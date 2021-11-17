@@ -41,6 +41,10 @@ public class FileUploadManager implements Serializable {
     // Used by PrimeFaces fileUpload
     private UploadedFile uploadedFile;
 
+    // Entered by User when uploading file
+    private String mealName;
+    private String mealDescription;
+
     /*
     The @EJB annotation directs the EJB Container Manager to inject (store) the object reference of the
     UserFacade bean into the instance variable 'userFacade' after it is instantiated at runtime.
@@ -76,18 +80,41 @@ public class FileUploadManager implements Serializable {
         this.uploadedFile = uploadedFile;
     }
 
+    public String getMealName() {
+        return mealName;
+    }
+
+    public void setMealName(String mealName) {
+        this.mealName = mealName;
+    }
+
+    public String getMealDescription() {
+        return mealDescription;
+    }
+
+    public void setMealDescription(String mealDescription) {
+        this.mealDescription = mealDescription;
+    }
+
     /*
     ================
     Instance Methods
     ================
      */
 
+    public String cancel() {
+        // Unselect previously selected movie object if any
+        mealName = null;
+        mealDescription = null;
+        return "/userFile/ListUserFiles?faces-redirect=true";
+    }
+
     /*
      **************************
      *   Handle File Upload   *
      **************************
      */
-    public String handleFileUpload(FileUploadEvent event) throws IOException {
+    public String handleFileUpload() throws IOException {
 
         try {
             String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
@@ -100,7 +127,7 @@ public class FileUploadManager implements Serializable {
             Since each file has its own primary key (unique id), the user can upload
             multiple files with the same name.
              */
-            String userId_filename = user.getId() + "_" + event.getFile().getFileName();
+            String userId_filename = user.getId() + "_" + uploadedFile.getFileName();
 
             /*
             "The try-with-resources statement is a try statement that declares one or more resources. 
@@ -108,7 +135,7 @@ public class FileUploadManager implements Serializable {
             The try-with-resources statement ensures that each resource is closed at the end of the
             statement." [Oracle] 
              */
-            try (InputStream inputStream = event.getFile().getInputStream();) {
+            try (InputStream inputStream = uploadedFile.getInputStream();) {
                 // The method inputStreamToFile is given below.
                 inputStreamToFile(inputStream, userId_filename);
             }
@@ -119,8 +146,11 @@ public class FileUploadManager implements Serializable {
                 <> id = auto generated as the unique Primary key for the user file object
                 <> filename = userId_filename
                 <> user_id = user
+                <> file_description =
              */
-            UserFile newUserFile = new UserFile(userId_filename, user);
+            UserFile newUserFile = new UserFile(userId_filename, user, mealName, mealDescription);
+            mealName = null;
+            mealDescription = null;
 
             /*
             ----------------------------------------------------------------
