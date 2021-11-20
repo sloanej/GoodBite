@@ -83,9 +83,9 @@ public class UserFile implements Serializable {
     @Column(name = "meal_name")
     private String mealName;
 
-    // file_description VARCHAR(512) NOT NULL
+    // file_description VARCHAR(2048) NOT NULL
     @Basic(optional = false)
-    @Size(min = 1, max = 512)
+    @Size(min = 1, max = 2048)
     @Column(name = "meal_description")
     private String mealDescription;
 

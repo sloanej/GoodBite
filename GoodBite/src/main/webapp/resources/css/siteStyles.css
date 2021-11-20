@@ -181,6 +181,34 @@ Used in Profile
 |   Other Style Definitions   |
 ===============================
 */
+.favMealPanel {
+    width: 40%;
+}
+
+.favMealPanelGrid {
+    display: inline-block;
+    text-align:center !important;
+    height: 500px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+/* SCROLLBAR */
+/* width */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: dimgrey;
+    border-radius: 10px;
+}
 
 /* Used in headerTemplate */
 .headerTitle {

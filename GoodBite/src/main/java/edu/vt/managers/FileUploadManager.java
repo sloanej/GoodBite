@@ -109,6 +109,43 @@ public class FileUploadManager implements Serializable {
         return "/userFile/ListUserFiles?faces-redirect=true";
     }
 
+
+
+    /*
+    ========================================================
+    Return Extension of the Selected File in Capital Letters
+    ========================================================
+     */
+    public String extensionOfSelectedFileInCaps(String userFileName) {
+
+        // Extract the file extension from the filename
+        String fileExtension = userFileName.substring(userFileName.lastIndexOf(".") + 1);
+
+        // Return file extension in capital letters
+        return fileExtension.toUpperCase();
+    }
+
+    /*
+    =============================================
+    Return True if Selected File is an Image File
+    =============================================
+    Any type of file can be uploaded or downloaded.
+    We identify the types of image files that can be displayed in the web browser.
+     */
+    public boolean isImage(String userFileName) {
+
+        switch (extensionOfSelectedFileInCaps(userFileName)) {
+            case "JPG":
+            case "JPEG":
+            case "PNG":
+            case "GIF":
+                // Selected file is an acceptable image file
+                return true;
+            default:
+                return false;
+        }
+    }
+
     /*
      **************************
      *   Handle File Upload   *
@@ -117,6 +154,15 @@ public class FileUploadManager implements Serializable {
     public String handleFileUpload() throws IOException {
 
         try {
+            // make sure the file is an image
+            if (!isImage(uploadedFile.getFileName())){
+                uploadedFile = null;
+                FacesMessage errorMessage = new FacesMessage(FacesMessage.SEVERITY_WARN,
+                        "Wrong Type!", "File Must Be An Image.");
+                FacesContext.getCurrentInstance().addMessage(null, errorMessage);
+                return "/userFile/ListUserFiles?faces-redirect=true";
+            }
+
             String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
 
             // user is the object reference of the signed-in User object
