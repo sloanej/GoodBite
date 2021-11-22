@@ -122,4 +122,9 @@ public final class Constants {
         "What was your favorite place to visit as a child?"
     };
 
+    public static String GEOAPIFY_BASE_URL = "https://api.geoapify.com/v2/places?categories=commercial.supermarket&filter=circle:";
+    public static String GEOAPIFY_API_KEY = "688f2afc8f1c4a45b76f18bdd8c286bf";
+
+
+
 }
