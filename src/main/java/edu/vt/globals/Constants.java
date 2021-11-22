@@ -38,8 +38,8 @@ public final class Constants {
 //    public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/Balci/DocRoot/CloudStorage/PhotoStorage/";
 
     // Unix (macOS) or Linux
-    public static final String FILES_ABSOLUTE_PATH  = "/Users/Balci/DocRoot/CloudStorage/FileStorage/";
-    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/Balci/DocRoot/CloudStorage/PhotoStorage/";
+    public static final String FILES_ABSOLUTE_PATH  = "/Users/jack/DocRoot/GoodBiteStorage/FileStorage/";
+    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/jack/DocRoot/GoodBiteStorage/PhotoStorage/";
 
     //--------------------------------
     // To run on your AWS EC2 instance
@@ -77,8 +77,8 @@ public final class Constants {
     //---------------
     // To run locally
     //---------------
-    public static final String FILES_URI  = "http://localhost:8080/files/";
-    public static final String PHOTOS_URI = "http://localhost:8080/photos/";
+    public static final String FILES_URI  = "http://localhost:8080/favmeals/";
+    public static final String PHOTOS_URI = "http://localhost:8080/profilepics/";
 
     //-----------------------------------------------------
     // To run on your AWS EC2 instance with your IP address
