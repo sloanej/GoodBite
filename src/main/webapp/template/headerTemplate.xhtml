@@ -67,7 +67,7 @@ siteTemplate for the entire site, achieving great maintainability.
 
                             <!-- Menu Options IF a User is Signed In -->
                             <c:if test="#{userController.isLoggedIn() == true}">
-                                <p:menuitem value="Favorite Meals" outcome="/userFile/FavoriteMeals" icon="fas fa-list" />
+                                <p:menuitem value="My Favorite Meals" outcome="/userFile/FavoriteMeals" icon="fas fa-list" />
 
                                 <p:menuitem outcome="/userAccount/Profile">
                                     <p:graphicImage cache="false" styleClass="smallProfilePhoto" value="#{userController.userPhoto()}" />
