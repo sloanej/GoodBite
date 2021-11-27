@@ -13,7 +13,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition>
-    <p:dialog id="StoreSearchDlg" header="Search Recipes" widgetVar="StoreSearchDialog"
+    <p:dialog id="StoreSearchDlg" header="Search Nearby Stores" widgetVar="StoreSearchDialog"
               modal="true" position="center" appendTo="@(body)"
               showEffect="slide" hideEffect="fade" responsive="true">
 
@@ -70,7 +70,7 @@
                     <p:commandButton value="Clear" icon="fas fa-undo" styleClass="ui-button-outlined"
                                      immediate="true"
                                      actionListener="#{nearByStoresSearchController.clear()}"
-                                     update=":searchDialogForm" oncomplete="PF('RecipeSearchDialog').show()">
+                                     update=":searchDialogForm" oncomplete="PF('StoreSearchDialog').show()">
 
                         <p:resetInput target=":searchDialogForm"/>
                     </p:commandButton>
@@ -80,7 +80,7 @@
                     <p:commandButton value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"
                                      immediate="true" ajax="false"
                                      actionListener="#{nearByStoresSearchController.clear()}"
-                                     onclick="PF('RecipeSearchDialog').hide()"/>
+                                     onclick="PF('StoreSearchDialog').hide()"/>
 
                     <!-- Clear entered values and selections if any -->
                     <!--                        <p:resetInput target=":searchDialogForm"/>-->

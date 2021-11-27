@@ -92,7 +92,7 @@ public class NearByStoresSearchController implements Serializable {
         try {
             List<GeoCoding> geoCodings = geoCodingFacade.findByZipCode(zipCode);
             if (geoCodings.size() == 0) {
-                throw new ZipCodeNotFoundException("Zipcode not found in the database.");
+                throw new ZipCodeNotFoundException("Zipcode available.");
             }
             GeoCoding geoCoding = geoCodings.get(0);
 //            https://api.geoapify.com/v2/places?categories=commercial.supermarket&filter=circle:-80.4138877,37.2295834
@@ -161,7 +161,7 @@ public class NearByStoresSearchController implements Serializable {
                 Methods.showMessage("Information", "No Results!", "No stores found for the search query!");
             }
         } catch (ZipCodeNotFoundException ex) {
-            Methods.showMessage("Error", "Zipcode not found in the database!", "Zipcode not found in the database!");
+            Methods.showMessage("Information", "Zipcode Unavailable!", "Zipcode not found in the database!");
             return "";
         } catch (Exception ex) {
             Methods.showMessage("Information", "No Results!", "No nearby stores found for the search query!");

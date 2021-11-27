@@ -65,6 +65,8 @@ siteTemplate for the entire site, achieving great maintainability.
                             <p:menuitem value="About Us" outcome="/template/AboutUs" icon="fas fa-home"/>
                             <p:menuitem value="Nearby Stores" onclick="PF('StoreSearchDialog').show();return false;"
                                         icon="fas fa-search"/>
+                            <p:menuitem value="Search Recipes" onclick="PF('RecipeSearchDialog').show();return false;"
+                                        icon="fas fa-search"/>
 
                             <!-- Menu Options IF a User is Signed In -->
                             <c:if test="#{userController.isLoggedIn() == true}">
@@ -91,5 +93,6 @@ siteTemplate for the entire site, achieving great maintainability.
         </table>
     </h:form>
     <ui:include src="/storeSearch/ApiSearch.xhtml"/>
+    <ui:include src="/recipeSearch/ApiSearch.xhtml"/>
 </ui:composition>
 </html>

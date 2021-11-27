@@ -124,6 +124,10 @@ public final class Constants {
 
     public static String GEOAPIFY_BASE_URL = "https://api.geoapify.com/v2/places?categories=commercial.supermarket&filter=circle:";
     public static String GEOAPIFY_API_KEY = "688f2afc8f1c4a45b76f18bdd8c286bf";
+//    https://api.edamam.com/api/recipes/v2?type=public&q=mutton%20&app_id=99b8644e&app_key=f52130770151d0b2a5cada889bf6ab3d&random=false
+    public static String EDAMAM_BASE_URL = "https://api.edamam.com/api/recipes/v2?type=public&q=";
+    public static final String EDAMAM_APP_ID = "99b8644e";
+    public static final String EDAMAM_API_KEY = "f52130770151d0b2a5cada889bf6ab3d";
 
 
 

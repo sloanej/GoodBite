@@ -377,3 +377,14 @@ cascading hierarchy, use the !important attribute.
 .columnSidePart {
     width: 75%;
 }
+
+.scrollableTextBox {
+    display: block;
+    text-align: left;
+    width: 300px;
+    height: 70px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
