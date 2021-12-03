@@ -18,7 +18,7 @@
 <ui:composition template="/template/siteTemplate.xhtml">
     <ui:define name="title">
         <!-- Set the page title -->
-        <h:outputText value="Store Search Results" />
+        <h:outputText value="Store Search" />
     </ui:define>
 
     <!-- Create the content for this page below -->
@@ -38,7 +38,7 @@
                             style="width:100%">
 
                     <f:facet name="header">
-                        <h:outputText value="Store Search Results" />
+                        <h:outputText value="Nearby Stores" />
                     </f:facet>
 
                     <p:dataViewGridItem>
@@ -47,7 +47,7 @@
 
                             <h:panelGrid columns="2" style="width:100%"
                                          columnClasses="columnStoreImage, columnMiddlePart">
-                                <img src="#{resource['images:grocery-store.png']}"
+                                <img src="#{resource['images:supermarket.jpg']}"
                                      style="width:92px; float:left; height: auto"
                                      alt="Grocery Store" />
 
@@ -75,7 +75,7 @@
 
                                 <h:panelGrid columns="2" style="width:100%"
                                              columnClasses="columnStoreImage, columnMiddlePart">
-                                    <img src="#{resource['images:grocery-store.png']}"
+                                    <img src="#{resource['images:supermarket.jpg']}"
                                          style="width:92px; float:left; height: auto"
                                          alt="Grocery Store" />
                                     <h:panelGrid style="width:100%; margin-left:10px">

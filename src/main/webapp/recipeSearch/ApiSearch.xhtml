@@ -17,10 +17,10 @@
               modal="true" position="center" appendTo="@(body)"
               showEffect="slide" hideEffect="fade" responsive="true">
 
-        <h:form id="recipeSearchDialogForm">
+        <h:form id="recipeSearchDialogForm" style=" border: none;">
             <p:panel>
                 <h:panelGroup>
-                    <p:panelGrid columns="2" columnClasses="panelGridColumn12, panelGridColumn21"
+                    <p:panelGrid columns="2"
                                  styleClass="ui-noborder">
                         <p:outputLabel value="Search " for="searchQuery"/>
                         <p:inputText id="searchQuery" value="#{recipeSearchController.query}"
@@ -54,7 +54,7 @@
                     <!-- CANCEL button -->
                     <p:commandButton value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"
                                      immediate="true" ajax="false"
-                                     actionListener="#{recipeSearchController.clear()}"
+
                                      onclick="PF('RecipeSearchDialog').hide()"/>
 
                     <!-- Clear entered values and selections if any -->

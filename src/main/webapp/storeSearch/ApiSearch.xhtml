@@ -32,7 +32,7 @@
                         </p:inputNumber>
                         <p:outputLabel value="Distance in Miles" for="distanceInMiles"/>
                         <p:inputNumber id="distanceInMiles" value="#{nearByStoresSearchController.distance}"
-                                       required="true" requiredMessage="Distance in Miles is required!"
+                                       required="true" requiredMessage=" Please enter distance in miles!"
                                        placeholder="Maximum Distance in Miles."
                                        decimalPlaces="2" maxValue="100"
                         >
@@ -44,7 +44,7 @@
                         <p:outputLabel value="Maximum Number of Stores" for="maxNumberOfResults"/>
                         <p:selectOneMenu id="maxNumberOfResults"
                                          value="#{nearByStoresSearchController.maxNumberOfResults}"
-                                         required="true" requiredMessage="Please Select a Diet Label!">
+                                         required="true" requiredMessage="Please select the number of stores!">
                             <f:selectItem itemLabel="Select Number" itemValue=""/>
                             <f:selectItem itemLabel="10" itemValue="10"/>
                             <f:selectItem itemLabel="20" itemValue="20"/>
