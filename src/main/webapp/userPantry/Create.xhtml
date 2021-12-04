@@ -19,7 +19,7 @@ xmlns:p="http://primefaces.org/ui">
         |  window for the user to enter the data to create a new recipe. |
         ===================================================================
         -->
-        <p:dialog id="RecipeCreateDlg" header="Create New Recipe" widgetVar="RecipeCreateDialog"
+        <p:dialog id="PantryCreateDlg" header="Create New Recipe" widgetVar="PantryCreateDialog"
                   modal="true" position="center" appendTo="@(body)"
                   showEffect="slide" hideEffect="fade" responsive="true" >
             <!--
@@ -30,10 +30,10 @@ xmlns:p="http://primefaces.org/ui">
             -->
 
             <!-- class="ui-datatable-data" in siteStyles reduces row paddings -->
-            <h:form id="RecipeCreateForm" class="ui-datatable-data">
+            <h:form id="PantryCreateForm" class="ui-datatable-data">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
-                                 rendered="#{recipeController.selected != null}">
+                                 rendered="#{pantryController.selected != null}">
             <!--
             When the user clicks the CREATE button in List.xhtml, actionListener="#{carController.prepareCreate}"
             executes the prepareCreate method in which a new Car object is instantiated and its object reference
@@ -41,45 +41,36 @@ xmlns:p="http://primefaces.org/ui">
             with property (instance variable) values set to empty or null. The inputText data fields below are
             intended to assign user-provided values to the properties of the newly created Car object.
             -->
-                        <p:outputLabel value="Recipe Name:" for="name" />
-                        <p:inputText id="name" value="#{recipeController.selected.name}" style="width:300px"
-                                     required="true" requiredMessage="Recipe Name field is required."/>
+                        <p:outputLabel value=" Ingredients:" for="ingredients" />
+                        <p:inputText id="ingredients" value="#{pantryController.selected.ingredients}" style="width:300px"
+                                     required="true" requiredMessage="Pantry ingredients is required." />
 
+<!--                        <p:outputLabel value="Quantity:" for="quantity" />-->
+<!--                        <p:inputText id="category" value="#{pantryController.selected.quantity}" style="width:300px"-->
+<!--                                     required="true" requiredMessage="Recipe category is required."/>-->
 
-                        <p:outputLabel value="Recipe Category:" for="category" />
-                        <p:inputText id="category" value="#{recipeController.selected.category}" style="width:300px"
-                                     required="true" requiredMessage="Recipe category is required."/>
+                        <p:outputLabel value="Quantity:" for="quantity" />
+                        <p:selectOneMenu id="category" value="#{pantryController.selected.quantity}"
+                                         required="true" requiredMessage="Please select a Category!" >
+                            <f:selectItem itemLabel="Select Quantity Label" itemValue=""/>
+                            <f:selectItem itemLabel="liter" itemValue="liter"/>
+                            <f:selectItem itemLabel="ounce" itemValue="ounce"/>
+                            <f:selectItem itemLabel="cup" itemValue="cup"/>
+                            <f:selectItem itemLabel="milliliter" itemValue="milliliter"/>
+                            <f:selectItem itemLabel="whole" itemValue="whole"/>
+                            <f:selectItem itemLabel="half" itemValue="half"/>
+                            <f:selectItem itemLabel="gallon" itemValue="gallon"/>
+                            <f:selectItem itemLabel="pound" itemValue="pound"/>
+                            <f:selectItem itemLabel="gram" itemValue="pound"/>
+                        </p:selectOneMenu>
 
-                        <p:outputLabel value="Recipe Cuisine:" for="cuisine" />
-                        <p:inputText id="cuisine" value="#{recipeController.selected.cuisine}" style="width:300px"
-                                     required="true" requiredMessage="Recipe Cuisine is required."/>
+                        <p:outputLabel value="Calories:" for="calories" />
+                        <p:inputText id="calories" value="#{pantryController.selected.calories}" style="width:300px"
+                                       required="true" requiredMessage="Calories is required!" />
 
-                        <p:outputLabel value="Recipe Website URL:" for="website_url" />
-                        <p:inputText id="website_url" value="#{recipeController.selected.website_url}" style="width:300px"
-                                     required="true" requiredMessage="Recipe Website is required!"/>
-
-                        <p:outputLabel value="Recipe Photo URL:" for="photo_url" />
-                        <p:inputText id="photo_url" value="#{recipeController.selected.photo_url}" style="width:300px"
-                                        required="true" requiredMessage="Recipe Photo URL is required." />
-
-                        <p:outputLabel value="Recipe Publisher Name:" for="publisher_name" />
-                        <p:inputText id="publisher_name" value="#{recipeController.selected.publisher_name}" style="width:300px"
-                                       required="true" requiredMessage=" Recipe publisher name field is required." />
-
-                        <p:outputLabel value="Recipe Publisher's Website URL:" for="publisher_url" />
-                        <p:inputText id="publisher_url" value="#{recipeController.selected.publisher_url}" style="width:300px"
-                                       required="true" requiredMessage="Recipe publisher's website URL is required." />
-
-
-                        <p:outputLabel value="Recipe Ingredients:" for="ingredients" />
-                        <p:inputText id="ingredients" value="#{recipeController.selected.ingredients}" style="width:300px"
-                                     required="true" requiredMessage="Recipe ingredients is required." />
-
-
-                        <p:outputLabel value="Recipe Nutrients" for="nutrients" />
-                        <p:inputText id="nutrients" value="#{recipeController.selected.nutrients}" style="width:300px"
-                                       required="true" requiredMessage="Recipe nutrients is required!" />
-
+                        <p:outputLabel value=" Nutrients:" for="nutrients" />
+                        <p:inputText id="nutrients" value="#{pantryController.selected.nutrients}" style="width:300px"
+                                     required="true" requiredMessage="Nutrients is required." />
 
                     </p:panelGrid>
                 </h:panelGroup>
@@ -89,7 +80,7 @@ xmlns:p="http://primefaces.org/ui">
                     <div align="center">
                         <!-- SAVE button -->
                         <p:commandButton value="Save" icon="fas fa-save" styleClass="rounded-button"
-                                         ajax="false" actionListener="#{recipeController.create()}"
+                                         ajax="false" actionListener="#{pantryController.create()}"
                                          update="display,:RecipeListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                                          oncomplete="handleSubmit(args,'RecipeCreateDialog');" />
                         &nbsp;
@@ -98,7 +89,7 @@ xmlns:p="http://primefaces.org/ui">
                         The cancel() method will make the selected car object null and show the List page.
                         -->
                         <p:commandButton value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"
-                                         action="#{recipeController.cancel()}" ajax="false" immediate="true"
+                                         action="#{pantryController.cancel()}" ajax="false" immediate="true"
                                          onclick="PF('RecipeCreateDialog').hide()" />
                     </div>
                 </h:panelGroup>
