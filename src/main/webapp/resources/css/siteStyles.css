@@ -353,3 +353,38 @@ cascading hierarchy, use the !important attribute.
     /* The drag-and-drop area height will increase as more files are dropped */
     min-height: 200px;
 }
+
+.panelGridColumn12 {
+    text-align: left;
+    white-space: nowrap;        /* Disallow line break */
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    background-color: oldlace !important;
+}
+.panelGridColumn21 {
+    text-align: right;
+    white-space: nowrap;        /* Disallow line break */
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    background-color: oldlace !important;
+}
+.columnStoreImage {
+    width: 100px;
+}
+.columnMiddlePart {
+    width: 80%;
+}
+.columnSidePart {
+    width: 75%;
+}
+
+.scrollableTextBox {
+    display: block;
+    text-align: left;
+    width: 300px;
+    height: 70px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
