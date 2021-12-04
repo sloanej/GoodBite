@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.26, for macos11.3 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.27, for macos12.0 (x86_64)
 --
 -- Host: localhost    Database: GoodBiteDB
 -- ------------------------------------------------------
@@ -23,12 +23,12 @@ DROP TABLE IF EXISTS `GeoCoding`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `GeoCoding` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `zipcode` varchar(10) NOT NULL,
-  `lat` decimal(11,6) NOT NULL,
-  `lng` decimal(11,6) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `zipcode_UNIQUE` (`zipcode`)
+                             `id` int unsigned NOT NULL AUTO_INCREMENT,
+                             `zipcode` varchar(10) NOT NULL,
+                             `lat` decimal(11,6) NOT NULL,
+                             `lng` decimal(11,6) NOT NULL,
+                             PRIMARY KEY (`id`),
+                             UNIQUE KEY `zipcode_UNIQUE` (`zipcode`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33145 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,16 +51,20 @@ DROP TABLE IF EXISTS `Recipe`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Recipe` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `ingredients` varchar(1024) NOT NULL,
-  `nutrition` varchar(2048) DEFAULT NULL,
-  `photo_url` varchar(512) DEFAULT NULL,
-  `instructions` longtext,
-  `category` varchar(128) DEFAULT NULL,
-  `cuisine` varchar(128) DEFAULT NULL,
-  `description` varchar(1024) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                          `id` int unsigned NOT NULL AUTO_INCREMENT,
+                          `name` varchar(256) NOT NULL,
+                          `ingredients` varchar(4096) NOT NULL,
+                          `nutrition` varchar(4096) DEFAULT NULL,
+                          `image_url` varchar(512) DEFAULT NULL,
+                          `category` varchar(128) DEFAULT NULL,
+                          `cuisine` varchar(128) DEFAULT NULL,
+                          `description` varchar(1024) DEFAULT NULL,
+                          `source_url` varchar(1024) DEFAULT NULL,
+                          `health_labels` varchar(4096) DEFAULT NULL,
+                          `diet_labels` varchar(4096) DEFAULT NULL,
+                          `cautions` varchar(1024) DEFAULT NULL,
+                          `url` varchar(512) DEFAULT NULL,
+                          PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -81,21 +85,21 @@ DROP TABLE IF EXISTS `User`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `User` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(32) NOT NULL,
-  `password` varchar(256) NOT NULL,
-  `first_name` varchar(32) NOT NULL,
-  `last_name` varchar(32) NOT NULL,
-  `middle_name` varchar(32) DEFAULT NULL,
-  `address1` varchar(128) NOT NULL,
-  `address2` varchar(128) DEFAULT NULL,
-  `city` varchar(64) NOT NULL,
-  `state` varchar(2) NOT NULL,
-  `zipcode` varchar(10) NOT NULL,
-  `security_question_number` int NOT NULL,
-  `security_question_answer` varchar(128) NOT NULL,
-  `email` varchar(128) NOT NULL,
-  PRIMARY KEY (`id`)
+                        `id` int unsigned NOT NULL AUTO_INCREMENT,
+                        `username` varchar(32) NOT NULL,
+                        `password` varchar(256) NOT NULL,
+                        `first_name` varchar(32) NOT NULL,
+                        `last_name` varchar(32) NOT NULL,
+                        `middle_name` varchar(32) DEFAULT NULL,
+                        `address1` varchar(128) NOT NULL,
+                        `address2` varchar(128) DEFAULT NULL,
+                        `city` varchar(64) NOT NULL,
+                        `state` varchar(2) NOT NULL,
+                        `zipcode` varchar(10) NOT NULL,
+                        `security_question_number` int NOT NULL,
+                        `security_question_answer` varchar(128) NOT NULL,
+                        `email` varchar(128) NOT NULL,
+                        PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -116,12 +120,12 @@ DROP TABLE IF EXISTS `UserPhoto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `UserPhoto` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `extension` enum('jpeg','jpg','png','gif') NOT NULL,
-  `user_id` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id_idx` (`user_id`),
-  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE
+                             `id` int unsigned NOT NULL AUTO_INCREMENT,
+                             `extension` enum('jpeg','jpg','png','gif') NOT NULL,
+                             `user_id` int unsigned DEFAULT NULL,
+                             PRIMARY KEY (`id`),
+                             KEY `user_id_idx` (`user_id`),
+                             CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -142,19 +146,22 @@ DROP TABLE IF EXISTS `UserRecipe`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `UserRecipe` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `ingredients` varchar(1024) NOT NULL,
-  `nutrition` varchar(2048) DEFAULT NULL,
-  `photo_url` varchar(512) DEFAULT NULL,
-  `description` varchar(1024) DEFAULT NULL,
-  `instructions` longtext,
-  `category` varchar(128) DEFAULT NULL,
-  `cuisine` varchar(128) DEFAULT NULL,
-  `user_id` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `userrecipe_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`) ON DELETE CASCADE
+                              `id` int unsigned NOT NULL AUTO_INCREMENT,
+                              `name` varchar(256) NOT NULL,
+                              `ingredients` varchar(4096) NOT NULL,
+                              `nutrients` varchar(4096) DEFAULT NULL,
+                              `image_url` varchar(512) DEFAULT NULL,
+                              `description` varchar(1024) DEFAULT NULL,
+                              `category` varchar(128) DEFAULT NULL,
+                              `cuisine` varchar(128) DEFAULT NULL,
+                              `user_id` int DEFAULT NULL,
+                              `source_url` varchar(1024) DEFAULT NULL,
+                              `health_labels` varchar(4096) DEFAULT NULL,
+                              `diet_labels` varchar(4096) DEFAULT NULL,
+                              `cautions` varchar(1024) DEFAULT NULL,
+                              `url` varchar(512) DEFAULT NULL,
+                              PRIMARY KEY (`id`),
+                              KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -176,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-21 19:17:14
+-- Dump completed on 2021-12-04  1:23:38
