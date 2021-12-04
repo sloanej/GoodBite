@@ -45,6 +45,7 @@ public class Recipe implements Serializable{
      *                               `health_labels` varchar(4096) DEFAULT NULL,
      *                               `diet_labels` varchar(4096) DEFAULT NULL,
      *                               `cautions` varchar(1024) DEFAULT NULL,
+     *                               `source` varchar(256) DEFAULT NULL,
      *                               `url` varchar(512) DEFAULT NULL,
      *                               PRIMARY KEY (`id`),
      *                               UNIQUE KEY `category_UNIQUE` (`category`),
@@ -147,10 +148,17 @@ public class Recipe implements Serializable{
     @Column(name = "url")
     private String url;
 
+    //  source(512) NOT NULL
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 256)
+    @Column(name = "source")
+    private String source;
+
 
     public Recipe() {}
 
-    public Recipe(String name, String ingredients, String nutrients, String imageUrl, String description, String category, String cuisine, String sourceUrl, String healthLabels, String dietLabels, String cautions, String url) {
+    public Recipe(String name, String ingredients, String nutrients, String imageUrl, String description, String category, String cuisine, String sourceUrl, String healthLabels, String dietLabels, String cautions, String url, String source) {
         this.name = name;
         this.ingredients = ingredients;
         this.nutrients = nutrients;
@@ -163,6 +171,7 @@ public class Recipe implements Serializable{
         this.dietLabels = dietLabels;
         this.cautions = cautions;
         this.url = url;
+        this.source = source;
     }
 
     public Integer getId() {
@@ -269,7 +278,14 @@ public class Recipe implements Serializable{
         this.url = url;
     }
 
-    /*
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+/*
     ================================
     Instance Methods Used Internally
     ================================

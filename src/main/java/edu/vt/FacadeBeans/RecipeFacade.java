@@ -129,7 +129,7 @@ public class RecipeFacade extends AbstractFacade<Recipe> {
         searchString = "%" + searchString + "%";
         // Conduct the search in a case-insensitive manner and return the results in a list.
         return getEntityManager().createQuery(
-                "SELECT c FROM Recipe c WHERE c.publisher_name LIKE :searchString")
+                "SELECT c FROM Recipe c WHERE c.source LIKE :searchString")
                 .setParameter("searchString", searchString)
                 .getResultList();
     }
@@ -145,7 +145,7 @@ public class RecipeFacade extends AbstractFacade<Recipe> {
         searchString = "%" + searchString + "%";
         // Conduct the search in a case-insensitive manner and return the results in a list.
         return getEntityManager().createQuery(
-                "SELECT c FROM Recipe c WHERE c.name LIKE :searchString OR c.category LIKE :searchString OR c.cuisine LIKE :searchString OR c.publisher_name LIKE :searchString")
+                "SELECT c FROM Recipe c WHERE c.name LIKE :searchString OR c.category LIKE :searchString OR c.cuisine LIKE :searchString OR c.source LIKE :searchString")
                 .setParameter("searchString", searchString)
                 .getResultList();
     }
