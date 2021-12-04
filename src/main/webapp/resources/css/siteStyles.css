@@ -7,7 +7,8 @@ html, body {
     background-color: #d4ff99;
     margin: 0 0 0 0;    /* top right bottom left */
     width: 100%;        /* Set page width horizontally 100% */
-    height:100%;       /* Set page height vertically 100% */
+    height:100%;
+    background-image: url("/background.jpg")/* Set page height vertically 100% */
 }
 
 body, p {
@@ -86,7 +87,8 @@ Style the div component whose unique id is "footer"
 <div id="footer"> in siteTemplate
 */
 #footer {
-    height: 100px;
+    background: lightgray;
+    height: 75px;
     width: 100%;
     left: 0;
     right: 0;
