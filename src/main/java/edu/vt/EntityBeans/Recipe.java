@@ -161,7 +161,7 @@ public class Recipe implements Serializable{
     public Recipe(String name, String ingredients, String nutrients, String imageUrl, String description, String category, String cuisine, String sourceUrl, String healthLabels, String dietLabels, String cautions, String url, String source) {
         this.name = name;
         this.ingredients = ingredients;
-        this.nutrients = nutrients;
+        this.nutrients = Recipe.this.nutrients;
         this.imageUrl = imageUrl;
         this.description = description;
         this.category = category;
@@ -198,12 +198,12 @@ public class Recipe implements Serializable{
         this.ingredients = ingredients;
     }
 
-    public String getNutrients() {
+    public String getnutrients() {
         return nutrients;
     }
 
-    public void setNutrients(String nutrients) {
-        this.nutrients = nutrients;
+    public void setnutrients(String nutrients) {
+        this.nutrients = Recipe.this.nutrients;
     }
 
     public String getImageUrl() {
