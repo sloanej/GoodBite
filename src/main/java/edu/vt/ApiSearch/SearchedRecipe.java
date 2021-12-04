@@ -11,19 +11,19 @@ public class SearchedRecipe {
     private String ingredients;
     private String source;
     private String nutrients;
-    private String directions;
+    private String sourceUrl;
     private String healthLabels;
     private String dietLabels;
     private String cautions;
     private String url;
 
-    public SearchedRecipe(String name, String imageUrl, String ingredients, String source, String nutrients, String directions, String healthLabels, String dietLabels, String cautions, String url) {
+    public SearchedRecipe(String name, String imageUrl, String ingredients, String source, String nutrients, String sourceUrl, String healthLabels, String dietLabels, String cautions, String url) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.ingredients = ingredients;
         this.source = source;
         this.nutrients = nutrients;
-        this.directions = directions;
+        this.sourceUrl = sourceUrl;
         this.healthLabels = healthLabels;
         this.dietLabels = dietLabels;
         this.cautions = cautions;
@@ -70,12 +70,12 @@ public class SearchedRecipe {
         this.nutrients = nutrients;
     }
 
-    public String getDirections() {
-        return directions;
+    public String getSourceUrl() {
+        return sourceUrl;
     }
 
-    public void setDirections(String directions) {
-        this.directions = directions;
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
     }
 
     public String getHealthLabels() {

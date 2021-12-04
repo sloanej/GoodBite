@@ -99,12 +99,12 @@ public class RecipeController implements Serializable {
 
     // Search Query Variables (Q = Query)
     private String name;
-    private String publisher_name;
-    private String publisher_url;
+    private String source;
+    private String sourceUrl;
     private String category;
     private String cuisine;
-    private String website_url;
-    private String photo_url;
+    private String url;
+    private String imageUrl;
     private String nutrients;
     private String ingredients;
 
@@ -130,20 +130,20 @@ public class RecipeController implements Serializable {
         this.name = name;
     }
 
-    public String getPublisher_name() {
-        return publisher_name;
+    public String getSource() {
+        return source;
     }
 
-    public void setPublisher_name(String publisher_name) {
-        this.publisher_name = publisher_name;
+    public void setSource(String source) {
+        this.source = source;
     }
 
-    public String getPublisher_url() {
-        return publisher_url;
+    public String getSourceUrl() {
+        return sourceUrl;
     }
 
-    public void setPublisher_url(String publisher_url) {
-        this.publisher_url = publisher_url;
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
     }
 
     public String getCategory() {
@@ -162,20 +162,20 @@ public class RecipeController implements Serializable {
         this.cuisine = cuisine;
     }
 
-    public String getWebsite_url() {
-        return website_url;
+    public String getUrl() {
+        return url;
     }
 
-    public void setWebsite_url(String website_url) {
-        this.website_url = website_url;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getPhoto_url() {
-        return photo_url;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setPhoto_url(String photo_url) {
-        this.photo_url = photo_url;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getNutrients() {

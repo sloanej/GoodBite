@@ -5,6 +5,7 @@
 
 package edu.vt.EntityBeans;
 
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -12,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -26,12 +29,21 @@ representing the User table in the CloudDriveDB database.
 @Entity
 
 // Name of the database table represented
-@Table(name = "Recipe")
+@Table(name = "UserRecipe")
+@NamedQueries({
+    /*
+    private User userId;    --> userId is the object reference of the User object.
+    userId.id               --> User object's database primary key
+     */
+        @NamedQuery(name = "UserRecipe.findAll", query = "SELECT u FROM UserRecipe u")
+        , @NamedQuery(name = "UserRecipe.findById", query = "SELECT u FROM UserRecipe u WHERE u.id = :id")
+        , @NamedQuery(name = "UserRecipe.findByFilename", query = "SELECT u FROM UserRecipe u WHERE u.name = :name")
+        , @NamedQuery(name = "UserRecipe.findUserRecipeByUserId", query = "SELECT u FROM UserRecipe u WHERE u.userId.id = :userId")
+})
 
-
-public class Recipe implements Serializable{
+public class UserRecipe implements Serializable{
     /**
-     * CREATE TABLE `Recipe` (
+     * CREATE TABLE `UserRecipe` (
      *                               `id` int unsigned NOT NULL AUTO_INCREMENT,
      *                               `name` varchar(256) NOT NULL,
      *                               `ingredients` varchar(4096) NOT NULL,
@@ -45,7 +57,6 @@ public class Recipe implements Serializable{
      *                               `health_labels` varchar(4096) DEFAULT NULL,
      *                               `diet_labels` varchar(4096) DEFAULT NULL,
      *                               `cautions` varchar(1024) DEFAULT NULL,
-     *                               `source` varchar(256) DEFAULT NULL,
      *                               `url` varchar(512) DEFAULT NULL,
      *                               PRIMARY KEY (`id`),
      *                               UNIQUE KEY `category_UNIQUE` (`category`),
@@ -148,17 +159,14 @@ public class Recipe implements Serializable{
     @Column(name = "url")
     private String url;
 
-    //  source(512) NOT NULL
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 256)
-    @Column(name = "source")
-    private String source;
+    // user_id INT UNSIGNED
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private User userId;
 
+    public UserRecipe() {}
 
-    public Recipe() {}
-
-    public Recipe(String name, String ingredients, String nutrients, String imageUrl, String description, String category, String cuisine, String sourceUrl, String healthLabels, String dietLabels, String cautions, String url, String source) {
+    public UserRecipe(String name, String ingredients, String nutrients, String imageUrl, String description, String category, String cuisine, String sourceUrl, String healthLabels, String dietLabels, String cautions, String url, User userId) {
         this.name = name;
         this.ingredients = ingredients;
         this.nutrients = nutrients;
@@ -171,7 +179,7 @@ public class Recipe implements Serializable{
         this.dietLabels = dietLabels;
         this.cautions = cautions;
         this.url = url;
-        this.source = source;
+        this.userId = userId;
     }
 
     public Integer getId() {
@@ -278,14 +286,15 @@ public class Recipe implements Serializable{
         this.url = url;
     }
 
-    public String getSource() {
-        return source;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
-/*
+
+    /*
     ================================
     Instance Methods Used Internally
     ================================
@@ -306,10 +315,10 @@ public class Recipe implements Serializable{
      */
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Recipe)) {
+        if (!(object instanceof UserRecipe)) {
             return false;
         }
-        Recipe other = (Recipe) object;
+        UserRecipe other = (UserRecipe) object;
         return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
