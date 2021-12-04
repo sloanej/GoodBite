@@ -46,16 +46,16 @@ public class UserRecipe implements Serializable{
      * CREATE TABLE `UserRecipe` (
      *                               `id` int unsigned NOT NULL AUTO_INCREMENT,
      *                               `name` varchar(256) NOT NULL,
-     *                               `ingredients` varchar(4096) NOT NULL,
-     *                               `nutrients` varchar(4096) DEFAULT NULL,
+     *                               `ingredients` varchar(2048) NOT NULL,
+     *                               `nutrients` varchar(2048) DEFAULT NULL,
      *                               `image_url` varchar(512) DEFAULT NULL,
      *                               `description` varchar(1024) DEFAULT NULL,
      *                               `category` varchar(128) DEFAULT NULL,
      *                               `cuisine` varchar(128) DEFAULT NULL,
      *                               `user_id` int unsigned DEFAULT NULL,
      *                               `source_url` varchar(1024) DEFAULT NULL,
-     *                               `health_labels` varchar(4096) DEFAULT NULL,
-     *                               `diet_labels` varchar(4096) DEFAULT NULL,
+     *                               `health_labels` varchar(2048) DEFAULT NULL,
+     *                               `diet_labels` varchar(2048) DEFAULT NULL,
      *                               `cautions` varchar(1024) DEFAULT NULL,
      *                               `url` varchar(512) DEFAULT NULL,
      *                               PRIMARY KEY (`id`),
@@ -81,17 +81,17 @@ public class UserRecipe implements Serializable{
     @Column(name = "name")
     private String name;
 
-    //  ingredients(4096) NOT NULL
+    //  ingredients(2048) NOT NULL
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 4096)
+    @Size(min = 1, max = 2048)
     @Column(name = "ingredients")
     private String ingredients;
 
-    //  nutrients(4096) NOT NULL
+    //  nutrients(2048) NOT NULL
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 4096)
+    @Size(min = 1, max = 2048)
     @Column(name = "nutrients")
     private String nutrients;
 
@@ -131,17 +131,17 @@ public class UserRecipe implements Serializable{
     private String sourceUrl;
 
 
-    //  health_labels(4096) NOT NULL
+    //  health_labels(2048) NOT NULL
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 4096)
+    @Size(min = 1, max = 2048)
     @Column(name = "health_labels")
     private String healthLabels;
 
-    //  diet_labels(4096) NOT NULL
+    //  diet_labels(2048) NOT NULL
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 4096)
+    @Size(min = 1, max = 2048)
     @Column(name = "diet_labels")
     private String dietLabels;
 
