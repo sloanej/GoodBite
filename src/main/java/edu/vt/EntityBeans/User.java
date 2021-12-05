@@ -161,7 +161,7 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 128)
-    @Column(name = "security_answer")
+    @Column(name = "security_question_answer")
     private String securityAnswer;
 
     // email VARCHAR(128) NOT NULL

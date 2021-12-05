@@ -23,7 +23,7 @@ as long as the user's established HTTP session is alive.
  */
 @SessionScoped
 
-    public class ChroneLineView implements Serializable{
+    public class ChronoLineView implements Serializable{
 
         private List<Event> events;
         private List<String> events2;
