@@ -5,10 +5,10 @@
 package edu.vt.controllers;
 
 import edu.vt.EntityBeans.User;
-import edu.vt.EntityBeans.UserFile;
+import edu.vt.EntityBeans.UploadedMeal;
 import edu.vt.EntityBeans.UserPhoto;
 import edu.vt.FacadeBeans.UserFacade;
-import edu.vt.FacadeBeans.UserFileFacade;
+import edu.vt.FacadeBeans.UploadedMealFacade;
 import edu.vt.FacadeBeans.UserPhotoFacade;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
@@ -75,10 +75,10 @@ public class UserController implements Serializable {
 
     /*
     The @EJB annotation directs the EJB Container Manager to inject (store) the object reference of the
-    UserFileFacade bean into the instance variable 'userFileFacade' after it is instantiated at runtime.
+    UploadedMealFacade bean into the instance variable 'uploadedMealFacade' after it is instantiated at runtime.
      */
     @EJB
-    private UserFileFacade userFileFacade;
+    private UploadedMealFacade uploadedMealFacade;
 
     /*
     =========================
@@ -668,7 +668,7 @@ public class UserController implements Serializable {
     public void deleteAllUserFiles(int primaryKey) {
 
         // Obtain the List of files that belongs to the user with primaryKey
-        List<UserFile> userFilesList = userFileFacade.findUserFilesByUserPrimaryKey(primaryKey);
+        List<UploadedMeal> userFilesList = uploadedMealFacade.findUserFilesByUserPrimaryKey(primaryKey);
 
         if (!userFilesList.isEmpty()) {
             // Java 8 looping over a list with lambda
@@ -676,12 +676,12 @@ public class UserController implements Serializable {
                 try {
                     /*
                     Delete the user file if it exists.
-                    getFilePath() is given in UserFile.java.
+                    getFilePath() is given in UploadedMeal.java.
                      */
                     Files.deleteIfExists(Paths.get(userFile.getFilePath()));
 
                     // Remove the user's file record from the database
-                    userFileFacade.remove(userFile);
+                    uploadedMealFacade.remove(userFile);
 
                 } catch (IOException ex) {
                     Methods.showMessage("Fatal Error",

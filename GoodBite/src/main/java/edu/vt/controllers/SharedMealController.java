@@ -1,14 +1,23 @@
 
 package edu.vt.controllers;
 
+import edu.vt.EntityBeans.SharedMeal;
+import edu.vt.EntityBeans.UploadedMeal;
 import edu.vt.EntityBeans.User;
-import edu.vt.EntityBeans.UserFile;
+import edu.vt.FacadeBeans.SharedMealFacade;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
-import edu.vt.FacadeBeans.UserFileFacade;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 
+import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
+import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -18,19 +27,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 
-@Named("userFileController")
+@Named("sharedMealController")
 @SessionScoped
 
-public class UserFileController implements Serializable {
+public class SharedMealController implements Serializable {
     /*
     ===============================
     Instance Variables (Properties)
@@ -38,16 +39,16 @@ public class UserFileController implements Serializable {
 
     /*
     The @EJB annotation directs the EJB Container Manager to inject (store) the object reference of the
-    UserFileFacade bean into the instance variable 'userFileFacade' after it is instantiated at runtime.
+    SharedMealFacade bean into the instance variable 'sharedMealFacade' after it is instantiated at runtime.
      */
     @EJB
-    private UserFileFacade userFileFacade;
+    private SharedMealFacade sharedMealFacade;
 
     // 'selected' contains the object reference of the selected User File object
-    private UserFile selected;
+    private SharedMeal selected;
 
-    // 'listOfUserFiles' is a List containing the object references of User File objects
-    private List<UserFile> listOfUserFiles = null;
+    // 'listOfSharedMeals' is a List containing the object references of User File objects
+    private List<SharedMeal> listOfSharedMeals = null;
 
     /*
     cleanedFileNameHashMap<KEY, VALUE>
@@ -64,11 +65,11 @@ public class UserFileController implements Serializable {
     Getter and Setter Methods
     =========================
      */
-    public UserFile getSelected() {
+    public SharedMeal getSelected() {
         return selected;
     }
 
-    public void setSelected(UserFile selected) {
+    public void setSelected(SharedMeal selected) {
         this.selected = selected;
     }
 
@@ -80,51 +81,35 @@ public class UserFileController implements Serializable {
         this.selectedRowNumber = selectedRowNumber;
     }
 
-    /*
-    ***************************************************************
-    Return the List of User Files that Belong to the Signed-In User
-    ***************************************************************
-     */
-    public List<UserFile> getListOfUserFiles() {
 
-        if (listOfUserFiles == null) {
-            /*
-            'user', the object reference of the signed-in user, was put into the SessionMap
-            in the initializeSessionMap() method in LoginManager upon user's sign in.
-             */
-            Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-            User signedInUser = (User) sessionMap.get("user");
+    public List<SharedMeal> getListOfSharedMeals() {
 
-            // Obtain the database primary key of the signedInUser object
-            Integer primaryKey = signedInUser.getId();
+        listOfSharedMeals = sharedMealFacade.findAll();
 
-            // Obtain only those files from the database that belong to the signed-in user
-            listOfUserFiles = userFileFacade.findUserFilesByUserPrimaryKey(primaryKey);
+        // Instantiate a new hash map object
+        cleanedFileNameHashMap = new HashMap<>();
 
-            // Instantiate a new hash map object
-            cleanedFileNameHashMap = new HashMap<>();
+        /*
+        cleanedFileNameHashMap<KEY, VALUE>
+            KEY   = Integer fileId
+            VALUE = String cleanedFileNameForSelected
+         */
+        listOfSharedMeals.forEach(userFile -> {
 
-            /*
-            cleanedFileNameHashMap<KEY, VALUE>
-                KEY   = Integer fileId
-                VALUE = String cleanedFileNameForSelected
-             */
-            listOfUserFiles.forEach(userFile -> {
+            // Obtain the filename stored in CloudStorage/FileStorage as 'userId_filename'
+            String storedFileName = userFile.getMealPhoto();
 
-                // Obtain the filename stored in CloudStorage/FileStorage as 'userId_filename'
-                String storedFileName = userFile.getFilename();
+            // Remove the "userId_" (e.g., "4_") prefix in the stored filename
+            String cleanedFileName = storedFileName.substring(storedFileName.indexOf("_") + 1);
 
-                // Remove the "userId_" (e.g., "4_") prefix in the stored filename
-                String cleanedFileName = storedFileName.substring(storedFileName.indexOf("_") + 1);
+            // Obtain the file database Primary Key id
+            Integer fileId = userFile.getId();
 
-                // Obtain the file database Primary Key id
-                Integer fileId = userFile.getId();
+            // Create an entry in the hash map as a key-value pair
+            cleanedFileNameHashMap.put(fileId, cleanedFileName);
+        });
 
-                // Create an entry in the hash map as a key-value pair
-                cleanedFileNameHashMap.put(fileId, cleanedFileName);
-            });
-        }
-        return listOfUserFiles;
+        return listOfSharedMeals;
     }
 
     /*
@@ -133,7 +118,21 @@ public class UserFileController implements Serializable {
     ================
      */
 
-    // The constants CREATE, DELETE and UPDATE are defined in JsfUtil.java
+    public boolean isUserMeal(User mealOwner){
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+
+        // false if not signed in
+        if (sessionMap.get("username") == null) {
+            System.out.println("false");
+            return false;
+        }
+
+
+        User signedInUser = (User) sessionMap.get("user");
+        System.out.println(signedInUser.equals(mealOwner));
+        return signedInUser.equals(mealOwner);
+
+    }
 
     /*
     **********************
@@ -145,17 +144,45 @@ public class UserFileController implements Serializable {
         /*
         JsfUtil.isValidationFailed() returns TRUE if the validationFailed() method has been called
         for the current request. Return of FALSE means that the create operation was successful and 
-        we can reset listOfUserFiles to null so that it will be recreated with the newly created user file.
+        we can reset listOfSharedMeals to null so that it will be recreated with the newly created user file.
          */
         if (!JsfUtil.isValidationFailed()) {
             selected = null;            // Remove selection
-            listOfUserFiles = null;     // Invalidate listOfUserFiles to trigger re-query.
+            listOfSharedMeals = null;     // Invalidate listOfSharedMeals to trigger re-query.
         }
     }
 
     // We do not allow update of a user file.
     public void update() {
         persist(PersistAction.UPDATE,"User File was Successfully Updated!");
+    }
+
+    public String deleteSharedFile(SharedMeal sharedMealToDelete) {
+
+        /*
+        We need to preserve the messages since we will redirect to show a
+        different JSF page after successful deletion of the user file.
+         */
+        Methods.preserveMessages();
+
+        try {
+
+            // Delete the user file record from the database
+            sharedMealFacade.remove(sharedMealToDelete);
+            // UploadedMealFacade inherits the remove() method from AbstractFacade
+
+            Methods.showMessage("Information", "Success!", "Selected File is Successfully Deleted!");
+
+            // See method below
+            refreshFileList();
+
+            return "/sharedMeals/SharedMeals?faces-redirect=true";
+
+        } catch (Exception ex) {
+            Methods.showMessage("Fatal Error", "Something went wrong while deleting the meal!",
+                    "See: " + ex.getMessage());
+            return "";
+        }
     }
 
     /*
@@ -180,9 +207,9 @@ public class UserFileController implements Serializable {
                      object in the database regardless of whether the object is a newly
                      created object (CREATE) or an edited (updated) object (EDIT or UPDATE).
                     
-                     UserFileFacade inherits the edit(selected) method from the AbstractFacade class.
+                     SharedMealFacade inherits the edit(selected) method from the AbstractFacade class.
                      */
-                    userFileFacade.edit(selected);
+                    sharedMealFacade.edit(selected);
                 } else {
                     /*
                      -----------------------------------------
@@ -190,9 +217,9 @@ public class UserFileController implements Serializable {
                      -----------------------------------------
                      The remove method performs the DELETE operation in the database.
                     
-                     UserFileFacade inherits the remove(selected) method from the AbstractFacade class.
+                     SharedMealFacade inherits the remove(selected) method from the AbstractFacade class.
                      */
-                    userFileFacade.remove(selected);
+                    sharedMealFacade.remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
 
@@ -215,11 +242,11 @@ public class UserFileController implements Serializable {
         }
     }
 
-    public UserFile getUserFile(Integer id) {
-        return userFileFacade.find(id);
+    public SharedMeal getUserFile(Integer id) {
+        return sharedMealFacade.find(id);
     }
 
-    @FacesConverter(forClass = UserFile.class)
+    @FacesConverter(forClass = SharedMeal.class)
     public static class UserFileControllerConverter implements Converter {
 
         @Override
@@ -227,7 +254,7 @@ public class UserFileController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            UserFileController controller = (UserFileController) facesContext.getApplication().getELResolver().
+            SharedMealController controller = (SharedMealController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "userFileController");
             return controller.getUserFile(getKey(value));
         }
@@ -247,90 +274,14 @@ public class UserFileController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof UserFile) {
-                UserFile o = (UserFile) object;
+            if (object instanceof SharedMeal) {
+                SharedMeal o = (SharedMeal) object;
                 return getStringKey(o.getId());
             } else {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
                         "object {0} is of type {1}; expected type: {2}",
-                        new Object[]{object, object.getClass().getName(), UserFile.class.getName()});
+                        new Object[]{object, object.getClass().getName(), SharedMeal.class.getName()});
                 return null;
-            }
-        }
-    }
-
-    /*
-    =========================
-    Delete Selected User File
-    =========================
-     */
-    public String deleteSelectedUserFile() {
-
-        UserFile userFileToDelete = selected;
-        /*
-        We need to preserve the messages since we will redirect to show a
-        different JSF page after successful deletion of the user file.
-         */
-        Methods.preserveMessages();
-
-        if (userFileToDelete == null) {
-            Methods.showMessage("Fatal Error", "No File Selected!", "You do not have a file to delete!");
-            return "";
-        } else {
-            try {
-                // Delete the file from CloudStorage/FileStorage
-                Files.deleteIfExists(Paths.get(userFileToDelete.getFilePath()));
-
-                // Delete the user file record from the database
-                userFileFacade.remove(userFileToDelete);
-                // UserFileFacade inherits the remove() method from AbstractFacade
-
-                Methods.showMessage("Information", "Success!", "Selected File is Successfully Deleted!");
-
-                // See method below
-                refreshFileList();
-
-                return "/userFile/ListUserFiles?faces-redirect=true";
-
-            } catch (IOException ex) {
-                Methods.showMessage("Fatal Error", "Something went wrong while deleting the user file!",
-                        "See: " + ex.getMessage());
-                return "";
-            }
-        }
-    }
-
-    public String deleteUserFile(UserFile userFileToDelete) {
-
-        /*
-        We need to preserve the messages since we will redirect to show a
-        different JSF page after successful deletion of the user file.
-         */
-        Methods.preserveMessages();
-
-        if (userFileToDelete == null) {
-            Methods.showMessage("Fatal Error", "No File Selected!", "You do not have a file to delete!");
-            return "";
-        } else {
-            try {
-                // Delete the file from CloudStorage/FileStorage
-                Files.deleteIfExists(Paths.get(userFileToDelete.getFilePath()));
-
-                // Delete the user file record from the database
-                userFileFacade.remove(userFileToDelete);
-                // UserFileFacade inherits the remove() method from AbstractFacade
-
-                Methods.showMessage("Information", "Success!", "Selected File is Successfully Deleted!");
-
-                // See method below
-                refreshFileList();
-
-                return "/userFile/FavoriteMeals?faces-redirect=true";
-
-            } catch (IOException ex) {
-                Methods.showMessage("Fatal Error", "Something went wrong while deleting the user file!",
-                        "See: " + ex.getMessage());
-                return "";
             }
         }
     }
@@ -342,54 +293,13 @@ public class UserFileController implements Serializable {
      */
     public void refreshFileList() {
         /*
-        By setting the listOfUserFiles to null, we force the getListOfUserFiles
+        By setting the listOfSharedMeals to null, we force the getListOfUserFiles
         method above to retrieve all of the user's files again.
          */
         selected = null;            // Remove selection
-        listOfUserFiles = null;     // Invalidate listOfUserFiles to trigger re-query.
+        listOfSharedMeals = null;     // Invalidate listOfSharedMeals to trigger re-query.
     }
 
-    /*
-    =======================================
-    Return Image or Icon based on File Type
-    =======================================
-    fileId is the database primary key value for a user file
-    Return image if it is an image file; otherwise, return file type icon
-
-    Any type of file can be uploaded or downloaded.
-    We identify the types of files that can be displayed or played in the web browser.
-    */
-    public String fileTypeIcon(Integer fileId) {
-
-        // Obtain the object reference of the UserFile whose primary key = fileId
-        UserFile userFile = userFileFacade.getUserFile(fileId);
-
-        // Obtain the userFile's filename as it is stored in the CloudDrive DB database
-        String imageFileName = userFile.getFilename();
-
-        // Extract the file extension from the filename
-        String fileExtension = imageFileName.substring(imageFileName.lastIndexOf(".") + 1);
-
-        // Convert file extension to uppercase
-        String fileExtensionInCaps = fileExtension.toUpperCase();
-
-        switch (fileExtensionInCaps) {
-            case "JPG":
-            case "JPEG":
-            case "PNG":
-            case "GIF":
-                // If it is an image file, return the image file URI
-                return Constants.FILES_URI + imageFileName;
-            case "MP4":
-            case "OGG":
-            case "WEBM":
-                // If it is a video file, return the videoFile icon
-                return "/resources/images/videoFile.png";
-            default:
-                // If it is another file type, return the viewFile icon
-                return "/resources/images/viewFile.png";
-        }
-    }
 
     /*
     =====================================
@@ -431,11 +341,11 @@ public class UserFileController implements Serializable {
     ==========================
      */
     public String selectedFileURI() {
-        return Constants.FILES_URI + selected.getFilename();
+        return Constants.FILES_URI + selected.getMealPhoto();
     }
 
-    public String getFileURI(UserFile file){
-        return Constants.FILES_URI + file.getFilename();
+    public String getFileURI(SharedMeal file){
+        return Constants.FILES_URI + file.getMealPhoto();
     }
 
     /*
@@ -500,7 +410,7 @@ public class UserFileController implements Serializable {
     public String extensionOfSelectedFileInCaps() {
 
         // Obtain the selected filename
-        String userFileName = selected.getFilename();
+        String userFileName = selected.getMealPhoto();
 
         // Extract the file extension from the filename
         String fileExtension = userFileName.substring(userFileName.lastIndexOf(".") + 1);

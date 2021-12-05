@@ -181,6 +181,15 @@ Used in Profile
 |   Other Style Definitions   |
 ===============================
 */
+body .ui-panel .ui-panel-footer {
+    border: 1px solid #dee2e6;
+    background: lightgreen;
+    color: #495057;
+    padding: 1rem;
+    margin: 0;
+    border-top: 0 none;
+}
+
 .favMealPanel {
     width: 40%;
 }
@@ -218,7 +227,6 @@ Used in Profile
     font-weight: normal;
     text-decoration: none;
     color: darkolivegreen;
-    ;
 }
 
 .titleSmall, .alertUser {
@@ -292,8 +300,7 @@ Proportionately scale image to show on mobile devices and smaller browser window
 Scale the image downward, but do not enlarge it beyond the width size of 500px.
 */
 .scalableImage {
-    width: 90%;
-    max-width: 500px;
+    max-width: 80%;
     height: auto;
     border: none;
 }

@@ -22,40 +22,15 @@ import javax.validation.constraints.Size;
 
 /*
 The @Entity annotation designates this class as a JPA Entity POJO class
-representing the UserFile table in the CloudDriveDB database.
+representing the UploadedMeal table in the CloudDriveDB database.
  */
 @Entity
 
 // Name of the database table represented
-@Table(name = "UserFile")
+@Table(name = "SharedMeals")
 
-@NamedQueries({
-    /*
-    private User userId;    --> userId is the object reference of the User object.
-    userId.id               --> User object's database primary key
-     */
-    @NamedQuery(name = "UserFile.findAll", query = "SELECT u FROM UserFile u")
-    , @NamedQuery(name = "UserFile.findById", query = "SELECT u FROM UserFile u WHERE u.id = :id")
-    , @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")
-    , @NamedQuery(name = "UserFile.findUserFilesByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
-})
+public class SharedMeal implements Serializable {
 
-public class UserFile implements Serializable {
-    /*
-    ========================================================
-    Instance variables representing the attributes (columns)
-    of the UserFile table in the CloudDriveDB database.
-
-    CREATE TABLE UserFile
-    (
-           id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
-           filename VARCHAR(256) NOT NULL,
-           user_id INT UNSIGNED,
-           FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
-    );
-
-    ========================================================
-     */
     private static final long serialVersionUID = 1L;
 
     // id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL
@@ -65,17 +40,12 @@ public class UserFile implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    // filename VARCHAR(256) NOT NULL
+    // meal_photo VARCHAR(256) NOT NULL
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 256)
-    @Column(name = "filename")
-    private String filename;
-
-    // user_id INT UNSIGNED
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne
-    private User userId;
+    @Column(name = "meal_photo")
+    private String mealPhoto;
 
     // meal_name VARCHAR(128) NOT NULL
     @Basic(optional = false)
@@ -89,27 +59,40 @@ public class UserFile implements Serializable {
     @Column(name = "meal_description")
     private String mealDescription;
 
+    // user_id INT UNSIGNED
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private User userId;
+
+    // public_name VARCHAR(128) NOT NULL
+    @Basic(optional = false)
+    @Size(min = 1, max = 128)
+    @Column(name = "public_name")
+    private String publicName;
+
+
     /*
     ===================================================================
-    Class constructors for instantiating a UserFile entity object to
-    represent a row in the UserFile table in the CloudDriveDB database.
+    Class constructors for instantiating a UploadedMeal entity object to
+    represent a row in the UploadedMeal table in the CloudDriveDB database.
     ===================================================================
      */
-    public UserFile() {
+    public SharedMeal() {
     }
 
     // Used in handleFileUpload() method of FileUploadManager
-    public UserFile(String filename, User id, String mealName, String mealDescription) {
-        this.filename = filename;
-        userId = id;
+    public SharedMeal(String mealPhoto, String mealName, String mealDescription, User id, String publicName) {
+        this.mealPhoto = mealPhoto;
         this.mealName = mealName;
         this.mealDescription = mealDescription;
+        userId = id;
+        this.publicName = publicName;
     }
 
     /*
     ======================================================
     Getter and Setter methods for the attributes (columns)
-    of the UserFile table in the CloudDriveDB database.
+    of the UploadedMeal table in the CloudDriveDB database.
     ======================================================
      */
     public Integer getId() {
@@ -120,20 +103,12 @@ public class UserFile implements Serializable {
         this.id = id;
     }
 
-    public String getFilename() {
-        return filename;
+    public String getMealPhoto() {
+        return mealPhoto;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setMealPhoto(String filename) {
+        this.mealPhoto = mealPhoto;
     }
 
     public String getMealName() {
@@ -152,6 +127,16 @@ public class UserFile implements Serializable {
         this.mealDescription = mealDescription;
     }
 
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) { this.userId = userId;}
+
+    public String getPublicName() {return publicName;}
+
+    public void setPublicName(String publicName) { this.publicName = publicName; }
+
     /*
     ================================
     Instance Methods Used Internally
@@ -167,16 +152,16 @@ public class UserFile implements Serializable {
     }
 
     /*
-     Checks if the UserFile object identified by 'object' is the same as the UserFile object identified by 'id'
-     Parameter object = UserFile object identified by 'object'
-     Returns True if the UserFile 'object' and 'id' are the same; otherwise, return False
+     Checks if the UploadedMeal object identified by 'object' is the same as the UploadedMeal object identified by 'id'
+     Parameter object = UploadedMeal object identified by 'object'
+     Returns True if the UploadedMeal 'object' and 'id' are the same; otherwise, return False
      */
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof UserFile)) {
+        if (!(object instanceof SharedMeal)) {
             return false;
         }
-        UserFile other = (UserFile) object;
+        SharedMeal other = (SharedMeal) object;
         return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
@@ -193,7 +178,7 @@ public class UserFile implements Serializable {
      */
 
     public String getFilePath() {
-        return Constants.FILES_ABSOLUTE_PATH + getFilename();
+        return Constants.FILES_ABSOLUTE_PATH + getMealPhoto();
     }
 
 }
