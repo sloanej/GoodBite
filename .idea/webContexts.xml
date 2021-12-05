@@ -3,6 +3,8 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/sharedMeals/Description.xhtml" value="file://$PROJECT_DIR$/src/main/webapp/sharedMeals" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/uploadedMeals/UploadedMeals.xhtml" value="file://$PROJECT_DIR$/src/main/webapp/uploadedMeals" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/template/siteTemplate.xhtml" value="file://$PROJECT_DIR$/src/main/webapp/template" />
       </map>
     </option>

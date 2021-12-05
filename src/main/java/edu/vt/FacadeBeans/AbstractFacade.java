@@ -18,7 +18,7 @@ public abstract class AbstractFacade<T> {
     The following concrete facade classes inherit from this AbstractFacade class:
 
         - UserFacade        for User entity class        representing database table User
-        - UserFileFacade    for UserFile entity class    representing database table UserFile
+        - UploadedMealFacade    for UploadedMeal entity class    representing database table UploadedMeal
         - UserPhotoFacade   for UserPhoto entity class   representing database table UserPhoto
 
      Each concrete facade class calls the following constructor method by passing entity

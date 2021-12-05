@@ -4,7 +4,8 @@
  */
 package edu.vt.FacadeBeans;
 
-import edu.vt.EntityBeans.UserFile;
+import edu.vt.EntityBeans.UploadedMeal;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +13,7 @@ import java.util.List;
 
 // @Stateless annotation implies that the conversational state with the client shall NOT be maintained.
 @Stateless
-public class UserFileFacade extends AbstractFacade<UserFile> {
+public class UploadedMealFacade extends AbstractFacade<UploadedMeal> {
     /*
     ---------------------------------------------------------------------------------------------
     The EntityManager is an API that enables database CRUD (Create Read Update Delete) operations
@@ -35,8 +36,8 @@ public class UserFileFacade extends AbstractFacade<UserFile> {
     This constructor method invokes its parent AbstractFacade's constructor method,
     which in turn initializes its entity class type T and entityClass instance variable.
      */
-    public UserFileFacade() {
-        super(UserFile.class);
+    public UploadedMealFacade() {
+        super(UploadedMeal.class);
     }
 
     /*
@@ -45,36 +46,36 @@ public class UserFileFacade extends AbstractFacade<UserFile> {
      *********************
      */
 
-    // Returns the object reference of the UserFile object whose primary key is id
-    public UserFile getUserFile(int id) {
-        return entityManager.find(UserFile.class, id);
+    // Returns the object reference of the UploadedMeal object whose primary key is id
+    public UploadedMeal getUserFile(int id) {
+        return entityManager.find(UploadedMeal.class, id);
     }
 
-    // Returns a list of object references of UserFile objects that belong to
+    // Returns a list of object references of UploadedMeal objects that belong to
     // the User object whose database Primary Key = primaryKey
-    public List<UserFile> findUserFilesByUserPrimaryKey(Integer primaryKey) {
+    public List<UploadedMeal> findUserFilesByUserPrimaryKey(Integer primaryKey) {
         /*
-        The following @NamedQuery definition is given in UserFile entity class file:
-        @NamedQuery(name = "UserFile.findUserFilesByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
+        The following @NamedQuery definition is given in UploadedMeal entity class file:
+        @NamedQuery(name = "UploadedMeal.findUserFilesByUserId", query = "SELECT u FROM UploadedMeal u WHERE u.userId.id = :userId")
         
         The following statement obtains the results from the named database query.
          */
-        return entityManager.createNamedQuery("UserFile.findUserFilesByUserId")
+        return entityManager.createNamedQuery("UploadedMeal.findUserFilesByUserId")
                 .setParameter("userId", primaryKey)
                 .getResultList();
     }
 
-    // Returns a list of object references of UserFile objects whose name is file_name
+    // Returns a list of object references of UploadedMeal objects whose name is file_name
     // It is assumed that file names are not unique and many files can have the same name
-    public List<UserFile> findByFilename(String file_name) {
+    public List<UploadedMeal> findByFilename(String file_name) {
         /*
-        The following @NamedQuery definition is given in UserFile entity class file:
-        @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")
+        The following @NamedQuery definition is given in UploadedMeal entity class file:
+        @NamedQuery(name = "UploadedMeal.findByFilename", query = "SELECT u FROM UploadedMeal u WHERE u.filename = :filename")
         
         The following statement obtains the results from the named database query.
          */
-        return entityManager.createNamedQuery("UserFile.findByFilename")
-                .setParameter("filename", file_name)
+        return entityManager.createNamedQuery("UploadedMeal.findByFilename")
+                .setParameter("mealPhoto", file_name)
                 .getResultList();
     }
 

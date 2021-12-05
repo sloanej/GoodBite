@@ -21,7 +21,7 @@
         (c) displays a title for the page in search-engine results.
         -->
         <title>
-            <ui:insert name="title">Good Bite</ui:insert>
+            <ui:insert name="title">GoodBite</ui:insert>
         </title>
 
         <!-- 
@@ -74,7 +74,8 @@
 
     </h:head>
 
-    <h:body>  
+    <h:body>
+        <body>
         <div id="page">  
             <!-- 
             The Site Template file layout design consists of three components:
@@ -136,7 +137,7 @@
             Changes made in the footer component will show up automatically with all pages created 
             based on this siteTemplate for the entire site, achieving great maintainability.
             -->
-            <br></br> <br></br>
+
             <div id="footer">
                 <ui:insert name="footer" >
                     <ui:include src="footerTemplate.xhtml" />
@@ -144,5 +145,7 @@
             </div>
 
         </div>
+        </body>
     </h:body>
+
 </html>

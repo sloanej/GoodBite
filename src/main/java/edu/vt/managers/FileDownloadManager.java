@@ -4,8 +4,9 @@
  */
 package edu.vt.managers;
 
-import edu.vt.EntityBeans.UserFile;
-import edu.vt.controllers.UserFileController;
+import edu.vt.EntityBeans.UploadedMeal;
+import edu.vt.controllers.UploadedMealController;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -29,10 +30,10 @@ public class FileDownloadManager implements Serializable {
 
     /*
     The @Inject annotation directs the CDI Container Manager to inject (store) the object reference of the
-    CDI container-managed UserFileController bean into the instance variable 'userFileController' after it is instantiated at runtime.
+    CDI container-managed UploadedMealController bean into the instance variable 'uploadedMealController' after it is instantiated at runtime.
      */
     @Inject
-    private UserFileController userFileController;
+    private UploadedMealController uploadedMealController;
 
     /*
     DefaultStreamedContent and StreamedContent classes are
@@ -47,10 +48,10 @@ public class FileDownloadManager implements Serializable {
      */
     public StreamedContent getFile() throws FileNotFoundException {
 
-        UserFile fileToDownload = userFileController.getSelected();
+        UploadedMeal fileToDownload = uploadedMealController.getSelected();
 
-        // getFilename() and getFilePath() are given in UserFile.java
-        String nameOfFileToDownload = fileToDownload.getFilename();
+        // getFilename() and getFilePath() are given in UploadedMeal.java
+        String nameOfFileToDownload = fileToDownload.getMealPhoto();
         String absolutePathOfFileToDownload = fileToDownload.getFilePath();
 
         // Returns the MIME type of the specified file or null if the MIME type is not known

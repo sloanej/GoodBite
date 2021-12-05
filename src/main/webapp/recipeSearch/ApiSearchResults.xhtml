@@ -11,6 +11,14 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+<head>
+    <style type="text/css">
+        p {
+            line-height: 1.5;
+            margin: 0;
+        }
+    </style>
+</head>
 
 <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
@@ -82,21 +90,41 @@
 
                     <p:dataViewListItem>
                         <div align="center" style="width: 50%">
-                            <p:panel style="text-align:left" >
+
 
                                 <h:panelGrid columns="3" style="width:100%"
                                              columnClasses="columnRecipeImage, columnMiddlePart, columnInfoButton">
-                                    <p:graphicImage url="#{aSearchedRecipe.imageUrl}" width="92px" style="float:left" />
+<!--                                    <p:graphicImage url="#{aSearchedRecipe.imageUrl}" width="92px" style="float:left" />-->
 
-                                    <h:panelGrid style="width:100%; margin-left:10px">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{aSearchedRecipe.name}"/>
-                                        </f:facet>
-                                        <br/>
-                                        <h:outputText value="by"/>
-                                        <br/>
-                                        <h:outputText value="#{aSearchedRecipe.source}" style="float:left"/>
-                                    </h:panelGrid>
+<!--                                    <h:panelGrid style="width:100%; margin-left:10px">-->
+<!--                                        <f:facet name="header">-->
+<!--                                            <h:outputText value="#{aSearchedRecipe.name}"/>-->
+<!--                                        </f:facet>-->
+<!--                                        <br/>-->
+<!--                                        <h:outputText value="by"/>-->
+<!--                                        <br/>-->
+<!--                                        <h:outputText value="#{aSearchedRecipe.source}" style="float:left"/>-->
+<!--                                    </h:panelGrid>-->
+
+                            <p:card style="width: 25em">
+                                <f:facet name="header">
+                                    <p:graphicImage url="#{aSearchedRecipe.imageUrl}" width="92px" style="float:left" />
+                                </f:facet>
+                                <f:facet name="header">
+                                    <h:outputText value="#{aSearchedRecipe.name}"/>
+                                </f:facet>
+
+                            <br/>
+                            <h:outputText value="by"/>
+                            <br/>
+                            <h:outputText value="#{aSearchedRecipe.source}" style="float:left"/>
+
+<!--                                <f:facet name="footer">-->
+<!--                                    <p:commandButton icon="pi pi-check" value="Save"/>-->
+<!--                                    <p:commandButton icon="pi pi-times" value="Cancel" styleClass="ui-button-secondary" style="margin-left: .5em"/>-->
+<!--                                </f:facet>-->
+                            </p:card>
+
 
                                     <!--
                                     *** INFO button ***
@@ -116,9 +144,10 @@
                                     </p:commandLink>
 
                                 </h:panelGrid>
-                            </p:panel>
+
                         </div>
                     </p:dataViewListItem>
+
 
                 </p:dataView>
             </h:form>

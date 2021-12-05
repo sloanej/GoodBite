@@ -23,8 +23,8 @@ public class SearchNutrients {
     public Nutrition getNutrition() throws Exception {
         // Exceptions would be handled in the parent (calling scope) try catch block.
         String searchQuery = query.replaceAll(" ", "%20");
-        //    https://api.edamam.com/api/nutrition-data?app_id=764889db&app_key=54fbdd1873720b7dc5c01d4eb508a1a7&nutrition-type=cooking&ingr=100g%20rice
-        String apiRequestUrl = Constants.EDAMAM_NUTRITION_BASE_URL + "&app_id=" + Constants.EDAMAM_NUTRITION_APP_ID + "&api_key=" + Constants.EDAMAM_NUTRITION_API_KEY + "&ingr=" + query;
+        //    https://api.edamam.com/api/nutrition-data?app_id=764889db&app_key=54fbdd1873720b7dc5c01d4eb508a1a7&nutrition-type=cooking&ingr=1.0cup%20rice
+        String apiRequestUrl = Constants.EDAMAM_NUTRITION_BASE_URL + searchQuery;
         // Obtain the JSON file (String of characters) containing the search results
         // The readUrlContent() method is given below
         String searchResultsJsonData = Methods.readUrlContent(apiRequestUrl);
@@ -80,41 +80,3 @@ public class SearchNutrients {
 
 }
 
-class Nutrition {
-    // Instance Variables.
-    private String nutrients;
-    private Double calories;
-    private Double totalWeight;
-
-
-    // Constructor
-    public Nutrition(String nutrients, Double calories, Double totalWeight) {
-        this.nutrients = nutrients;
-        this.calories = calories;
-        this.totalWeight = totalWeight;
-    }
-
-    public String getNutrients() {
-        return nutrients;
-    }
-
-    public void setNutrients(String nutrients) {
-        this.nutrients = nutrients;
-    }
-
-    public Double getCalories() {
-        return calories;
-    }
-
-    public void setCalories(Double calories) {
-        this.calories = calories;
-    }
-
-    public Double getTotalWeight() {
-        return totalWeight;
-    }
-
-    public void setTotalWeight(Double totalWeight) {
-        this.totalWeight = totalWeight;
-    }
-}
