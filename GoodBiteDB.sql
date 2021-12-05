@@ -33438,5 +33438,6 @@ CREATE TABLE `SharedMeals`
     `user_id`          int unsigned  DEFAULT NULL,
     `meal_description` varchar(2048) DEFAULT NULL,
     `meal_photo`       varchar(1024) DEFAULT NULL,
+    `public_name`      varchar(128)  DEFAULT NULL,
     FOREIGN KEY (user_id) REFERENCES User (id) ON DELETE CASCADE
 );
