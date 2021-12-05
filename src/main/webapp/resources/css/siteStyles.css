@@ -7,7 +7,8 @@ html, body {
     background-color: #d4ff99;
     margin: 0 0 0 0;    /* top right bottom left */
     width: 100%;        /* Set page width horizontally 100% */
-    height:100%;       /* Set page height vertically 100% */
+    height:100%;
+    background-image: url("/background.jpg")/* Set page height vertically 100% */
 }
 
 body, p {
@@ -86,7 +87,8 @@ Style the div component whose unique id is "footer"
 <div id="footer"> in siteTemplate
 */
 #footer {
-    height: 100px;
+    background: lightgray;
+    height: 75px;
     width: 100%;
     left: 0;
     right: 0;
@@ -359,4 +361,39 @@ cascading hierarchy, use the !important attribute.
 .ui-fileupload-content {
     /* The drag-and-drop area height will increase as more files are dropped */
     min-height: 200px;
+}
+
+.panelGridColumn12 {
+    text-align: left;
+    white-space: nowrap;        /* Disallow line break */
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    background-color: oldlace !important;
+}
+.panelGridColumn21 {
+    text-align: right;
+    white-space: nowrap;        /* Disallow line break */
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    background-color: oldlace !important;
+}
+.columnStoreImage {
+    width: 100px;
+}
+.columnMiddlePart {
+    width: 80%;
+}
+.columnSidePart {
+    width: 75%;
+}
+
+.scrollableTextBox {
+    display: block;
+    text-align: left;
+    width: 300px;
+    height: 70px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: normal;
+    overflow-wrap: break-word;
 }
