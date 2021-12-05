@@ -34,17 +34,16 @@
             <h:panelGroup id="display">
                 <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
                              rendered="#{pantryController.selected != null}">
-                    <p:outputLabel value="Ingredient:" for="ingredient" />
                     <div class="card">
                         <h:form>
                             <p:growl>
                                 <p:autoUpdate/>
                             </p:growl>
 
-                            <h5 class="p-mt-0">Basic</h5>
-                            <p:selectCheckboxMenu id="menu" value="#{checkboxView.selectedIngredients}" label="ingredients" style="width: 15rem"
+                            <h5 class="p-mt-0">Select Ingredients</h5>
+                            <p:selectCheckboxMenu id="menu" value="#{pantryController.selectedListOfIngredients}" label="ingredients" style="width: 15rem"
                                                   filter="true" filterMatchMode="startsWith" panelStyle="width: 15rem" scrollHeight="250">
-                                <f:selectItems value="#{checkboxView.ingredients}"/>
+                                <f:selectItems value="#{pantryController.listOfIngredients}"/>
                             </p:selectCheckboxMenu>
 
                         </h:form>
@@ -58,7 +57,7 @@
                 <div align="center">
                     <!-- SAVE button -->
                     <p:commandButton value="Search" icon="fas fa-search" styleClass="rounded-button"
-                                     ajax="false" actionListener="#{pantryController.update()}"
+                                     ajax="false" actionListener="#{recipeSearchController.performIngredientRecipeSearch(pantryController.listOfIngredients)}"
                                      update="display,:carListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                                      oncomplete="handleSubmit(args, 'PantrySearchDialog');"/>
                     &nbsp;
