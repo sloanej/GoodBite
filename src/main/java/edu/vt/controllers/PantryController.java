@@ -112,6 +112,9 @@ public class PantryController implements Serializable {
         User signedInUser = (User) sessionMap.get("user");
         return signedInUser;
     }
+    public void unselect() {
+        this.selected = null;
+    }
 }
 
 

@@ -37,7 +37,7 @@ This page is constructed based on the siteTemplate
             <h:form id="PantryListForm">
                 <p:panel header="List of Pantry Items">
                     <p:dataTable id="datalist"
-                                 value="#{pantryController.listOfIngredients}"
+                                 value="#{pantryController.getListOfIngredients}"
                                  var="aPantry"
                                  widgetVar="recipesDataTable"
                                  selectionMode="single"
