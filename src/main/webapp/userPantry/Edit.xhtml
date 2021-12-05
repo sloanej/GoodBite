@@ -34,14 +34,20 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
                                  rendered="#{pantryController.selected != null}">
+
                         <p:outputLabel value="Ingredient:" for="ingredient" />
-                        <p:inputText id="name" value="#{pantryController.selected.ingredient}" style="width:300px"
+                        <p:inputText id="ingredient" value="#{pantryController.selected.ingredient}" style="width:300px"
                                      required="true" requiredMessage="Ingredient field is required."/>
 
+<!--                        Quantity -->
 
                         <p:outputLabel value="Quantity:" for="quantity" />
-                        <p:selectOneMenu id="category" value="#{pantryController.selected.quantity}"
-                                         required="true" requiredMessage="Quantity is required!" >
+                        <p:inputText id="quantity" value="#{pantryController.selected.quantity}" style="width:300px"
+                                     required="true" requiredMessage="Quantity is required!" />
+<!--                        Unit -->
+                        <p:outputLabel value="Unit:" for="unit" />
+                        <p:selectOneMenu id="unit" value="#{pantryController.selected.unit}"
+                                         required="true" requiredMessage="Please select a Unit!" >
                             <f:selectItem itemLabel="Select Quantity Label" itemValue=""/>
                             <f:selectItem itemLabel="liter" itemValue="liter"/>
                             <f:selectItem itemLabel="ounce" itemValue="ounce"/>
@@ -59,7 +65,7 @@
                                      required="true" requiredMessage="Calories is required!" />
 
                         <p:outputLabel value=" Nutrients:" for="nutrients" />
-                        <p:inputText id="nutrients" value="#{pantryController.selected.nutrients}" style="width:300px"
+                        <p:inputText id="nutrients" value="#{pantryController.selected.nutrients}" styleClass="scrollableTextBox"
                                      required="true" requiredMessage="Nutrients is required." />
                     </p:panelGrid>
 
@@ -70,7 +76,7 @@
                         <!-- SAVE button -->
                         <p:commandButton value="Save" icon="fas fa-save" styleClass="rounded-button"
                                          ajax="false" actionListener="#{pantryController.update()}"
-                                         update="display,:carListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                         update="display,:RecipeListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                                          oncomplete="handleSubmit(args, 'PantryEditDialog');"/>
                         &nbsp;
                         <!-- CANCEL button -->

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-  - Created by Neha Surana on 2021.11.1
-  - Copyright © 2021 Neha Surana. All rights reserved.
+  - Created by Ishaan Gulati on 2021.12.4
+  - Copyright © 2021 Ishaan Gulati. All rights reserved.
   -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -50,16 +50,15 @@
                     </div>
 
                 </p:panelGrid>
-
             </h:panelGroup>
             <br />
             <h:panelGroup>
                 <div align="center">
                     <!-- SAVE button -->
                     <p:commandButton value="Search" icon="fas fa-search" styleClass="rounded-button"
-                                     ajax="false" actionListener="#{recipeSearchController.performIngredientRecipeSearch(pantryController.listOfIngredients)}"
-                                     update="display,:carListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
-                                     oncomplete="handleSubmit(args, 'PantrySearchDialog');"/>
+                                     actionListener="#{recipeSearchController.performIngredientRecipeSearch(pantryController.listOfIngredients)}"
+                                     ajax="false"
+                                     />
                     &nbsp;
                     <!-- CANCEL button -->
                     <p:commandButton value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"

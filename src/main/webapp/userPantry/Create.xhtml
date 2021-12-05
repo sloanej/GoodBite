@@ -41,8 +41,8 @@ xmlns:p="http://primefaces.org/ui">
             with property (instance variable) values set to empty or null. The inputText data fields below are
             intended to assign user-provided values to the properties of the newly created Car object.
             -->
-                        <p:outputLabel value=" Ingredients:" for="ingredients" />
-                        <p:inputText id="ingredients" value="#{pantryController.selected.ingredients}" style="width:300px"
+                        <p:outputLabel value=" Ingredient:" for="ingredients" />
+                        <p:inputText id="ingredients" value="#{pantryController.selected.ingredient}" style="width:300px"
                                      required="true" requiredMessage="Pantry ingredients is required." />
 
 <!--                        <p:outputLabel value="Quantity:" for="quantity" />-->
@@ -50,8 +50,11 @@ xmlns:p="http://primefaces.org/ui">
 <!--                                     required="true" requiredMessage="Recipe category is required."/>-->
 
                         <p:outputLabel value="Quantity:" for="quantity" />
-                        <p:selectOneMenu id="category" value="#{pantryController.selected.quantity}"
-                                         required="true" requiredMessage="Please select a Category!" >
+                        <p:inputText id="quantity" value="#{pantryController.selected.quantity}" style="width:300px"
+                                     required="true" requiredMessage="Quantity is required!" />
+                        <p:outputLabel value="Unit:" for="unit" />
+                        <p:selectOneMenu id="unit" value="#{pantryController.selected.unit}"
+                                         required="true" requiredMessage="Please select a Unit!" >
                             <f:selectItem itemLabel="Select Quantity Label" itemValue=""/>
                             <f:selectItem itemLabel="liter" itemValue="liter"/>
                             <f:selectItem itemLabel="ounce" itemValue="ounce"/>
@@ -64,14 +67,6 @@ xmlns:p="http://primefaces.org/ui">
                             <f:selectItem itemLabel="gram" itemValue="pound"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="Calories:" for="calories" />
-                        <p:inputText id="calories" value="#{pantryController.selected.calories}" style="width:300px"
-                                       required="true" requiredMessage="Calories is required!" />
-
-                        <p:outputLabel value=" Nutrients:" for="nutrients" />
-                        <p:inputText id="nutrients" value="#{pantryController.selected.nutrients}" style="width:300px"
-                                     required="true" requiredMessage="Nutrients is required." />
-
                     </p:panelGrid>
                 </h:panelGroup>
 
@@ -82,7 +77,7 @@ xmlns:p="http://primefaces.org/ui">
                         <p:commandButton value="Save" icon="fas fa-save" styleClass="rounded-button"
                                          ajax="false" actionListener="#{pantryController.create()}"
                                          update="display,:RecipeListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
-                                         oncomplete="handleSubmit(args,'RecipeCreateDialog');" />
+                                         oncomplete="handleSubmit(args,'PantryCreateDialog');" />
                         &nbsp;
                         <!--
                         CANCEL button: Call the cancel() method immediately without first rendering this JSF page.
@@ -90,7 +85,7 @@ xmlns:p="http://primefaces.org/ui">
                         -->
                         <p:commandButton value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"
                                          action="#{pantryController.cancel()}" ajax="false" immediate="true"
-                                         onclick="PF('RecipeCreateDialog').hide()" />
+                                         onclick="PF('PantryCreateDialog').hide()" />
                     </div>
                 </h:panelGroup>
             </h:form>

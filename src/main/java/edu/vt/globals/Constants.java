@@ -130,7 +130,7 @@ public final class Constants {
 //    https://api.edamam.com/api/nutrition-data?app_id=764889db&app_key=54fbdd1873720b7dc5c01d4eb508a1a7&nutrition-type=cooking&ingr=100g%20rice
     public static final String EDAMAM_NUTRITION_API_KEY = "54fbdd1873720b7dc5c01d4eb508a1a7";
     public static final String EDAMAM_NUTRITION_APP_ID = "764889db";
-    public static final String EDAMAM_NUTRITION_BASE_URL = "https://api.edamam.com/api/nutrition-data?nutrition-type=cooking";
+    public static final String EDAMAM_NUTRITION_BASE_URL = "https://api.edamam.com/api/nutrition-data?app_id=764889db&app_key=54fbdd1873720b7dc5c01d4eb508a1a7&nutrition-type=cooking&ingr=";
 
 
 

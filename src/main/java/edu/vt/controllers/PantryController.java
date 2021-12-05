@@ -7,17 +7,23 @@
 
 package edu.vt.controllers;
 
+import edu.vt.globals.Methods;
 import edu.vt.EntityBeans.User;
-import edu.vt.EntityBeans.Recipe;
+import edu.vt.ApiSearch.Nutrition;
 import edu.vt.EntityBeans.UserPantry;
+import edu.vt.controllers.util.JsfUtil;
+import edu.vt.ApiSearch.SearchNutrients;
 import edu.vt.FacadeBeans.UserPantryFacade;
 
 
 import javax.ejb.EJB;
 import java.util.Map;
 import java.util.List;
+import javax.ejb.EJBException;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.enterprise.context.SessionScoped;
 
@@ -72,7 +78,8 @@ public class PantryController implements Serializable {
 
     // selected = object reference of a selected Recipe object
     private UserPantry selected;
-    private List<UserPantry> selectedIngredients;
+    private List<UserPantry> selectedListOfIngredients;
+    private String[] selectedIngredients;
 
     public void setListOfIngredients(List<UserPantry> listOfIngredients) {
         this.listOfIngredients = listOfIngredients;
@@ -86,13 +93,14 @@ public class PantryController implements Serializable {
         this.selected = selected;
     }
 
-    public List<UserPantry> getSelectedIngredients() {
-        return selectedIngredients;
+    public List<UserPantry> getSelectedListOfIngredients() {
+        return selectedListOfIngredients;
     }
 
-    public void setSelectedIngredients(List<UserPantry> selectedIngredients) {
-        this.selectedIngredients = selectedIngredients;
+    public void setSelectedListOfIngredients(List<UserPantry> selectedListOfIngredients) {
+        this.selectedListOfIngredients = selectedListOfIngredients;
     }
+
 
     public List<UserPantry> getListOfIngredients() {
         // get Logged in user.
@@ -101,7 +109,8 @@ public class PantryController implements Serializable {
         // else return the result.
         if (listOfIngredients == null) {
             User user = this.getLoggedInUser();
-            listOfIngredients = pantryFacade.findUserPantryByUserId(user.getId());
+            Integer userId = user.getId();
+            listOfIngredients = pantryFacade.findUserPantryByUserId(userId);
         }
         return listOfIngredients;
     }
@@ -115,8 +124,127 @@ public class PantryController implements Serializable {
     public void unselect() {
         this.selected = null;
     }
-}
 
+    /*
+    *****************************
+    Prepare to Create a New UserPantryItem
+    *****************************
+    */
+    public void prepareCreate() {
+        /*
+        Instantiate a new UserPantry object and store its object reference into
+        instance variable 'selected'. The UserPantry class is defined in UserPantry.java
+         */
+        // add user id and details.
+        selected = new UserPantry();
+        selected.setUserId(this.getLoggedInUser());
+    }
+
+    public void create() {
+        Methods.preserveMessages();
+
+        persist(JsfUtil.PersistAction.CREATE, "User Pantry item was Successfully Created!");
+
+        if (!JsfUtil.isValidationFailed()) {
+            // No JSF validation error. The CREATE operation is successfully performed.
+            selected = null;        // Remove selection
+            listOfIngredients = null;    // Invalidate listOfIngredients to trigger re-query.
+        }
+    }
+
+    /*
+    *************************************
+    UPDATE Selected UserPantry item in the Database
+    *************************************
+     */
+    public void update() {
+        Methods.preserveMessages();
+
+        persist(JsfUtil.PersistAction.UPDATE, "User Pantry Item was Successfully Updated!");
+
+        if (!JsfUtil.isValidationFailed()) {
+            // No JSF validation error. The UPDATE operation is successfully performed.
+            selected = null;        // Remove selection
+            listOfIngredients = null;    // Invalidate listOfIngredients to trigger re-query.
+        }
+    }
+
+    /*
+    ***************************************
+    DELETE Selected UserPantry from the Database
+    ***************************************
+     */
+
+
+
+    public void destroy() {
+        Methods.preserveMessages();
+
+        persist(JsfUtil.PersistAction.DELETE, "User Pantry Item was Successfully Deleted!");
+
+        if (!JsfUtil.isValidationFailed()) {
+            // No JSF validation error. The DELETE operation is successfully performed.
+            selected = null;        // Remove selection
+            listOfIngredients = null;    // Invalidate listOfIngredients to trigger re-query.
+        }
+    }
+
+    /**
+     * @param persistAction  refers to CREATE, UPDATE (Edit) or DELETE action
+     * @param successMessage displayed to inform the user about the result
+     */
+    private void persist(JsfUtil.PersistAction persistAction, String successMessage) {
+        if (selected != null) {
+            try {
+                if (persistAction != JsfUtil.PersistAction.DELETE) {
+                    /*
+                     -------------------------------------------------
+                     Perform CREATE or EDIT operation in the database.
+                     -------------------------------------------------
+                     The edit(selected) method performs the SAVE (STORE) operation of the "selected"
+                     object in the database regardless of whether the object is a newly
+                     created object (CREATE) or an edited (updated) object (EDIT or UPDATE).
+
+                     UserPantryFacade inherits the edit(selected) method from the AbstractFacade class.
+                     */
+                    String searchQuery = this.selected.getQuantity() + " " + this.selected.getUnit()+ " " + this.selected.getIngredient();
+                    SearchNutrients searchNutrients = new SearchNutrients(searchQuery);
+                    Nutrition nutrient = searchNutrients.getNutrition();
+                    this.selected.setCalories(nutrient.getCalories());
+                    this.selected.setNutrients(nutrient.getNutrients());
+                    pantryFacade.edit(selected);
+                } else {
+                    /*
+                     -----------------------------------------
+                     Perform DELETE operation in the database.
+                     -----------------------------------------
+                     The remove(selected) method performs the DELETE operation of the "selected"
+                     object in the database.
+
+                     UserPantryFacade inherits the remove(selected) method from the AbstractFacade class.
+                     */
+                    pantryFacade.remove(selected);
+                }
+                JsfUtil.addSuccessMessage(successMessage);
+            } catch (EJBException ex) {
+                String msg = "";
+                Throwable cause = ex.getCause();
+                if (cause != null) {
+                    msg = cause.getLocalizedMessage();
+                }
+                if (msg.length() > 0) {
+                    JsfUtil.addErrorMessage(msg);
+                } else {
+                    JsfUtil.addErrorMessage(ex, "A persistence error occurred.");
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                JsfUtil.addErrorMessage(ex, "A persistence error occurred.");
+            }
+        }
+    }
+
+}
 
 
 

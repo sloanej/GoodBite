@@ -37,7 +37,7 @@ This page is constructed based on the siteTemplate
             <h:form id="PantryListForm">
                 <p:panel header="List of Pantry Items">
                     <p:dataTable id="datalist"
-                                 value="#{pantryController.getListOfIngredients}"
+                                 value="#{pantryController.getListOfIngredients()}"
                                  var="aPantry"
                                  widgetVar="recipesDataTable"
                                  selectionMode="single"
@@ -51,8 +51,8 @@ This page is constructed based on the siteTemplate
                                  emptyMessage="No Recipe found for the search query entered!" >
 
 
-                        <p:ajax event="rowSelect"   update="createButton  editButton deleteButton searchButton "/>
-                        <p:ajax event="rowUnselect" update="createButton  editButton deleteButton searchButton "/>
+                        <p:ajax event="rowSelect"   update="createButton  editButton deleteButton  searchButton"/>
+                        <p:ajax event="rowUnselect" update="createButton  editButton deleteButton  searchButton"/>
 
                         <!--
                         *************************
@@ -80,6 +80,12 @@ This page is constructed based on the siteTemplate
                                   filterBy="#{aPantry.quantity}" filterMatchMode="contains"
                         >
                             <h:outputText value="#{aPantry.quantity}"/>
+                        </p:column>
+
+                        <p:column headerText="Unit:" sortBy="#{aPantry.unit}" style="width: 50px; text-align: center ; vertical-align: top"
+                                  filterBy="#{aPantry.unit}" filterMatchMode="contains"
+                        >
+                            <h:outputText value="#{aPantry.unit}"/>
                         </p:column>
 
                         <p:column headerText="Nutrients:" sortBy="#{aPantry.nutrients}" style="width: 50px; text-align: center ; vertical-align: top"
@@ -118,7 +124,7 @@ This page is constructed based on the siteTemplate
                                 &nbsp;
                                 <!-- EDIT button: id is used since it is referenced to be activated or deactivated -->
                                 <p:commandButton id="editButton" value="Update Pantry" icon="fas fa-edit" styleClass="rounded-button"
-                                                 update=":PantryEditDlg" oncomplete="PF('PantryEditDialog').show()"
+                                                 update=":PantryEditForm" oncomplete="PF('PantryEditDialog').show()"
                                                  disabled="#{empty pantryController.selected}"/>
                                 &nbsp;
                                 <!-- ***************************************************
@@ -143,7 +149,7 @@ This page is constructed based on the siteTemplate
                                 </p:confirmDialog>
 
                                 <p:commandButton id="searchButton" value="Search Recipes from Pantry Ingredients" icon="fas fa-search" styleClass="rounded-button"
-                                                 update=":PantrySearchDlg" oncomplete="PF('PantrysearchDialog').show()"
+                                                 update=":PantrySearchForm" oncomplete="PF('PantrySearchDialog').show()"
                                                  disabled="#{empty pantryController.selected}"/>
 
                                 <!-- *******************************************

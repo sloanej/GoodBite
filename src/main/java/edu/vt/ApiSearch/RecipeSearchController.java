@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import edu.vt.EntityBeans.UserPantry;
 
 @Named("recipeSearchController")
 @SessionScoped
@@ -156,7 +157,7 @@ public class RecipeSearchController implements Serializable {
                     if (cautions.equals("")) {
                         cautions = cautions.concat(aCaution);
                     } else {
-                        cautions = cautions.concat(", "+ aCaution);
+                        cautions = cautions.concat(", " + aCaution);
                     }
                 }
             }
@@ -227,55 +228,13 @@ public class RecipeSearchController implements Serializable {
         // This sets the necessary flag to ensure the messages are preserved.
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
-        listOfSearchedRecipes = new ArrayList();
 
-        // Spaces in search query must be replaced with "+"
+        // Spaces in search query must be replaced with "%20"
         String searchQuery = query.replaceAll(" ", "%20");
 
         try {
             //    https://api.edamam.com/api/recipes/v2?type=public&q=mutton%20&app_id=99b8644e&app_key=f52130770151d0b2a5cada889bf6ab3d&random=false
-
-            String edamamUrl = Constants.EDAMAM_BASE_URL + searchQuery + "&app_id=" + Constants.EDAMAM_APP_ID + "&app_key=" + Constants.EDAMAM_API_KEY + "&random=false";
-
-            // Obtain the JSON file (String of characters) containing the search results
-            // The readUrlContent() method is given below
-            String searchResultsJsonData = Methods.readUrlContent(edamamUrl);
-            // The file returned from the API is in the form of a JSON object
-            // Create a new JSON object from the returned file
-            JSONObject searchResultsJsonObject = new JSONObject(searchResultsJsonData);
-            // get link to get the next page.
-            // make 2nd api call to get the list of recipes for the next page. (20 recipes per page)
-            JSONObject links = searchResultsJsonObject.optJSONObject("_links");
-            JSONObject next = links.optJSONObject("next");
-            String nextPage = "";
-            if (next != null) {
-                nextPage = next.optString("href", "");
-            }
-            int index = 0;
-            JSONArray hits = searchResultsJsonObject.getJSONArray("hits");
-            while (index < hits.length()) {
-                JSONObject jsonObject = hits.getJSONObject(index);
-                SearchedRecipe recipe = mapRecipe(jsonObject);
-                if (recipe != null) {
-                    listOfSearchedRecipes.add(recipe);
-                }
-                index++;
-            }
-            // make the second api for getting second page of recipes. In a single api call we only get 20 recipes. 2 api calls -> 40 (approx) recipes.
-            if (!nextPage.equals("")) {
-                String secondPageJsonData = Methods.readUrlContent(nextPage);
-                JSONObject secondPageJsonObject = new JSONObject(secondPageJsonData);
-                JSONArray secondPageHits = secondPageJsonObject.getJSONArray("hits");
-                index = 0;
-                while (index < secondPageHits.length()) {
-                    JSONObject jsonObject = secondPageHits.getJSONObject(index);
-                    SearchedRecipe recipe = mapRecipe(jsonObject);
-                    if (recipe != null) {
-                        listOfSearchedRecipes.add(recipe);
-                    }
-                    index++;
-                }
-            }
+            this.apiSearch(searchQuery);
 
         } catch (Exception ex) {
             Methods.showMessage("Information", "No Results!", "No recipe found for the search query!");
@@ -288,6 +247,80 @@ public class RecipeSearchController implements Serializable {
         value = (double) Math.round(value);
         value = value / 100;
         return value;
+    }
+
+
+    private String formatNutrientsQuery(ArrayList<UserPantry> selectedIngredients) {
+        String formattedQuery = "";
+        for (UserPantry str : selectedIngredients) {
+            formattedQuery += " " + str.getIngredient();
+        }
+        return formattedQuery.trim();
+    }
+
+    private List<SearchedRecipe> apiSearch(String searchQuery) throws Exception {
+        listOfSearchedRecipes = new ArrayList();
+        String edamamUrl = Constants.EDAMAM_BASE_URL + searchQuery + "&app_id=" + Constants.EDAMAM_APP_ID + "&app_key=" + Constants.EDAMAM_API_KEY + "&random=false";
+
+        // Obtain the JSON file (String of characters) containing the search results
+        // The readUrlContent() method is given below
+        String searchResultsJsonData = Methods.readUrlContent(edamamUrl);
+        // The file returned from the API is in the form of a JSON object
+        // Create a new JSON object from the returned file
+        JSONObject searchResultsJsonObject = new JSONObject(searchResultsJsonData);
+        // get link to get the next page.
+        // make 2nd api call to get the list of recipes for the next page. (20 recipes per page)
+        JSONObject links = searchResultsJsonObject.optJSONObject("_links");
+        JSONObject next = links.optJSONObject("next");
+        String nextPage = "";
+        if (next != null) {
+            nextPage = next.optString("href", "");
+        }
+        int index = 0;
+        JSONArray hits = searchResultsJsonObject.getJSONArray("hits");
+        while (index < hits.length()) {
+            JSONObject jsonObject = hits.getJSONObject(index);
+            SearchedRecipe recipe = mapRecipe(jsonObject);
+            if (recipe != null) {
+                listOfSearchedRecipes.add(recipe);
+            }
+            index++;
+        }
+        // make the second api for getting second page of recipes. In a single api call we only get 20 recipes. 2 api calls -> 40 (approx) recipes.
+        if (!nextPage.equals("")) {
+            String secondPageJsonData = Methods.readUrlContent(nextPage);
+            JSONObject secondPageJsonObject = new JSONObject(secondPageJsonData);
+            JSONArray secondPageHits = secondPageJsonObject.getJSONArray("hits");
+            index = 0;
+            while (index < secondPageHits.length()) {
+                JSONObject jsonObject = secondPageHits.getJSONObject(index);
+                SearchedRecipe recipe = mapRecipe(jsonObject);
+                if (recipe != null) {
+                    listOfSearchedRecipes.add(recipe);
+                }
+                index++;
+            }
+        }
+
+        return listOfSearchedRecipes;
+
+    }
+
+    public String performIngredientRecipeSearch(ArrayList<UserPantry> selectedIngredients) {
+        selected = null;
+
+        // This sets the necessary flag to ensure the messages are preserved.
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+
+        // Spaces in search query must be replaced with "%20"
+        String searchQuery = this.formatNutrientsQuery(selectedIngredients).replaceAll(" ", "%20");
+        try {
+            this.apiSearch(searchQuery);
+            return "/recipeSearch/ApiSearchResults?faces-redirect=true";
+        } catch (Exception ex) {
+            Methods.showMessage("Information", "No Results!", "No recipe found for the search query!");
+        }
+        return "/recipeSearch/ApiSearchResults?faces-redirect=true";
     }
 
 

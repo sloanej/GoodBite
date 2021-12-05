@@ -74,18 +74,15 @@ public class UserPantry implements Serializable{
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 256)
+//    @Size(min = 1, max = 256)
     @Column(name = "calories", precision = 8, scale = 2)
     private Double calories;
 
 
-    //    @Column(precision = 5, scale = 4)
-//    @Type(type = "big_decimal")
-//    private double similarity;
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 256)
+//    @Size(min = 1, max = 256)
     @Column(name = "quantity", precision = 8, scale = 2)
     private Double quantity;
 
@@ -94,13 +91,29 @@ public class UserPantry implements Serializable{
     @ManyToOne
     private User userId;
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 128)
+    @Column(name = "unit")
+    private String unit;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2048)
+    @Column(name = "nutrients")
+    private String nutrients;
+
+
     public UserPantry() {}
-    public UserPantry(Integer id, String ingredient, Double calories, Double quantity, User userId) {
+
+    public UserPantry(Integer id, String ingredient, Double calories, Double quantity, User userId, String unit, String nutrients) {
         this.id = id;
         this.ingredient = ingredient;
         this.calories = calories;
         this.quantity = quantity;
         this.userId = userId;
+        this.unit = unit;
+        this.nutrients = nutrients;
     }
 
     public Integer getId() {
@@ -115,7 +128,7 @@ public class UserPantry implements Serializable{
         return ingredient;
     }
 
-    public void setIngredients(String ingredient) {
+    public void setIngredient(String ingredient) {
         this.ingredient = ingredient;
     }
 
@@ -141,6 +154,22 @@ public class UserPantry implements Serializable{
 
     public void setUserId(User userId) {
         this.userId = userId;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getNutrients() {
+        return nutrients;
+    }
+
+    public void setNutrients(String nutrients) {
+        this.nutrients = nutrients;
     }
 
     /*
