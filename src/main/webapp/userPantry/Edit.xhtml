@@ -42,7 +42,7 @@
 <!--                        Quantity -->
 
                         <p:outputLabel value="Quantity:" for="quantity" />
-                        <p:inputText id="quantity" value="#{pantryController.selected.quantity}" style="width:300px"
+                        <p:inputNumber id="quantity" value="#{pantryController.selected.quantity}" style="width:300px"
                                      required="true" requiredMessage="Quantity is required!" />
 <!--                        Unit -->
                         <p:outputLabel value="Unit:" for="unit" />
@@ -57,7 +57,7 @@
                             <f:selectItem itemLabel="half" itemValue="half"/>
                             <f:selectItem itemLabel="gallon" itemValue="gallon"/>
                             <f:selectItem itemLabel="pound" itemValue="pound"/>
-                            <f:selectItem itemLabel="gram" itemValue="pound"/>
+                            <f:selectItem itemLabel="gram" itemValue="gram"/>
                         </p:selectOneMenu>
 
 

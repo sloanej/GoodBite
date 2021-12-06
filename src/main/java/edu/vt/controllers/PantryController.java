@@ -7,25 +7,25 @@
 
 package edu.vt.controllers;
 
-import edu.vt.globals.Methods;
-import edu.vt.EntityBeans.User;
 import edu.vt.ApiSearch.Nutrition;
-import edu.vt.EntityBeans.UserPantry;
-import edu.vt.controllers.util.JsfUtil;
 import edu.vt.ApiSearch.SearchNutrients;
+import edu.vt.EntityBeans.User;
+import edu.vt.EntityBeans.UserPantry;
 import edu.vt.FacadeBeans.UserPantryFacade;
-
+import edu.vt.controllers.util.JsfUtil;
+import edu.vt.globals.Methods;
 
 import javax.ejb.EJB;
-import java.util.Map;
-import java.util.List;
 import javax.ejb.EJBException;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.context.FacesContext;
-import javax.enterprise.context.SessionScoped;
 
 
 /*
@@ -78,8 +78,8 @@ public class PantryController implements Serializable {
 
     // selected = object reference of a selected Recipe object
     private UserPantry selected;
-    private List<UserPantry> selectedListOfIngredients;
-    private String[] selectedIngredients;
+    private List<String> listOfIngredientNames = null;
+    private List<String> selectedListOfIngredients = null;
 
     public void setListOfIngredients(List<UserPantry> listOfIngredients) {
         this.listOfIngredients = listOfIngredients;
@@ -93,14 +93,30 @@ public class PantryController implements Serializable {
         this.selected = selected;
     }
 
-    public List<UserPantry> getSelectedListOfIngredients() {
+    public List<String> getSelectedListOfIngredients() {
         return selectedListOfIngredients;
     }
 
-    public void setSelectedListOfIngredients(List<UserPantry> selectedListOfIngredients) {
+    public void setSelectedListOfIngredients(List<String> selectedListOfIngredients) {
         this.selectedListOfIngredients = selectedListOfIngredients;
     }
 
+    public List<String> getListOfIngredientNames() {
+        if (listOfIngredients == null) {
+            User user = this.getLoggedInUser();
+            Integer userId = user.getId();
+            listOfIngredients = pantryFacade.findUserPantryByUserId(userId);
+            listOfIngredientNames = new ArrayList<>();
+            for (UserPantry ingredient : listOfIngredients) {
+                listOfIngredientNames.add(ingredient.getIngredient());
+            }
+        }
+        return listOfIngredientNames;
+    }
+
+    public void setListOfIngredientNames(List<String> listOfIngredientNames) {
+        this.listOfIngredientNames = listOfIngredientNames;
+    }
 
     public List<UserPantry> getListOfIngredients() {
         // get Logged in user.
@@ -111,6 +127,10 @@ public class PantryController implements Serializable {
             User user = this.getLoggedInUser();
             Integer userId = user.getId();
             listOfIngredients = pantryFacade.findUserPantryByUserId(userId);
+            listOfIngredientNames = new ArrayList<>();
+            for (UserPantry ingredient : listOfIngredients) {
+                listOfIngredientNames.add(ingredient.getIngredient());
+            }
         }
         return listOfIngredients;
     }
@@ -121,6 +141,7 @@ public class PantryController implements Serializable {
         User signedInUser = (User) sessionMap.get("user");
         return signedInUser;
     }
+
     public void unselect() {
         this.selected = null;
     }
@@ -186,7 +207,6 @@ public class PantryController implements Serializable {
      */
 
 
-
     public void destroy() {
         Methods.preserveMessages();
 
@@ -217,7 +237,7 @@ public class PantryController implements Serializable {
 
                      UserPantryFacade inherits the edit(selected) method from the AbstractFacade class.
                      */
-                    String searchQuery = this.selected.getQuantity() + " " + this.selected.getUnit()+ " " + this.selected.getIngredient();
+                    String searchQuery = this.selected.getQuantity() + " " + this.selected.getUnit() + " " + this.selected.getIngredient();
                     SearchNutrients searchNutrients = new SearchNutrients(searchQuery);
                     Nutrition nutrient = searchNutrients.getNutrition();
                     this.selected.setCalories(nutrient.getCalories());

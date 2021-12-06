@@ -300,10 +300,10 @@ public class RecipeSearchController implements Serializable {
     }
 
 
-    private String formatNutrientsQuery(ArrayList<UserPantry> selectedIngredients) {
+    private String formatNutrientsQuery(ArrayList<String> selectedIngredients) {
         String formattedQuery = "";
-        for (UserPantry str : selectedIngredients) {
-            formattedQuery += " " + str.getIngredient();
+        for (String str : selectedIngredients) {
+            formattedQuery += " " + str;
         }
         return formattedQuery.trim();
     }
@@ -356,7 +356,7 @@ public class RecipeSearchController implements Serializable {
 
     }
 
-    public String performIngredientRecipeSearch(ArrayList<UserPantry> selectedIngredients) {
+    public String performIngredientRecipeSearch(ArrayList<String> selectedIngredients) {
         selected = null;
 
         // This sets the necessary flag to ensure the messages are preserved.
@@ -366,7 +366,6 @@ public class RecipeSearchController implements Serializable {
         String searchQuery = this.formatNutrientsQuery(selectedIngredients).replaceAll(" ", "%20");
         try {
             this.apiSearch(searchQuery);
-            return "/recipeSearch/ApiSearchResults?faces-redirect=true";
         } catch (Exception ex) {
             Methods.showMessage("Information", "No Results!", "No recipe found for the search query!");
         }
