@@ -92,4 +92,9 @@ public class UserRecipeController implements Serializable {
     public String convertDoubleToString(Double value) {
         return Double.toString(value);
     }
+
+    public void clear() {
+        selected = null;
+        listOfRecipes = null;
+    }
 }
