@@ -20,8 +20,7 @@
         <h:form id="searchDialogForm">
             <p:panel>
                 <h:panelGroup>
-                    <p:panelGrid columns="2" columnClasses="panelGridColumn12, panelGridColumn21"
-                                 styleClass="ui-noborder">
+                    <p:panelGrid columns="2">
                         <p:outputLabel value="ZipCode " for="zipCode"/>
                         <p:inputNumber id="zipCode" value="#{nearByStoresSearchController.zipCode}"
                                        required="true" requiredMessage="Please Enter a 5 Digit Zipcode!"
@@ -34,8 +33,7 @@
                         <p:inputNumber id="distanceInMiles" value="#{nearByStoresSearchController.distance}"
                                        required="true" requiredMessage=" Please enter distance in miles!"
                                        placeholder="Maximum Distance in Miles."
-                                       decimalPlaces="2" maxValue="100"
-                        >
+                                       decimalPlaces="2" maxValue="100">
                             <f:validateLength maximum="5"/>
                         </p:inputNumber>
 
