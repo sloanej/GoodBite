@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 
@@ -37,7 +38,7 @@ representing the User table in the CloudDriveDB database.
      */
         @NamedQuery(name = "UserRecipe.findAll", query = "SELECT u FROM UserRecipe u")
         , @NamedQuery(name = "UserRecipe.findById", query = "SELECT u FROM UserRecipe u WHERE u.id = :id")
-        , @NamedQuery(name = "UserRecipe.findByFilename", query = "SELECT u FROM UserRecipe u WHERE u.name = :name")
+        , @NamedQuery(name = "UserRecipe.findByName", query = "SELECT u FROM UserRecipe u WHERE u.name = :name")
         , @NamedQuery(name = "UserRecipe.findUserRecipeByUserId", query = "SELECT u FROM UserRecipe u WHERE u.userId.id = :userId")
 })
 
@@ -104,60 +105,58 @@ public class UserRecipe implements Serializable{
 
     //  description(1024) NOT NULL
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1024)
-    @Column(name = "description")
+    @Size(min = 0, max = 1024)
+    @Column(name = "description", nullable = true)
     private String description;
 
     //  description(128) NOT NULL
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 128)
-    @Column(name = "category")
+    @Size(min = 0, max = 128)
+    @Column(name = "category", nullable = true)
     private String category;
 
     //  cuisine(128) NOT NULL
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 128)
-    @Column(name = "cuisine")
+    @Size(min = 0, max = 128)
+    @Column(name = "cuisine", nullable = true)
     private String cuisine;
 
     //  source_url(1024) NOT NULL
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1024)
-    @Column(name = "source_url")
+    @Size(min = 0, max = 1024)
+    @Column(name = "source_url", nullable = true)
     private String sourceUrl;
 
 
     //  health_labels(2048) NOT NULL
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2048)
-    @Column(name = "health_labels")
+    @Size(min = 0, max = 2048)
+    @Column(name = "health_labels", nullable = true)
     private String healthLabels;
 
     //  diet_labels(2048) NOT NULL
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2048)
-    @Column(name = "diet_labels")
+    @Size(min = 0, max = 2048)
+    @Column(name = "diet_labels", nullable = true)
     private String dietLabels;
 
     //  cautions(1024`) NOT NULL
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1024)
-    @Column(name = "cautions")
+    @Size(min = 0, max = 1024)
+    @Column(name = "cautions", nullable = true)
     private String cautions;
 
     //  cautions(512) NOT NULL
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 512)
-    @Column(name = "url")
+    @Size(min = 0, max = 512)
+    @Column(name = "url", nullable = true)
     private String url;
+
+    //  source(256)
+    @Basic(optional = false)
+    @Size(min = 0, max = 256)
+    @Column(name = "source", nullable = true)
+    private String source;
 
     // user_id INT UNSIGNED
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -292,6 +291,14 @@ public class UserRecipe implements Serializable{
 
     public void setUserId(User userId) {
         this.userId = userId;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     /*

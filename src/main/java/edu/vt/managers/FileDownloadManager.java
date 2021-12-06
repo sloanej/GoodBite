@@ -4,18 +4,19 @@
  */
 package edu.vt.managers;
 
-import edu.vt.EntityBeans.UploadedMeal;
-import edu.vt.controllers.UploadedMealController;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import edu.vt.EntityBeans.User;
+import edu.vt.controllers.UserRecipeController;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.inject.Inject;
+import javax.inject.Named;
+import org.primefaces.shaded.json.JSONArray;
 
-// Needed for PrimeFaces fileDownload
+// These two are needed for PrimeFaces file download
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -30,10 +31,10 @@ public class FileDownloadManager implements Serializable {
 
     /*
     The @Inject annotation directs the CDI Container Manager to inject (store) the object reference of the
-    CDI container-managed UploadedMealController bean into the instance variable 'uploadedMealController' after it is instantiated at runtime.
+    CDI container-managed CompanyController bean into the instance variable 'companyController' after it is instantiated at runtime.
      */
     @Inject
-    private UploadedMealController uploadedMealController;
+    UserRecipeController userRecipeController;
 
     /*
     DefaultStreamedContent and StreamedContent classes are
@@ -46,24 +47,49 @@ public class FileDownloadManager implements Serializable {
     Getter and Setter Methods
     =========================
      */
-    public StreamedContent getFile() throws FileNotFoundException {
+    public StreamedContent getFile() {
 
-        UploadedMeal fileToDownload = uploadedMealController.getSelected();
+        // 'items' contains the data table content. Convert it to JSONArray.
+        JSONArray jasonArray = new JSONArray(userRecipeController.getListOfRecipes());
 
-        // getFilename() and getFilePath() are given in UploadedMeal.java
-        String nameOfFileToDownload = fileToDownload.getMealPhoto();
-        String absolutePathOfFileToDownload = fileToDownload.getFilePath();
+        // Convert the JSON array into a String
+        String dataTableAsJsonString = jasonArray.toString();
 
-        // Returns the MIME type of the specified file or null if the MIME type is not known
-        String contentMimeType = FacesContext.getCurrentInstance().getExternalContext().getMimeType(absolutePathOfFileToDownload);
+        /*
+        -----------------------------------------------------------------------------------------------------
+        'listOfCompanies' is List<Company>: an Array List containing the object references of Company objects.
+        Each Company object is represented as a JSON object with KEY-VALUE pairings.
+        The KEY-VALUE pairings are not in any particular order.
+        [                                              <== Start of JSON array
+            {                                          <== Start of first company's JSON object
+                "ticker":"WMT",
+                "website":"https://www.walmart.com",
+                "name":"Wal-Mart Stores Inc.",
+                "exchange":"NYSE",
+                "id":1,
+                "employees":2300000,
+                "revenues":500343,
+                "sector":"Retailing"
+            },                                         <== End of first company's JSON object
+            :
+            :
+            {                                          <== Start of last company's JSON object
+                "ticker":"GM",
+                "website":"https://www.gm.com",
+                "name":"General Motors Company",
+                "exchange":"NYSE",
+                "id":43,
+                "employees":180000,
+                "revenues":157311,
+                "sector":"Motor Vehicles & Parts"
+            }                                          <== End of last company's JSON object
+        ]                                              <== End of JSON array
+        -----------------------------------------------------------------------------------------------------
+         */
+        // Convert the String into an InputStream
+        InputStream inputStream = new ByteArrayInputStream(dataTableAsJsonString.getBytes());
 
-        // Obtain the filename without the prefix "userId_" inserted to associate the file to a user
-        String downloadedFileName = nameOfFileToDownload.substring(nameOfFileToDownload.indexOf("_") + 1);
-
-        // FileInputStream must be used here since the files are stored in a directory external to our application
-        FileInputStream streamOfFileToDownload = new FileInputStream(absolutePathOfFileToDownload);
-
-        file = DefaultStreamedContent.builder().contentType(contentMimeType).name(downloadedFileName).stream(() -> streamOfFileToDownload).build();
+        file = DefaultStreamedContent.builder().contentType("text/plain").name("RecipesInJSONFile.txt").stream(() -> inputStream).build();
 
         return file;
     }
@@ -71,4 +97,13 @@ public class FileDownloadManager implements Serializable {
     public void setFile(StreamedContent file) {
         this.file = file;
     }
+
+    public UserRecipeController getUserRecipeController() {
+        return userRecipeController;
+    }
+
+    public void UserRecipeController(UserRecipeController userRecipeController) {
+        this.userRecipeController = userRecipeController;
+    }
+
 }

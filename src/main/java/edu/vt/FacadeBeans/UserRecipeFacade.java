@@ -5,6 +5,7 @@
 
 package edu.vt.FacadeBeans;
 
+import edu.vt.EntityBeans.UserPantry;
 import edu.vt.EntityBeans.UserRecipe;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,5 +31,11 @@ public class UserRecipeFacade extends AbstractFacade<UserRecipe> {
     public UserRecipeFacade() {
         super(UserRecipe.class);
     }
+//    findUserRecipeByUserId/
 
+    public List<UserRecipe> findUserRecipeByUserId(Integer userId) {
+        return (List<UserRecipe>) entityManager.createNamedQuery("UserRecipe.findUserRecipeByUserId")
+                .setParameter("userId", userId)
+                .getResultList();
+    }
 }
