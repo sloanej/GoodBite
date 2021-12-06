@@ -30,9 +30,9 @@ public class PhotoService {
     public void init() {
         listOfPhotos = new ArrayList<>();
 
-        listOfPhotos.add(new Photo("/resources/images/slider/photo1.jpg", "/resources/images/slider/photos1.png", "Description for Photo 1", "Chickpeas"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo1.jpg", "/resources/images/slider/photos1.png", "Description for Photo 1", "Onions"));
         listOfPhotos.add(new Photo("/resources/images/slider/photo2.jpg", "/resources/images/slider/photos2.png", "Description for Photo 2", "Corn"));
-        listOfPhotos.add(new Photo("/resources/images/slider/photo3.jpg", "/resources/images/slider/photos3.png", "Description for Photo 3", "Onions"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo3.jpg", "/resources/images/slider/photos3.png", "Description for Photo 3", "Chickpeas"));
         listOfPhotos.add(new Photo("/resources/images/slider/photo4.jpg", "/resources/images/slider/photos4.png", "Description for Photo 4", "Lemons"));
         listOfPhotos.add(new Photo("/resources/images/slider/photo5.jpg", "/resources/images/slider/photos5.png", "Description for Photo 5", "Cooked Beans"));
         listOfPhotos.add(new Photo("/resources/images/slider/photo6.jpg", "/resources/images/slider/photos6.png", "Description for Photo 6", "Pears"));

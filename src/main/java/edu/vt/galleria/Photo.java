@@ -14,7 +14,7 @@ public class Photo implements Serializable {
     ===============================
      */
 
-    // Filepath for regular photo,   e.g., "/resources/images/photos/photo1.jpg"
+    // Filepath for regular photo,   e.g., "/resources/images/photos/photo3.jpg"
     private String regularPhotoFilepath;
 
     // Filepath for thumbnail photo, e.g., "/resources/images/photos/photo1s.jpg"

@@ -61,24 +61,24 @@ siteTemplate for the entire site, achieving great maintainability.
                         <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom"
                             style="white-space: nowrap;">
                             <p:menuitem value="Home" outcome="/index" icon="fas fa-home" />
-                            <p:menuitem value="About Us" outcome="/template/AboutUs" icon="fas fa-home" />
+                            <p:menuitem value="About Us" outcome="/template/AboutUs" icon="	fas fa-book-reader" />
                             <p:menuitem value="Shared Meals" outcome="/sharedMeals/SharedMeals"
-                                icon="fas fa-bread-slice" />
+                                icon="fas fa-share" />
 
                             <!-- Menu Options IF a User is Signed In -->
                             <c:if test="#{userController.isLoggedIn() == true}">
                                 <p:menuitem value="My Uploaded Meals" outcome="/uploadedMeals/UploadedMeals"
-                                    icon="fas fa-list" />
+                                    icon="fas fa-file-upload" />
                                 <p:menuitem value="Nearby Stores" onclick="PF('StoreSearchDialog').show();return false;"
-                                    icon="fas fa-search" />
+                                    icon="fas fa-map-marked-alt" />
                                 <p:menuitem value="Search Recipes"
                                     onclick="PF('RecipeSearchDialog').show();return false;" icon="fas fa-search" />
 
                                 <!-- Menu Options IF a User is Signed In -->
 
-                                <p:menuitem value="My Favorite Meals" outcome="/userFile/FavoriteMeals"
-                                    icon="fas fa-list" />
-                                <p:menuitem value="My Pantry" outcome="/userPantry/ListUserPantry" icon="fas fa-list" />
+                                <p:menuitem value="My Favorite Meals" outcome="/userRecipe/UserRecipesList"
+                                    icon="fas fa-heartbeat" />
+                                <p:menuitem value="My Pantry" outcome="/userPantry/ListUserPantry" icon="fas fa-box-open" />
                                 <p:menuitem value="Saved Recipes" outcome="/userRecipe/UserRecipesList" icon="fas fa-list" />
                                 <p:menuitem outcome="/userAccount/Profile">
                                     <p:graphicImage cache="false" styleClass="smallProfilePhoto"
