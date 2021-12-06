@@ -195,6 +195,11 @@ body .ui-panel .ui-panel-footer {
     border-top: 0 none;
 }
 
+body .ui-panelgrid .ui-panelgrid-cell {
+    background: transparent;
+    border: none;
+}
+
 .favMealPanel {
     width: 40%;
 }

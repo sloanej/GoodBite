@@ -17,11 +17,10 @@
               modal="true" position="center" appendTo="@(body)"
               showEffect="slide" hideEffect="fade" responsive="true">
 
-        <h:form id="recipeSearchDialogForm" style=" border: none;">
+        <h:form id="recipeSearchDialogForm">
             <p:panel>
                 <h:panelGroup>
-                    <p:panelGrid columns="2"
-                                 styleClass="ui-noborder">
+                    <p:panelGrid columns="2">
                         <p:outputLabel value="Search " for="searchQuery"/>
                         <p:inputText id="searchQuery" value="#{recipeSearchController.query}"
                                      required="true" requiredMessage="Please Enter a Search String!"
