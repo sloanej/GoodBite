@@ -82,8 +82,7 @@ public class UserPantry implements Serializable{
 
     @Basic(optional = false)
     @NotNull
-//    @Size(min = 1, max = 256)
-    @Column(name = "quantity", precision = 8, scale = 2)
+    @Column(name = "quantity")
     private Double quantity;
 
     // user_id INT UNSIGNED
