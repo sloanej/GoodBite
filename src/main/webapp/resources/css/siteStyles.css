@@ -8,7 +8,6 @@ html, body {
     margin: 0 0 0 0;    /* top right bottom left */
     width: 100%;        /* Set page width horizontally 100% */
     height:100%;
-    background-image: url("/background.jpg")/* Set page height vertically 100% */
 }
 
 body, p {
@@ -60,10 +59,9 @@ Style the div component whose unique id is "header"
 <div id="header"> in siteTemplate
 */
 #header {
-    background-color: azure;
+    background-color: white;
     width: 100%;
     height: 84px;
-    position: absolute;
     left: 0;
     top: 0;
     right: 0;
@@ -87,8 +85,9 @@ Style the div component whose unique id is "footer"
 <div id="footer"> in siteTemplate
 */
 #footer {
-    background: lightgray;
-    height: 75px;
+    font-family: "Times New Roman", Times, serif;
+    background: white;
+    height: 150px;
     width: 100%;
     left: 0;
     right: 0;
@@ -185,7 +184,7 @@ Used in Profile
 */
 body .ui-panel .ui-panel-footer {
     border: 1px solid #dee2e6;
-    background: lightgreen;
+    background: powderblue;
     color: #495057;
     padding: 1rem;
     margin: 0;
@@ -217,7 +216,7 @@ body .ui-panel .ui-panel-footer {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: dimgrey;
+    background: grey;
     border-radius: 10px;
 }
 
@@ -226,7 +225,7 @@ body .ui-panel .ui-panel-footer {
     font-family: "Times New Roman", Times, serif;
     font-size: 18pt;
     font-style: italic;
-    font-weight: normal;
+    font-weight: bold;
     text-decoration: none;
     color: darkolivegreen;
 }
@@ -245,7 +244,7 @@ body .ui-panel .ui-panel-footer {
     white-space: nowrap;        /* Disallow line break */
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    background-color: lightgoldenrodyellow !important;
+    background-color: white !important;
 }
 
 /* Style p:panelGrid Column 2 */
@@ -254,12 +253,12 @@ body .ui-panel .ui-panel-footer {
     white-space: nowrap;        /* Disallow line break */
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    background-color: lightgoldenrodyellow !important;
+    background-color: white !important;
 }
 
 /* Used to color panel backgrounds */
 .ui-panel-content {
-    background-color: lightgreen !important;
+    background-color: powderblue !important;
 }
 
 /* Used in Profile and About pages to style person's photo in a circle */
@@ -368,14 +367,14 @@ cascading hierarchy, use the !important attribute.
     white-space: nowrap;        /* Disallow line break */
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    background-color: oldlace !important;
+    background-color: white !important;
 }
 .panelGridColumn21 {
     text-align: right;
     white-space: nowrap;        /* Disallow line break */
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    background-color: oldlace !important;
+    background-color: white !important;
 }
 .columnStoreImage {
     width: 100px;
@@ -397,3 +396,4 @@ cascading hierarchy, use the !important attribute.
     white-space: normal;
     overflow-wrap: break-word;
 }
+

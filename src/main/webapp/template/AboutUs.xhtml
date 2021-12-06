@@ -13,201 +13,66 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-This page is constructed based on the siteTemplate
-<ui:composition template="/template/siteTemplate.xhtml">
-  <ui:define name="title">
+<ui:composition template="/template/siteTemplateBG.xhtml">
+
+<ui:define name="title">
     <!-- Set the page title -->
     <h:outputText value="About Us" />
-  </ui:define>
+</ui:define>
 
   <!-- Create the content for this page below -->
-  <ui:define name="editableContent">
-  <head>
-
-    <style type ="text/css">
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
-}
-
-html {
-  box-sizing: border-box;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
-.column {
-  float: left;
-  width: 33.3%;
-  margin-bottom: 16px;
-  padding: 0 8px;
-}
-
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  margin: 8px;
-}
-
-.about-section {
-  padding: 50px;
-  text-align: center;
-  background-color: #474e5d;
-  color: white;
-}
-
-.container {
-  padding: 0 16px;
-}
-
-.container::after, .row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-.title {
-  color: grey;
-}
-
-.button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-}
-
-.button:hover {
-  background-color: #555;
-}
-
-@media screen and (max-width: 650px) {
-  .column {
-    width: 100%;
-    display: block;
-
-  }
-
-}
-
-.custom-marker {
-  display: flex;
-  width: 2rem;
-  height: 2rem;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  border-radius: 50%;
-  z-index: 1;
-}
-
-.ui-chronoline-event-content,
-.ui-chronoline-event-opposite {
-  line-height: 1;
-}
-
-@media screen and (max-width: 960px) {
-  .customized-chronoline .ui-chronoline-event:nth-child(even) {
-    flex-direction: row !important;
-  }
-
-  .customized-chronoline .ui-chronoline-event:nth-child(even) .ui-chronoline-event-content {
-    text-align: left !important;
-  }
-
-  .customized-chronoline .ui-chronoline-event-opposite {
-    flex: 0;
-  }
-
-  .customized-chronoline .ui-card {
-    margin-top: 1rem;
-  }
-}
-</style >
-</head>
-<div class="about-section">
-  <h1>About Us Page</h1>
-  <p>Some text about who we are and what we do.</p>
-  <p>Resize the browser window to see that this page is responsive by the way.</p>
-</div>
-
-<h2 style="text-align:center">Our Team</h2>
-<div class="row">
-  <div class="column">
-    <div class="card">
-        <img src="" alt="Jack" style="width:100%"></img>
-      <div class="container">
-        <h2>Jack Sloane</h2>
-        <p class="title">CEO and Founder</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>jane@example.com</p>
-        <p><button class="button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="column">
-    <div class="card">
-        <img src="photo2.png" alt="Neha" style="width:100%"></img>
-      <div class="container">
-        <h2>Neha Surana</h2>
-        <p class="title">Art Director</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>nehasurana@vt.edu</p>
-        <p><button class="button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="column">
-    <div class="card">
-        <img src="/resources/images/slider/photo3.png" alt="Ishaan Gulati" style="width:100px"></img>
-      <div class="container">
-        <h2>Ishaan Gulati</h2>
-        <p class="title">Designer</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>john@example.com</p>
-        <p><button class="button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-</div>
-
-    <div class="card">
-      <h:form>
-        <h5>Customized</h5>
-        <p:chronoline value="#{chronolineView.events}" var="event" align="alternate" styleClass="customized-chronoline">
-
-          <p:card>
-            <f:facet name="title">
-              #{event.status}
-            </f:facet>
-            <f:facet name="subtitle">
-              #{event.date}
-            </f:facet>
-
-<!--            <p:graphicImage rendered="#{not empty event.image}" width="200" styleClass="p-shadow-2"-->
-<!--                            value="../../resources/demo/images/product/#{event.image}" alt="#{event.image}"/>-->
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-            <p:commandButton value="Read more" styleClass="ui-button-flat" />
-          </p:card>
-
-          <f:facet name="marker">
-            <span class="custom-marker p-shadow-2" style="background-color: #{event.color}"><i class="#{event.icon}"/></span>
-          </f:facet>
-        </p:chronoline>
-
-      </h:form>
+<ui:define name="editableContent">
+    <div style="width: 100%; padding: 50px; text-align: center; background-color: white; color: white">
+      <h1>About Us</h1>
+      <p>We are a team of graduate computer science students at Virginia Tech. This web application is our semester project for
+          <br/>CS5704 Software Engineering. We are students and devout followers of the renowned Professor Osman Balci. </p>
     </div>
 
+    <h2 style="text-align:center">Our Team</h2>
 
+    <div align="center">
+        <p:panelGrid columns="3" cellpadding="6px">
+         <p:panel>
+             <img src="#{resource['images:jack.jpeg']}"
+                  style="height:100px; width:auto; border:none;"
+                  alt="Jack" />
+            <h2 style="font-family: 'Times New Roman', Times, serif">
+                Jack Sloane
+            </h2>
+            <p>Developer</p>
+            <p>Jack is a lackadaisical and notably superstitious vagabond who dreams of someday "making it" as a software engineer.</p>
+            <p>sloanej@vt.edu</p>
+         </p:panel>
+
+
+
+          <p:panel>
+              <img src="#{resource['images:neha.jpeg']}"
+                   style="height:100px; width:auto; border:none;"
+                   alt="Neha" />
+            <h2 style="font-family: 'Times New Roman', Times, serif">
+                Neha Surana
+            </h2>
+            <p>Developer</p>
+            <p>Neha is a hard worker and effiecient problem solver working her way to a Masters degree in Computer Science.</p>
+            <p>nehasurana@vt.edu</p>
+          </p:panel>
+
+
+          <p:panel>
+              <img src="#{resource['images:ishaan.jpeg']}"
+                   style="height:100px; width:auto; border:none;"
+                   alt="Ishaan" />
+            <h2 style="font-family: 'Times New Roman', Times, serif">
+                Ishaan Gulati
+            </h2>
+            <p>Developer</p>
+            <p>Ishaan is a deep philosphical thinker who writes mathmatical proofs for fun when he isn't engaged in acedemic discourse with his fellow students.</p>
+            <p>ishaangulati97@vt.com</p>
+          </p:panel>
+
+        </p:panelGrid>
+    </div>
   </ui:define>
 </ui:composition>
 </html>

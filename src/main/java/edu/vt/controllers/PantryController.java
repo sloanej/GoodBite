@@ -170,6 +170,16 @@ public class PantryController implements Serializable {
     }
 
     /*
+     *************************************
+     *   Cancel and Display List.xhtml   *
+     *************************************
+     */
+    public String cancel() {
+        // Unselect previously selected video object if any
+        selected = null;
+        return "/userPantry/ListUserPantry?faces-redirect=true";
+    }
+    /*
     ***************************************
     DELETE Selected UserPantry from the Database
     ***************************************
