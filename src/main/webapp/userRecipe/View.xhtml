@@ -1,93 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  - Created by Ishaan Gulati on 2021.12.6
+  - Created by Ishaan Gulati on 2021.11.21
   - Copyright © 2021 Ishaan Gulati. All rights reserved.
   -->
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
 <ui:composition>
+    <!--
+    ==========================================================
+    |  Clicking the VIEW button displays this Dialog window  |
+    |  for the user to view the selected movie's data.       |
+    ==========================================================
+    -->
     <p:dialog id="RecipeViewDlg" header="View Recipe" widgetVar="RecipeViewDialog"
-              modal="true" width="60%" position="center" appendTo="@(body)"
-              showEffect="slide" hideEffect="fade" responsive="true">
+              modal="true" position="center" appendTo="@(body)"  height="700" width="45%"
+              showEffect="slide" hideEffect="fade" responsive="true" >
 
-        <h:form id="RecipeViewForm">
-
-            <!-- Height must be given as a fixed value to enable scrolling -->
-            <!-- Width is unspecified and changeable; thus being responsive -->
-
-            <p:scrollPanel mode="native" style="height:500px">
+        <h:form id="RecipeViewForm" class="ui-datatable-data">
+            <div align="center">
+                <h:graphicImage value="#{userRecipeController.selected.imageUrl}" />
+            </div>
+            <br />
+            <h:panelGroup id="display">
                 <div align="center">
-                    <div>
-                        <h:outputText styleClass="h1" value="Recipe Photo:"/>
-                        <br/>
-                        <h:graphicImage class="scalableImage" value="#{userRecipeController.selected.imageUrl}"/>
-                        <br/><br/>
-                    </div>
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                                 rendered="#{userRecipeController.selected != null}" >
 
-                    <div>
-                        <h:outputText styleClass="h1" value="Recipe Name:"/>
-                        <br/>
-                        <a href="#{recipesController.selected.url}" class="a">
-                            #{recipesController.selected.name}
-                        </a>
-                        <br/><br/>
-                    </div>
+                        <h:outputText value="Name:"/>
+                        <h:outputText value="#{userRecipeController.selected.name}"/>
 
-                    <div>
-                        <h:outputText styleClass="h1" value="Recipe Caategory:"/>
-                        <br/>
-                        <h:outputText styleClass="h1" value="#{recipesController.selected.category}"/>
-                        <br/><br/>
-                    </div>
+                        <h:outputLabel value="Ingredients:" />
+                        <h:outputText value="#{userRecipeController.selected.ingredients}" styleClass="scrollableTextBox"/>
 
-                    <div>
-                        <h:outputText styleClass="h1" value="Recipe Cuisine:"/>
-                        <br/>
-                        <h:outputText styleClass="h1" value="#{recipesController.selected.cuisine}"/>
-                        <br/><br/>
-                    </div>
+                        <h:outputText value="Health Labes:"/>
+                        <h:outputText value="#{userRecipeController.selected.healthLabels}" styleClass="scrollableTextBox"/>
 
-                    <div>
-                        <h:outputText styleClass="h1" value="Publisher Name:"/>
-                        <br/>
-                        <a href="#{recipesController.selected.sourceUrl}" class="a">
-                            #{recipesController.selected.source}
-                        </a>
-                        <br/><br/>
-                    </div>
+                        <h:outputText value="Diet Labels:"/>
+                        <h:outputText value="#{userRecipeController.selected.dietLabels}" styleClass="scrollableTextBox"/>
 
-                    <div>
-                        <h:outputText styleClass="h1" value="Recipe Ingredients:"/>
-                        <br/>
-                        <h:outputText styleClass="p" value="#{recipesController.selected.ingredients}"/>
-                        <br/><br/>
-                    </div>
+                        <h:outputText value="Nutrition:"/>
+                        <h:outputText value="#{userRecipeController.selected.nutrients}" styleClass="scrollableTextBox"/>
 
-                    <div>
-                        <h:outputText styleClass="h1" value="Recipe Nutrients:"/>
-                        <br/>
-                        <h:outputText styleClass="p" value="#{recipesController.selected.nutrients}"/>
-                    </div>
+                        <h:outputText value="Cautions"/>
+                        <h:outputText value="#{userRecipeController.selected.cautions}" styleClass="scrollableTextBox"/>
+
+                        <h:outputText value="Source:"/>
+                        <h:outputText value="#{userRecipeController.selected.source}" styleClass="scrollableTextBox"/>
+
+                        <h:outputText value="Directions:"/>
+                        <div class="scrollableTextBox">
+                            <a href="#{userRecipeController.selected.sourceUrl}" class="a">
+                                Visit #{userRecipeController.selected.source}
+                            </a>
+                        </div>
+                    </p:panelGrid>
+                </div>
+            </h:panelGroup>
+
+            <h:panelGroup>
+                <br />
+                <div align="center">
+                    <!-- CLOSE button -->
+                    <p:commandButton value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
+                                     onclick="PF('RecipeViewDialog').hide()" />
+                    &nbsp;
 
                 </div>
-
-                <h:panelGroup>
-                    <br/>
-                    <div align="center">
-                        <!-- CLOSE button -->
-                        <p:commandButton value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
-                                         onclick="PF('RecipeViewDialog').hide()" />
-                    </div>
-                </h:panelGroup>
-            </p:scrollPanel>
+            </h:panelGroup>
 
         </h:form>
+
     </p:dialog>
 </ui:composition>
 </html>

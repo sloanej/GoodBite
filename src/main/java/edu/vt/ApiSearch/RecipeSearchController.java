@@ -8,6 +8,7 @@ package edu.vt.ApiSearch;
 import edu.vt.EntityBeans.User;
 import edu.vt.EntityBeans.UserRecipe;
 import edu.vt.FacadeBeans.UserRecipeFacade;
+import edu.vt.controllers.UserRecipeController;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
@@ -18,6 +19,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,6 +40,9 @@ public class RecipeSearchController implements Serializable {
 
     @EJB
     UserRecipeFacade userRecipeFacade;
+
+    @Inject
+    private UserRecipeController service;
 
     public String getQuery() {
         return query;
@@ -393,7 +398,7 @@ public class RecipeSearchController implements Serializable {
             userRecipe.setUrl(this.selected.getUrl());
             userRecipeFacade.edit(userRecipe);
             JsfUtil.addSuccessMessage("Recipe was successfully saved!.");
-            //TODO: Refresh user recipe list.
+            service.clear();
         } catch (EJBException ex) {
             String msg = "";
             Throwable cause = ex.getCause();
