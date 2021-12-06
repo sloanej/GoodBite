@@ -8,258 +8,104 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
->
-<head>
-<style type="text/css">
-    p {
-        line-height: 1.5;
-        margin: 5px;
-    }
-    .product-item .product-item-content {
-        border: 1px solid var(--surface-d);
-        border-radius: 3px;
-        margin: .3rem;
-        text-align: center;
-        padding: 2rem 0;
-    }
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+        <style type="text/css">
+            p {
+                line-height: 1.5;
+                margin: 5px;
+            }
+            .product-item .product-item-content {
+                border: 1px solid var(--surface-d);
+                border-radius: 3px;
+                margin: .3rem;
+                text-align: center;
+                padding: 2rem 0;
+            }
 
-    .product-item .product-image {
-        width: 50%;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
-    }
+            .product-item .product-image {
+                width: 50%;
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+            }
+        </style>
+    </head>
+    <h:body>
 
+    </h:body>
+        <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+        <!-- This page is constructed based on the siteTemplate -->
+        <ui:composition template="/template/siteTemplateBG.xhtml">
+            <!-- Create the content for this page below -->
+            <ui:define name="editableContent">
+                <h:form>
+                    <div class="card" align="center">
+                        <!--
+                        ========================================
+                        |   PrimeFaces Galleria Image Slider   |
+                        ========================================
+                        (1) value="#{galleriaManager.listOfPhotos}" obtains a list of photo object references.
+                        (2) var="aPhoto" is the iterator variable holding a photo object reference from the list.
+                        (3) numVisible="7" indicates that 7 thumbnail photos are displayed below each photo.
+                        (4) responsiveOptions defines a model of options for Responsive UI Design.
+                            It enables the slider to resize to fit on a smartphone screen.
+                        (5) circular="true" loops the slide show until it is stopped.
+                        (6) autoPlay="true" automatically starts the slide show.
+                        (7) If the user selects a thumbnail photo or clicks an arrow button, the slider
+                            becomes manual until the page is refreshed to be auto play again.
+                        (8) transitionInterval="4000" displays next photo after 4 seconds (4000 milliseconds).
+                        (9) showCaption="true" enables caption display. We show only photo title in the caption.
+                            Photo description (alt) is omitted.
+                        (10) Change max-width to be the maximum width of the photos used.
+                        -->
 
-</style>
-</head>
-<h:body >
-
-<!-- Do not enter tags before the composition line since they are ignored by JSF -->
-
-<!-- This page is constructed based on the siteTemplate -->
-<ui:composition template="/template/siteTemplate.xhtml">
-
-    <!-- Create the content for this page below -->
-    <ui:define name="editableContent">
-<h:form>
-        <div class="card" align="center">
-            <!--
-            ========================================
-            |   PrimeFaces Galleria Image Slider   |
-            ========================================
-            (1) value="#{galleriaManager.listOfPhotos}" obtains a list of photo object references.
-            (2) var="aPhoto" is the iterator variable holding a photo object reference from the list.
-            (3) numVisible="7" indicates that 7 thumbnail photos are displayed below each photo.
-            (4) responsiveOptions defines a model of options for Responsive UI Design.
-                It enables the slider to resize to fit on a smartphone screen.
-            (5) circular="true" loops the slide show until it is stopped.
-            (6) autoPlay="true" automatically starts the slide show.
-            (7) If the user selects a thumbnail photo or clicks an arrow button, the slider
-                becomes manual until the page is refreshed to be auto play again.
-            (8) transitionInterval="4000" displays next photo after 4 seconds (4000 milliseconds).
-            (9) showCaption="true" enables caption display. We show only photo title in the caption.
-                Photo description (alt) is omitted.
-            (10) Change max-width to be the maximum width of the photos used.
-            -->
-
-            <p:galleria value="#{galleriaManager.listOfPhotos}" var="aPhoto" numVisible="7" responsiveOptions="#{galleriaView.responsiveOptions1}" style="max-width: 500px">
-                <p:graphicImage value="#{aPhoto.regularPhotoFilepath}" alt="#{aPhoto.title}" style="width: 100%; display: block;" />
-                <f:facet name="caption">
-                    <span class="p-mb-2">#{aPhoto.title}</span>
-                </f:facet>
-                <f:facet name="thumbnail">
-                    <p:graphicImage value="#{aPhoto.thumbnailPhotoFilepath}" alt="#{aPhoto.title}" style="display: block;" />
-                </f:facet>
-            </p:galleria>
-        </div>
-        <div></div>
-    <br></br><br></br>
-<!--        <div class="card">-->
-<!--            <p:card style="margin-right: 15px;width: 23%; float:left ; padding: 0 20px" >-->
-<!--                <f:facet name="header">-->
-<!--                    <img alt="user header" src="../../resources/demo/images/usercard.png"/>-->
-<!--                </f:facet>-->
-<!--                <f:facet name="title">-->
-<!--                    Advanced Card-->
-<!--                </f:facet>-->
-<!--                <f:facet name="subtitle">-->
-<!--                    Card subtitle-->
-<!--                </f:facet>-->
-
-<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt-->
-<!--                    quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>-->
-
-<!--                <f:facet name="footer">-->
-<!--                    <div class="card">-->
-<!--                        <h:form>-->
-<!--                            <p:growl id="message1" showDetail="true"/>-->
-
-<!--                            <p:commandButton value="Save" action="#{confirmView.confirm}" update="message1" styleClass="p-mr-2" icon="pi pi-check">-->
-<!--                                <p:confirm type="popup" header="Confirmation" message="Are you sure you want to proceed?" icon="pi pi-exclamation-triangle"/>-->
-<!--                            </p:commandButton>-->
-
-<!--                            <p:commandButton value="Cancel" action="#{confirmView.delete}" update="message1" styleClass="ui-button-danger" icon="pi pi-times" style="margin-left: .5em">-->
-<!--                                <p:confirm type="popup" header="Confirmation" message="Do you want to delete this record?" icon="pi pi-info-circle"/>-->
-<!--                            </p:commandButton>-->
-
-<!--                            <p:confirmPopup global="true">-->
-<!--                                <p:commandButton value="No" type="button" styleClass="ui-confirm-popup-no ui-button-flat"/>-->
-<!--                                <p:commandButton value="Yes" type="button" styleClass="ui-confirm-popup-yes" />-->
-<!--                            </p:confirmPopup>-->
-<!--                        </h:form>-->
-<!--                    </div>-->
-<!--                </f:facet>-->
-
-<!--            </p:card>-->
-<!--            &nbsp; &nbsp;-->
-<!--            &nbsp;&nbsp;-->
-<!--            <p:card style="width: 23%; float:left ; padding: 0 20px; margin-right: 15px" >-->
-<!--                <f:facet name="header">-->
-<!--                    <img alt="user header" src="../../resources/demo/images/usercard.png"/>-->
-<!--                </f:facet>-->
-<!--                <f:facet name="title">-->
-<!--                    Advanced Card-->
-<!--                </f:facet>-->
-<!--                <f:facet name="subtitle">-->
-<!--                    Card subtitle-->
-<!--                </f:facet>-->
-
-<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt-->
-<!--                    quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>-->
-
-<!--                <f:facet name="footer">-->
-<!--                    <div class="card">-->
-<!--                        <h:form>-->
-<!--                            <p:growl id="message2" showDetail="true"/>-->
-
-<!--                            <p:commandButton value="Save" action="#{confirmView.confirm}" update="message2" styleClass="p-mr-2" icon="pi pi-check">-->
-<!--                                <p:confirm type="popup" header="Confirmation" message="Are you sure you want to proceed?" icon="pi pi-exclamation-triangle"/>-->
-<!--                            </p:commandButton>-->
-
-<!--                            <p:commandButton value="Cancel" action="#{confirmView.delete}" update="message2" styleClass="ui-button-danger" icon="pi pi-times" style="margin-left: .5em">-->
-<!--                                <p:confirm type="popup" header="Confirmation" message="Do you want to delete this record?" icon="pi pi-info-circle"/>-->
-<!--                            </p:commandButton>-->
-
-<!--                            <p:confirmPopup global="true">-->
-<!--                                <p:commandButton value="No" type="button" styleClass="ui-confirm-popup-no ui-button-flat"/>-->
-<!--                                <p:commandButton value="Yes" type="button" styleClass="ui-confirm-popup-yes" />-->
-<!--                            </p:confirmPopup>-->
-<!--                        </h:form>-->
-<!--                    </div>-->
-<!--                </f:facet>-->
-<!--            </p:card>-->
-<!--            <p:card style="width: 23%; float:left ; padding: 0 20px; margin-right: 15px" >-->
-<!--                <f:facet name="header">-->
-<!--                    <img alt="user header" src="../../resources/demo/images/usercard.png"/>-->
-<!--                </f:facet>-->
-<!--                <f:facet name="title">-->
-<!--                    Advanced Card-->
-<!--                </f:facet>-->
-<!--                <f:facet name="subtitle">-->
-<!--                    Card subtitle-->
-<!--                </f:facet>-->
-
-<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt-->
-<!--                    quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>-->
-
-<!--                <f:facet name="footer">-->
-<!--                    <div class="card">-->
-<!--                        <h:form>-->
-<!--                            <p:growl id="message3" showDetail="true"/>-->
-
-<!--                            <p:commandButton value="Save" action="#{confirmView.confirm}" update="message3" styleClass="p-mr-2" icon="pi pi-check">-->
-<!--                                <p:confirm type="popup" header="Confirmation" message="Are you sure you want to proceed?" icon="pi pi-exclamation-triangle"/>-->
-<!--                            </p:commandButton>-->
-
-<!--                            <p:commandButton value="Cancel" action="#{confirmView.delete}" update="message3" styleClass="ui-button-danger" icon="pi pi-times" style="margin-left: .5em">-->
-<!--                                <p:confirm type="popup" header="Confirmation" message="Do you want to delete this record?" icon="pi pi-info-circle"/>-->
-<!--                            </p:commandButton>-->
-
-<!--                            <p:confirmPopup global="true">-->
-<!--                                <p:commandButton value="No" type="button" styleClass="ui-confirm-popup-no ui-button-flat"/>-->
-<!--                                <p:commandButton value="Yes" type="button" styleClass="ui-confirm-popup-yes" />-->
-<!--                            </p:confirmPopup>-->
-<!--                        </h:form>-->
-<!--                    </div>-->
-<!--                </f:facet>-->
-<!--            </p:card>-->
-<!--            <p:card style="width: 23%; float:left ; padding: 0 20px; margin-right: 15px" >-->
-<!--                <f:facet name="header">-->
-<!--                    <img alt="user header" src="../../resources/demo/images/usercard.png"/>-->
-<!--                </f:facet>-->
-<!--                <f:facet name="title">-->
-<!--                    Advanced Card-->
-<!--                </f:facet>-->
-<!--                <f:facet name="subtitle">-->
-<!--                    Card subtitle-->
-<!--                </f:facet>-->
-
-<!--                <p>will get recipe details from API</p>-->
-
-<!--                <f:facet name="footer">-->
-<!--&lt;!&ndash;                    <p:commandButton icon="pi pi-check" value="Save"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <p:commandButton icon="pi pi-times" value="Cancel" styleClass="ui-button-secondary" style="margin-left: .5em"/>&ndash;&gt;-->
-<!--                    <div class="card">-->
-<!--                        <h:form>-->
-<!--                            <p:growl id="message" showDetail="true"/>-->
-
-<!--                            <p:commandButton value="Save" action="#{confirmView.confirm}" update="message" styleClass="p-mr-2" icon="pi pi-check">-->
-<!--                                <p:confirm type="popup" header="Confirmation" message="Are you sure you want to proceed?" icon="pi pi-exclamation-triangle"/>-->
-<!--                            </p:commandButton>-->
-
-<!--                            <p:commandButton value="Cancel" action="#{confirmView.delete}" update="message" styleClass="ui-button-danger" icon="pi pi-times" style="margin-left: .5em">-->
-<!--                                <p:confirm type="popup" header="Confirmation" message="Do you want to delete this record?" icon="pi pi-info-circle"/>-->
-<!--                            </p:commandButton>-->
-
-<!--                            <p:confirmPopup global="true">-->
-<!--                                <p:commandButton value="No" type="button" styleClass="ui-confirm-popup-no ui-button-flat"/>-->
-<!--                                <p:commandButton value="Yes" type="button" styleClass="ui-confirm-popup-yes" />-->
-<!--                            </p:confirmPopup>-->
-<!--                        </h:form>-->
-<!--                    </div>-->
-<!--                </f:facet>-->
-<!--            </p:card>-->
-
-<!--        </div>-->
-
-
-    <div class="card">
-
-        <p:carousel value="#{carouselView.listOfRecipes}" var="product" circular="true" autoplayInterval="5000"
-                    responsiveOptions="#{carouselView.responsiveOptions}" numVisible="3" numScroll="1">
-            <f:facet name="header">
-                <h5>Popular Recipes:</h5>
-            </f:facet>
-
-            <div class="product-item">
-                <p:card style="margin-right: 10px" >
-                <div class="product-item-content">
-                    <div class="p-mb-3">
-
-                        <img src="#{product.imageUrl}" alt="Recipe Photo" style="height: 300px; width: 300px"  />
+                        <p:galleria value="#{galleriaManager.listOfPhotos}" var="aPhoto" numVisible="7" responsiveOptions="#{galleriaView.responsiveOptions1}" style="max-width: 500px">
+                            <p:graphicImage value="#{aPhoto.regularPhotoFilepath}" alt="#{aPhoto.title}" style="width: 100%; display: block;" />
+                            <f:facet name="caption">
+                                <span class="p-mb-2">#{aPhoto.title}</span>
+                            </f:facet>
+                            <f:facet name="thumbnail">
+                                <p:graphicImage value="#{aPhoto.thumbnailPhotoFilepath}" alt="#{aPhoto.title}" style="width: 100%; display: block;" />
+                            </f:facet>
+                        </p:galleria>
                     </div>
-                    <div>
-                        <h4 class="p-mb-1">#{product.name}</h4>
-                        <h6 class="p-mt-0 p-mb-3">
-                            <h:outputText value="#{product.nutrients}">
+                    <div></div>
+                    <br></br><br></br>
+                    <div class="card">
 
-                            </h:outputText>
-                        </h6>
+                        <p:carousel value="#{carouselView.listOfRecipes}" var="product" circular="true" autoplayInterval="5000"
+                                    responsiveOptions="#{carouselView.responsiveOptions}" numVisible="3" numScroll="1">
+                            <f:facet name="header" >
+                                <div style="background-color: white; width: 100%; height:70px; padding: 1px; text-align: center" >
+                                    <h2 style="font-family: 'Times New Roman', Times, serif; font-size: 18pt; font-weight: bold; text-decoration: none; color: darkolivegreen">
+                                        Popular Recipes:
+                                    </h2>
+                                </div>
 
+                            </f:facet>
+                            <div class="product-item">
+                                <br></br><br></br>   <br></br><br></br>
+                                <p:card style="margin-right: 10px" >
+                                    <div class="product-item-content">
+                                        <div class="p-mb-3">
+                                            <img src="#{product.imageUrl}" alt="Recipe Photo" style="height: 300px; width: 300px"  />
+                                        </div>
+                                        <div>
+                                            <h3 style="font-family: 'Times New Roman', Times, serif; color: darkolivegreen" class="p-mb-1">
+                                                #{product.name}
+                                            </h3>
+                                            <h4 style="font-family: 'Times New Roman', Times, serif;" class="p-mt-0 p-mb-3">
+                                                <h:outputText value="#{product.nutrients}"/>
+                                            </h4>
+
+                                        </div>
+                                    </div>
+                                </p:card>
+                            </div>
+                        </p:carousel>
                     </div>
-                </div>
-                </p:card>
-            </div>
-        </p:carousel>
-
-    </div>
-
-</h:form>
-</ui:define>
-
-</ui:composition>
-</h:body>
-
-<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+                </h:form>
+            </ui:define>
+        </ui:composition>
+        <!-- Do not enter tags after the composition line since they are ignored by JSF -->
 
 </html>

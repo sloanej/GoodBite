@@ -76,7 +76,7 @@ xmlns:p="http://primefaces.org/ui">
                         <!-- SAVE button -->
                         <p:commandButton value="Save" icon="fas fa-save" styleClass="rounded-button"
                                          ajax="false" actionListener="#{pantryController.create()}"
-                                         update="display,:RecipeListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                         update="display,:PantryListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                                          oncomplete="handleSubmit(args,'PantryCreateDialog');" />
                         &nbsp;
                         <!--
