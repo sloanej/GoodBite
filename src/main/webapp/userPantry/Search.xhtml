@@ -56,7 +56,8 @@
                 <div align="center">
                     <!-- SAVE button -->
                     <p:commandButton value="Search" icon="fas fa-search" styleClass="rounded-button"
-                                     actionListener="#{recipeSearchController.performIngredientRecipeSearch(pantryController.listOfIngredients)}"
+                                     action="#{recipeSearchController.performIngredientRecipeSearch(pantryController.listOfIngredients)}"
+                                     update="display,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                                      ajax="false"
                                      />
                     &nbsp;
