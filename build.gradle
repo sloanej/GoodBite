@@ -30,4 +30,14 @@ dependencies {
 
     // MySQL JDBC Connector to Java is configured in WildFly
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.26'
+
+    compileOnly group: 'com.lowagie', name: 'itext', version: '2.1.7'
+
+    // poi-3.15.jar is located in the flat filesystem directory defined above
+    // poi-3.15.jar provides a Java API to generate files in Microsoft format, e.g., Excel, CSV
+    compileOnly group: 'org.apache.poi', name: 'poi', version: '3.15'
+
+    // xmlbeans-2.6.0.jar is located in the flat filesystem directory defined above
+    // xmlbeans-2.6.0.jar provides a Java API to generate XML files.
+    compileOnly group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '2.6.0'
 }

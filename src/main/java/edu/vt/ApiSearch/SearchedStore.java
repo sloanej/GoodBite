@@ -80,7 +80,7 @@ public class SearchedStore {
         return postCode;
     }
 
-    public void setSostCode(String postCode) {
+    public void setPostCode(String postCode) {
         this.postCode = postCode;
     }
 }

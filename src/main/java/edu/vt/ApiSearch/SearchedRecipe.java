@@ -16,8 +16,11 @@ public class SearchedRecipe {
     private String dietLabels;
     private String cautions;
     private String url;
+    private String category;
+    private String cuisine;
 
-    public SearchedRecipe(String name, String imageUrl, String ingredients, String source, String nutrients, String sourceUrl, String healthLabels, String dietLabels, String cautions, String url) {
+
+    public SearchedRecipe(String name, String imageUrl, String ingredients, String source, String nutrients, String sourceUrl, String healthLabels, String dietLabels, String cautions, String url, String category, String cuisine) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.ingredients = ingredients;
@@ -28,6 +31,8 @@ public class SearchedRecipe {
         this.dietLabels = dietLabels;
         this.cautions = cautions;
         this.url = url;
+        this.category = category;
+        this.cuisine = cuisine;
     }
 
     public String getName() {
@@ -108,5 +113,21 @@ public class SearchedRecipe {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCuisine() {
+        return cuisine;
+    }
+
+    public void setCuisine(String cuisine) {
+        this.cuisine = cuisine;
     }
 }

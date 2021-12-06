@@ -68,6 +68,13 @@
                     <!-- CLOSE button -->
                     <p:commandButton value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
                                      onclick="PF('RecipeViewDialog').hide()" />
+                    &nbsp;
+                    <p:commandButton value="Save" icon="fas fa-save" styleClass="rounded-button" ajax="false"
+                                     actionListener="#{recipeSearchController.save()}"
+                                     update=":growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage">
+<!--                        <p:confirm header="Save Confirmation"-->
+<!--                                   message="Are you sure you want to add the selected save to your List of Favourite Recipes?"/>-->
+                    </p:commandButton>
                 </div>
             </h:panelGroup>
 

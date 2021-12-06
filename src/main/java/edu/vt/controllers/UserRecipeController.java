@@ -5,25 +5,17 @@
 
 package edu.vt.controllers;
 
-import edu.vt.globals.Methods;
 import edu.vt.EntityBeans.User;
-import edu.vt.ApiSearch.Nutrition;
-import edu.vt.EntityBeans.UserPantry;
-import edu.vt.controllers.util.JsfUtil;
-import edu.vt.ApiSearch.SearchNutrients;
-import edu.vt.FacadeBeans.UserPantryFacade;
-
+import edu.vt.EntityBeans.UserRecipe;
+import edu.vt.FacadeBeans.UserRecipeFacade;
 
 import javax.ejb.EJB;
-import java.util.Map;
-import java.util.List;
-import javax.ejb.EJBException;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.faces.context.FacesContext;
-import javax.enterprise.context.SessionScoped;
+import java.util.List;
+import java.util.Map;
 
 /*
 ---------------------------------------------------------------------------
@@ -57,6 +49,47 @@ in memory from the format under which it was stored.
 -----------------------------------------------------------------------------
  */
 
-public class UserRecipeController implements Serializable{
+public class UserRecipeController implements Serializable {
+    List<UserRecipe> listOfRecipes = null;
+    UserRecipe selected = null;
 
+    @EJB
+    private UserRecipeFacade userRecipeFacade;
+
+    public List<UserRecipe> getListOfRecipes() {
+        if (listOfRecipes == null) {
+            User user = this.getLoggedInUser();
+            listOfRecipes = userRecipeFacade.findUserRecipeByUserId(user.getId());
+        }
+        return listOfRecipes;
+    }
+
+    public void setListOfRecipes(List<UserRecipe> listOfRecipes) {
+        this.listOfRecipes = listOfRecipes;
+    }
+
+    public UserRecipe getSelected() {
+        return selected;
+    }
+
+    public void setSelected(UserRecipe selected) {
+        this.selected = selected;
+    }
+
+    private User getLoggedInUser() {
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        return (User) sessionMap.get("user");
+    }
+
+    public void unselect() {
+        selected = null;
+    }
+
+    public String convertIntToString(Integer value) {
+        return Integer.toString(value);
+    }
+
+    public String convertDoubleToString(Double value) {
+        return Double.toString(value);
+    }
 }
