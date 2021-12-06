@@ -30,14 +30,19 @@ public class PhotoService {
     public void init() {
         listOfPhotos = new ArrayList<>();
 
-        listOfPhotos.add(new Photo("/resources/images/slider/photo1.png", "/resources/images/slider/photos1.png",
-                "Description for Photo 1", "Health and Fitness are Key to a Happy Life"));
-        listOfPhotos.add(new Photo("/resources/images/slider/photo2.png", "/resources/images/slider/photos2.png",
-                "Description for Photo 2", "Apple Fitness+ is the first Fitness Experience built around Apple Watch"));
-        listOfPhotos.add(new Photo("/resources/images/slider/photo5.png", "/resources/images/slider/photos5.png",
-                "Description for Photo 5", "Body Mass Index for Women"));
-        listOfPhotos.add(new Photo("/resources/images/slider/photo4.png", "/resources/images/slider/photos4.png",
-                "Description for Photo 3", "Image 4"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo1.jpg", "/resources/images/slider/photos1.png", "Description for Photo 1", "Chickpeas"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo2.jpg", "/resources/images/slider/photos2.png", "Description for Photo 2", "Corn"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo3.jpg", "/resources/images/slider/photos3.png", "Description for Photo 3", "Onions"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo4.jpg", "/resources/images/slider/photos4.png", "Description for Photo 4", "Lemons"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo5.jpg", "/resources/images/slider/photos5.png", "Description for Photo 5", "Cooked Beans"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo6.jpg", "/resources/images/slider/photos6.png", "Description for Photo 6", "Pears"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo7.jpg", "/resources/images/slider/photos7.png", "Description for Photo 7", "Orange"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo8.jpg", "/resources/images/slider/photos8.png", "Description for Photo 8", "Ginger"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo9.jpg", "/resources/images/slider/photos9.png", "Description for Photo 9", "Chia Seeds"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo10.jpg", "/resources/images/slider/photos10.png", "Description for Photo 10", "Potatoes"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo11.jpg", "/resources/images/slider/photos11.png", "Description for Photo 11", "Pineapple"));
+        listOfPhotos.add(new Photo("/resources/images/slider/photo12.jpg", "/resources/images/slider/photos12.png", "Description for Photo 12", "Mangoes"));
+
 
 
     }

@@ -14,7 +14,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 This page is constructed based on the siteTemplate
-<ui:composition template="/template/siteTemplate.xhtml">
+<ui:composition template="/template/siteTemplateBG.xhtml">
     <ui:define name="title">
         <!-- Set the page title -->
         <h:outputText value="User Pantry" />
@@ -39,7 +39,7 @@ This page is constructed based on the siteTemplate
                     <p:dataTable id="datalist"
                                  value="#{pantryController.getListOfIngredients()}"
                                  var="aPantry"
-                                 widgetVar="recipesDataTable"
+                                 widgetVar="pantryDataTable"
                                  selectionMode="single"
                                  selection="#{pantryController.selected}"
                                  reflow="true"
@@ -71,8 +71,7 @@ This page is constructed based on the siteTemplate
                         </f:facet>
 
                         <p:column headerText="Ingredient:" sortBy="#{aPantry.ingredient}" style="width: 50px; text-align: center ; vertical-align: top"
-                                  filterBy="#{aPantry.ingredient}" filterMatchMode="contains"
-                        >
+                                  filterBy="#{aPantry.ingredient}" filterMatchMode="contains">
                             <h:outputText value="#{aPantry.ingredient}"/>
                         </p:column>
 
@@ -88,10 +87,10 @@ This page is constructed based on the siteTemplate
                             <h:outputText value="#{aPantry.unit}"/>
                         </p:column>
 
-                        <p:column headerText="Nutrients:" sortBy="#{aPantry.nutrients}" style="width: 50px; text-align: center ; vertical-align: top"
+                        <p:column headerText="Nutrients:" sortBy="#{aPantry.nutrients}" style="width: 300px; text-align: center ; vertical-align: top"
                                   filterBy="#{aPantry.nutrients}" filterMatchMode="contains"
                         >
-                            <h:outputText value="#{aPantry.nutrients}"/>
+                            <h:outputText value="#{aPantry.nutrients}" styleClass="scrollableTextBox" />
                         </p:column>
 
                         <p:column headerText="Calories:" sortBy="#{aPantry.calories}" style="width: 50px; text-align: center ; vertical-align: top"
@@ -99,7 +98,7 @@ This page is constructed based on the siteTemplate
                         >
                             <h:outputText value="#{aPantry.calories}"/>
                         </p:column>
-                        <p:column headerText="User Photo" style="width:100px;">
+                        <p:column headerText="User Photo" style="width:40px; text-align: center">
                             <div align="center">
                                 <h:graphicImage class="smallProfilePhoto" value="#{userController.userPhoto()}" />
                             </div>
@@ -137,7 +136,7 @@ This page is constructed based on the siteTemplate
                                                  disabled="#{empty pantryController.selected}">
 
                                     <p:confirm header="Deletion Confirmation"
-                                               message="Are you sure you want to permanently delete the selected recipe from the database?"/>
+                                               message="Are you sure you want to permanently delete the selected ingredient from the database?"/>
                                 </p:commandButton>
 
                                 <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
@@ -147,6 +146,8 @@ This page is constructed based on the siteTemplate
                                         <p:commandButton value="Yes" type="button" class="ui-confirmdialog-yes ui-button-danger" icon="fas fa-check-square" />
                                     </div>
                                 </p:confirmDialog>
+
+                                &nbsp;
 
                                 <p:commandButton id="searchButton" value="Search Recipes from Pantry Ingredients" icon="fas fa-search" styleClass="rounded-button"
                                                  update=":PantrySearchForm" oncomplete="PF('PantrySearchDialog').show()"
@@ -162,7 +163,9 @@ This page is constructed based on the siteTemplate
                     </p:dataTable>
                 </p:panel>
             </h:form>
+
         </div>
+        <br/><br/><br/><br/><br/><br/><br/>
 
         <!--
         Clicking the Create button displays the included

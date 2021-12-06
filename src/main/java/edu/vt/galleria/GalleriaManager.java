@@ -49,23 +49,6 @@ public class GalleriaManager implements Serializable {
     public void init() {
         listOfPhotos = photoService.getListOfPhotos();
 
-//        responsiveOptions1 = new ArrayList<>();
-//        responsiveOptions1.add(new ResponsiveOption("1024px", 5));
-//        responsiveOptions1.add(new ResponsiveOption("768px", 3));
-//        responsiveOptions1.add(new ResponsiveOption("560px", 1));
-//
-//        responsiveOptions2 = new ArrayList<>();
-//        responsiveOptions2.add(new ResponsiveOption("1024px", 5));
-//        responsiveOptions2.add(new ResponsiveOption("960px", 4));
-//        responsiveOptions2.add(new ResponsiveOption("768px", 3));
-//        responsiveOptions2.add(new ResponsiveOption("560px", 1));
-//
-//        responsiveOptions3 = new ArrayList<>();
-//        responsiveOptions3.add(new ResponsiveOption("1500px", 5));
-//        responsiveOptions3.add(new ResponsiveOption("1024px", 3));
-//        responsiveOptions3.add(new ResponsiveOption("768px", 2));
-//        responsiveOptions3.add(new ResponsiveOption("560px", 1));
-//    }
         responsiveOptions1 = new ArrayList<>();
         responsiveOptions1.add(new ResponsiveOption("1024px", 5));
         responsiveOptions1.add(new ResponsiveOption("768px", 3));

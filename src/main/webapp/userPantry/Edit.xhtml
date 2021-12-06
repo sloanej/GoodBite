@@ -60,13 +60,7 @@
                             <f:selectItem itemLabel="gram" itemValue="pound"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="Calories:" for="calories" />
-                        <p:inputText id="calories" value="#{pantryController.selected.calories}" style="width:300px"
-                                     required="true" requiredMessage="Calories is required!" />
 
-                        <p:outputLabel value=" Nutrients:" for="nutrients" />
-                        <p:inputText id="nutrients" value="#{pantryController.selected.nutrients}" styleClass="scrollableTextBox"
-                                     required="true" requiredMessage="Nutrients is required." />
                     </p:panelGrid>
 
                 </h:panelGroup>
@@ -76,7 +70,7 @@
                         <!-- SAVE button -->
                         <p:commandButton value="Save" icon="fas fa-save" styleClass="rounded-button"
                                          ajax="false" actionListener="#{pantryController.update()}"
-                                         update="display,:RecipeListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                         update="display,:PantryListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                                          oncomplete="handleSubmit(args, 'PantryEditDialog');"/>
                         &nbsp;
                         <!-- CANCEL button -->

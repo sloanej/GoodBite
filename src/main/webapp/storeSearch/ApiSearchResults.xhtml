@@ -15,7 +15,7 @@
 <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
 <!-- This page is constructed based on the siteTemplate -->
-<ui:composition template="/template/siteTemplate.xhtml">
+<ui:composition template="/template/siteTemplateBG.xhtml">
     <ui:define name="title">
         <!-- Set the page title -->
         <h:outputText value="Store Search" />
@@ -35,7 +35,7 @@
                             pageLinks="5"
                             layout="grid"
                             gridIcon="pi pi-th-large" listIcon="pi pi-bars"
-                            style="width:100%">
+                            style="min-height: 500px; width:100%">
 
                     <f:facet name="header">
                         <h:outputText value="Nearby Stores" />
@@ -99,6 +99,7 @@
 
                 </p:dataView>
             </h:form>
+            <br/><br/><br/><br/><br/><br/><br/>
         </div>
 
     </ui:define>
