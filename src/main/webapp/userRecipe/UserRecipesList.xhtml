@@ -75,7 +75,7 @@ This page is constructed based on the siteTemplate
                         </p:column>
 
                         <p:column headerText="Name:" sortBy="#{aRecipe.name}" style="text-align: center ; vertical-align: top; width: 100px"
-                                  filterBy="#{aRecipe.ingredient}" filterMatchMode="contains" exportFunction="#{aRecipe.getName()}"
+                                  filterBy="#{aRecipe.name}" filterMatchMode="contains" exportFunction="#{aRecipe.getName()}"
                         >
                             <h:outputText value="#{aRecipe.name}"/>
                         </p:column>
@@ -93,7 +93,7 @@ This page is constructed based on the siteTemplate
                         </p:column>
 
                         <p:column headerText="Health Labels:" sortBy="#{aRecipe.healthLabels}" style="width: 300px; text-align: center ; vertical-align: top"
-                                  filterBy="#{aRecipe.healthLabes}" filterMatchMode="contains" exportFunction="#{aRecipe.getHealthLabels()}"
+                                  filterBy="#{aRecipe.healthLabels}" filterMatchMode="contains" exportFunction="#{aRecipe.getHealthLabels()}"
                         >
                             <h:outputText value="#{aRecipe.healthLabels}" styleClass="scrollableTextBox"/>
                         </p:column>
