@@ -8,6 +8,7 @@ package edu.vt.ApiSearch;
 import edu.vt.EntityBeans.User;
 import edu.vt.EntityBeans.UserRecipe;
 import edu.vt.FacadeBeans.UserRecipeFacade;
+import edu.vt.controllers.PantryController;
 import edu.vt.controllers.UserRecipeController;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.globals.Constants;
@@ -28,8 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import edu.vt.EntityBeans.UserPantry;
 
 @Named("recipeSearchController")
 @SessionScoped
@@ -237,24 +236,27 @@ public class RecipeSearchController implements Serializable {
         nutrition += ".";
         // iterate array to get the cuisine details and category of the recipe
 
-        JSONArray categoryAsArray = foundRecipe.getJSONArray("dishType");
+        JSONArray categoryAsArray = foundRecipe.optJSONArray("dishType");
 
         String category = "";
-        int categoryArrayLength = ingredientLinesAsArray.length();
-
-        if (categoryArrayLength > 0) {
-            for (int j = 0; j < categoryArrayLength; j++) {
-                String aCategoryLine = categoryAsArray.optString(j, "");
-                if (j < categoryArrayLength - 1 && !aCategoryLine.equals("")) {
-                    aCategoryLine = aCategoryLine + ", ";
+        if (categoryAsArray != null) {
+            int categoryArrayLength = ingredientLinesAsArray.length();
+            if (categoryArrayLength > 0) {
+                for (int j = 0; j < categoryArrayLength; j++) {
+                    String aCategoryLine = categoryAsArray.optString(j, "");
+                    if (j < categoryArrayLength - 1 && !aCategoryLine.equals("")) {
+                        aCategoryLine = aCategoryLine + ", ";
+                    }
+                    category = category.concat(aCategoryLine);
                 }
-                category = category.concat(aCategoryLine);
             }
+
         }
 
 
         String cuisine = "";
-        JSONArray cuisineAsArray = foundRecipe.getJSONArray("cuisineType");
+        JSONArray cuisineAsArray = foundRecipe.optJSONArray("cuisineType");
+        if (cuisineAsArray != null) {
         int cuisineAsArrayLength = cuisineAsArray.length();
 
         if (cuisineAsArrayLength > 0) {
@@ -265,6 +267,7 @@ public class RecipeSearchController implements Serializable {
                 }
                 cuisine = cuisine.concat(aCuisineLine);
             }
+        }
         }
 
         return new SearchedRecipe(name, imageURL, ingredientLines, publisherName, nutrition, recipeURL, healthLabels, dietLabels, cautions, uri, category, cuisine);
@@ -356,6 +359,10 @@ public class RecipeSearchController implements Serializable {
 
     }
 
+    @Inject
+    private PantryController pantryController;
+
+
     public String performIngredientRecipeSearch(ArrayList<String> selectedIngredients) {
         selected = null;
 
@@ -363,9 +370,16 @@ public class RecipeSearchController implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
         // Spaces in search query must be replaced with "%20"
-        String searchQuery = this.formatNutrientsQuery(selectedIngredients).replaceAll(" ", "%20");
         try {
+            if (selectedIngredients.isEmpty()) {
+                throw new IngredientsListEmptyException("INGREDIENTS_LIST_EMPTY");
+            }
+            query = this.formatNutrientsQuery(selectedIngredients);
+            String searchQuery = query.replaceAll(" ", "%20");
             this.apiSearch(searchQuery);
+            pantryController.setSelectedListOfIngredients(new ArrayList<String>());
+        } catch (IngredientsListEmptyException ex) {
+            Methods.showMessage("Information", "No Results!", "Please select at least one ingredient to search for recipes!");
         } catch (Exception ex) {
             Methods.showMessage("Information", "No Results!", "No recipe found for the search query!");
         }
@@ -393,7 +407,7 @@ public class RecipeSearchController implements Serializable {
             userRecipe.setHealthLabels(this.selected.getHealthLabels());
             userRecipe.setDietLabels(this.selected.getDietLabels());
             userRecipe.setSource(this.selected.getSource());
-            userRecipe.setDescription(this.selected.getName()+ ", "+ this.selected.getCategory() + ", " + this.selected.getCuisine() + ".");
+            userRecipe.setDescription(this.selected.getName() + ", " + this.selected.getCategory() + ", " + this.selected.getCuisine() + ".");
             userRecipe.setUrl(this.selected.getUrl());
             userRecipeFacade.edit(userRecipe);
             JsfUtil.addSuccessMessage("Recipe was successfully saved!.");
@@ -417,3 +431,12 @@ public class RecipeSearchController implements Serializable {
 
 
 }
+
+
+//Custom exception class.
+class IngredientsListEmptyException extends RuntimeException {
+    IngredientsListEmptyException(String errorMessage) {
+        super(errorMessage);
+    }
+}
+
