@@ -220,7 +220,7 @@ public class FileUploadManager implements Serializable {
             uploadedMealController.refreshFileList();
 
             FacesMessage infoMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Success!", "File(s) Uploaded Successfully!");
+                    "Success!", "File Uploaded Successfully!");
             FacesContext.getCurrentInstance().addMessage(null, infoMessage);
 
         } catch (IOException e) {
