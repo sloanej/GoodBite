@@ -236,24 +236,27 @@ public class RecipeSearchController implements Serializable {
         nutrition += ".";
         // iterate array to get the cuisine details and category of the recipe
 
-        JSONArray categoryAsArray = foundRecipe.getJSONArray("dishType");
+        JSONArray categoryAsArray = foundRecipe.optJSONArray("dishType");
 
         String category = "";
-        int categoryArrayLength = ingredientLinesAsArray.length();
-
-        if (categoryArrayLength > 0) {
-            for (int j = 0; j < categoryArrayLength; j++) {
-                String aCategoryLine = categoryAsArray.optString(j, "");
-                if (j < categoryArrayLength - 1 && !aCategoryLine.equals("")) {
-                    aCategoryLine = aCategoryLine + ", ";
+        if (categoryAsArray != null) {
+            int categoryArrayLength = ingredientLinesAsArray.length();
+            if (categoryArrayLength > 0) {
+                for (int j = 0; j < categoryArrayLength; j++) {
+                    String aCategoryLine = categoryAsArray.optString(j, "");
+                    if (j < categoryArrayLength - 1 && !aCategoryLine.equals("")) {
+                        aCategoryLine = aCategoryLine + ", ";
+                    }
+                    category = category.concat(aCategoryLine);
                 }
-                category = category.concat(aCategoryLine);
             }
+
         }
 
 
         String cuisine = "";
-        JSONArray cuisineAsArray = foundRecipe.getJSONArray("cuisineType");
+        JSONArray cuisineAsArray = foundRecipe.optJSONArray("cuisineType");
+        if (cuisineAsArray != null) {
         int cuisineAsArrayLength = cuisineAsArray.length();
 
         if (cuisineAsArrayLength > 0) {
@@ -264,6 +267,7 @@ public class RecipeSearchController implements Serializable {
                 }
                 cuisine = cuisine.concat(aCuisineLine);
             }
+        }
         }
 
         return new SearchedRecipe(name, imageURL, ingredientLines, publisherName, nutrition, recipeURL, healthLabels, dietLabels, cautions, uri, category, cuisine);
