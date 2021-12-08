@@ -38,14 +38,14 @@ public final class Constants {
 //    public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/Balci/DocRoot/CloudStorage/PhotoStorage/";
 
     // Unix (macOS) or Linux
-    public static final String FILES_ABSOLUTE_PATH  = "/Users/jack/DocRoot/CS5704-Team5-FileStorage/FileStorage/";
-    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/jack/DocRoot/CS5704-Team5-FileStorage/PhotoStorage/";
+//    public static final String FILES_ABSOLUTE_PATH  = "/Users/jack/DocRoot/CS5704-Team5-FileStorage/FileStorage/";
+//    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/jack/DocRoot/CS5704-Team5-FileStorage/PhotoStorage/";
 
     //--------------------------------
     // To run on your AWS EC2 instance
     //--------------------------------
-//    public static final String FILES_ABSOLUTE_PATH  = "/opt/wildfly/DocRoot/CloudStorage/FileStorage/";
-//    public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/CloudStorage/PhotoStorage/";
+    public static final String FILES_ABSOLUTE_PATH  = "/opt/wildfly/DocRoot/CS5704-Team5-FileStorage/FileStorage/";
+    public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/CS5704-Team5-FileStorage/PhotoStorage/";
 
     /*
      ---------------------------------
@@ -77,14 +77,14 @@ public final class Constants {
     //---------------
     // To run locally
     //---------------
-    public static final String FILES_URI  = "http://localhost:8080/CS5704-Team5favmeals/";
-    public static final String PHOTOS_URI = "http://localhost:8080/CS5704-Team5profilepics/";
+//    public static final String FILES_URI  = "http://localhost:8080/goodbite_files/";
+//    public static final String PHOTOS_URI = "http://localhost:8080/goodbite_photos/";
 
     //-----------------------------------------------------
     // To run on your AWS EC2 instance with your IP address
     //-----------------------------------------------------
-//    public static final String FILES_URI  = "http://54.92.194.218:8080/files/";
-//    public static final String PHOTOS_URI = "http://54.92.194.218:8080/photos/";
+    public static final String FILES_URI  = "http://54.147.221.18:8080/goodbite_files/";
+    public static final String PHOTOS_URI = "http://54.147.221.18:8080/goodbite_photos/";
 
     /* 
     =============================================
