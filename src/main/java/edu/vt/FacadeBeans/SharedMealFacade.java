@@ -41,16 +41,16 @@ public class SharedMealFacade extends AbstractFacade<SharedMeal> {
         super(SharedMeal.class);
     }
 
-    // Returns a list of object references of all the entity objects found in the database joined with user table
-//    public List<SharedMealData> joinUsername() {
-//        List<SharedMealData> sharedMealData = (List<SharedMealData>) getEntityManager()
-//                .createQuery(
-//                "SELECT u.username, m.userId, m.id, m.mealName, m.mealPhoto, m.mealDescription "+
-//                "FROM SharedMeal m "+
-//                "LEFT JOIN User u ON m.userId = u")
-//                .getResultList();
-//
-//        return  sharedMealData;
-//    }
+//     Returns a list of object references of all the entity objects found in the database joined with user table
+    public List<SharedMealData> joinUsername() {
+        List<SharedMealData> sharedMealData = (List<SharedMealData>) getEntityManager()
+                .createQuery(
+                "SELECT u.username, m.userId, m.id, m.mealName, m.mealPhoto, m.mealDescription "+
+                "FROM SharedMeal m "+
+                "LEFT JOIN User u ON m.userId = u")
+                .getResultList();
+
+        return  sharedMealData;
+    }
 
 }
