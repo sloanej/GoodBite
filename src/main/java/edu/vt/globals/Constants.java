@@ -83,8 +83,8 @@ public final class Constants {
     //-----------------------------------------------------
     // To run on your AWS EC2 instance with your IP address
     //-----------------------------------------------------
-    public static final String FILES_URI  = "http://54.147.221.18:8080/goodbite_files/";
-    public static final String PHOTOS_URI = "http://54.147.221.18:8080/goodbite_photos/";
+    public static final String FILES_URI  = "https://cs5704gulati.live/goodbite_files/";
+    public static final String PHOTOS_URI = "https://cs5704gulati.live/goodbite_photos/";
 
     /* 
     =============================================
