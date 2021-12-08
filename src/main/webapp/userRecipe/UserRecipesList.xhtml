@@ -16,7 +16,7 @@ This page is constructed based on the siteTemplate
 <ui:composition template="/template/siteTemplateBG.xhtml">
     <ui:define name="title">
         <!-- Set the page title -->
-        <h:outputText value="Favourite Recipes" />
+        <h:outputText value="Saved Recipes" />
     </ui:define>
 
     <!-- Create the content for this page below -->
@@ -103,11 +103,6 @@ This page is constructed based on the siteTemplate
                         >
                             <h:outputText value="#{aRecipe.dietLabels}" styleClass="scrollableTextBox"/>
                         </p:column>
-                        <p:column headerText="Image" style="width:100px;">
-                            <div align="center">
-                                <h:graphicImage class="smallProfilePhoto" value="#{userController.userPhoto()}" />
-                            </div>
-                        </p:column>
 
                         <p:column headerText="Category" sortBy="#{aRecipe.category}"
                                   filterBy="#{aRecipe.category}" filterMatchMode="contains" exportFunction="#{aRecipe.getCategory()}"
@@ -119,6 +114,12 @@ This page is constructed based on the siteTemplate
                                   filterBy="#{aRecipe.cuisine}" filterMatchMode="contains"  exportFunction="#{aRecipe.getCuisine()}"
                                   style="vertical-align: top; width: 80px">
                             <h:outputText value="#{aRecipe.cuisine}"/>
+                        </p:column>
+
+                        <p:column headerText="Image" style="width:100px;">
+                            <div align="center">
+                                <h:graphicImage class="smallProfilePhoto" value="#{userController.userPhoto()}" />
+                            </div>
                         </p:column>
 
 

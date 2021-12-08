@@ -164,7 +164,7 @@ public class PantryController implements Serializable {
     public void create() {
         Methods.preserveMessages();
 
-        persist(JsfUtil.PersistAction.CREATE, "User Pantry item was Successfully Created!");
+        persist(JsfUtil.PersistAction.CREATE, "Pantry Ingredient was Successfully Created!");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The CREATE operation is successfully performed.
@@ -181,7 +181,7 @@ public class PantryController implements Serializable {
     public void update() {
         Methods.preserveMessages();
 
-        persist(JsfUtil.PersistAction.UPDATE, "User Pantry Item was Successfully Updated!");
+        persist(JsfUtil.PersistAction.UPDATE, "Pantry Ingredient was Successfully Updated!");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The UPDATE operation is successfully performed.
