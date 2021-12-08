@@ -1,8 +1,8 @@
 //
 //
 ///*
-// * Created by Neha Surana on 2021.11.1
-// * Copyright © 2021 Neha Surana. All rights reserved.
+// * Created by Team 5 on 2021.11.1
+// * Copyright © 2021 Team 5. All rights reserved.
 // */
 //
 //package edu.vt.EntityBeans;

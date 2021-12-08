@@ -1,4 +1,8 @@
 
+/*
+ * Created by Team 5 on 2021.11.15
+ * Copyright © 2021 Team 5. All rights reserved.
+ */
 
 package edu.vt.Carousel;
 

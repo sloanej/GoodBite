@@ -1,6 +1,6 @@
 /*
- * Created by Osman Balci on 2021.7.14
- * Copyright © 2021 Osman Balci. All rights reserved.
+ * Created by Team 5 on 2021.10.14
+ * Copyright © 2021 Team 5. All rights reserved.
  */
 package edu.vt.globals;
 
