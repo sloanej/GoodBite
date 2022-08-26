@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Team 5 on 2021.5.21
+  - Copyright © 2021 Team 5. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplateBG.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="My Uploaded Meals" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <div align="center">
+            <h:form id="FavoriteMealsForm">
+                <p:dataView value="#{uploadedMealController.listOfUploadedMeals}"
+                            var="aCurrentUploadedMeal"
+                            rows="6"
+                            layout="grid"
+                            paginator="true"
+                            rowsPerPageTemplate="3,6,9,12"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            pageLinks="5"
+                            gridIcon="pi pi-th-large" listIcon="pi pi-bars"
+                            style="width:100%">
+
+                    <f:facet name="header">
+                        <h:outputText value="My Uploaded Meals"/>
+                    </f:facet>
+
+                    <p:dataViewGridItem>
+                        <!-- The p:panel defines a data grid cell displaying aCurrentUploadedMeal data -->
+                        <p:panel style="text-align: center">
+
+                            <h:panelGrid columns="1" styleClass="favMealPanelGrid" cellpadding="6px">
+                                <f:facet name="header">
+                                    <h:outputText value="#{aCurrentUploadedMeal.mealName}"/>
+                                    <br/>
+                                </f:facet>
+
+                                <h:graphicImage width="500px" height="400px" class="scalableImage" value="#{uploadedMealController.getFileURI(aCurrentUploadedMeal)}"/>
+
+                                <h:outputText value="#{aCurrentUploadedMeal.mealDescription}"/>
+                                <br/>
+                            </h:panelGrid>
+                            <f:facet name="footer">
+                                <div align="center">
+                                    <p:commandButton id="deleteButtonGrid" value="Delete File" icon="fas fa-trash-alt" styleClass="rounded-button"
+                                                     actionListener="#{uploadedMealController.deleteUserFile(aCurrentUploadedMeal)}"
+                                                     update=":FavoriteMealsForm" ajax="true">
+
+                                        <p:confirm header="Deletion Confirmation"
+                                                   message="Are you sure you want to delete this meal from the database?" />
+                                    </p:commandButton>
+
+                                    <p:confirmDialog id="confirmDeleteDialogBoxGrid" global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                        <div align="center">
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fas fa-window-close" />
+                                            &nbsp;
+                                            <p:commandButton value="Yes" type="button" class="ui-confirmdialog-yes ui-button-danger" icon="fas fa-check-square" />
+                                        </div>
+                                    </p:confirmDialog>
+                                    &nbsp;
+                                    <!--
+                                   ***************************************************
+                                   Display a Confirmation dialog for the SHARE button
+                                   ***************************************************
+                                   -->
+                                    <p:commandButton id="shareButtonGrid" value="Share" icon="fas fa-share" styleClass="rounded-button"
+                                                     actionListener="#{uploadedMealController.prepareShare(aCurrentUploadedMeal)}"
+                                                     update="growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                                    oncomplete="PF('ShareMealDialog').show()"/>
+
+                                    <p:confirmDialog id="confirmShareDialogBoxGrid" global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                        <div align="center">
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fas fa-window-close" />
+                                            &nbsp;
+                                            <p:commandButton value="Yes" type="button" class="ui-confirmdialog-yes ui-button-danger" icon="fas fa-check-square" />
+                                        </div>
+                                    </p:confirmDialog>
+
+                                </div>
+                            </f:facet>
+                        </p:panel>
+                    </p:dataViewGridItem>
+
+                    <p:dataViewListItem>
+                        <p:panel styleClass="favMealPanel">
+
+                            <h:panelGrid columns="1" styleClass="favMealPanelGrid" cellpadding="6px">
+                                <f:facet name="header">
+                                    <h:outputText value="#{aCurrentUploadedMeal.mealName}"/>
+                                    <br/>
+                                </f:facet>
+
+                                <h:graphicImage width="500px" height="400px" class="scalableImage" value="#{uploadedMealController.getFileURI(aCurrentUploadedMeal)}"/>
+
+                                <h:outputText value="#{aCurrentUploadedMeal.mealDescription}"/>
+                                <br/>
+                            </h:panelGrid>
+                            <f:facet name="footer">
+                                    <div align="center">
+                                        <p:commandButton id="deleteButtonList" value="Delete File" icon="fas fa-trash-alt" styleClass="rounded-button"
+                                                         actionListener="#{uploadedMealController.deleteUserFile(aCurrentUploadedMeal)}"
+                                                         update=":FavoriteMealsForm" ajax="true">
+
+                                            <p:confirm header="Deletion Confirmation"
+                                                       message="Are you sure you want to delete this meal from the database?" />
+                                        </p:commandButton>
+
+                                        <p:confirmDialog id="confirmDeleteDialogBoxList" global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                            <div align="center">
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fas fa-window-close" />
+                                                &nbsp;
+                                                <p:commandButton value="Yes" type="button" class="ui-confirmdialog-yes ui-button-danger" icon="fas fa-check-square" />
+                                            </div>
+                                        </p:confirmDialog>
+                                        &nbsp;
+                                        <!--
+                                       ***************************************************
+                                       Display a Confirmation dialog for the SHARE button
+                                       ***************************************************
+                                       -->
+                                        <p:commandButton id="shareButtonList" value="Share" icon="fas fa-share" styleClass="rounded-button"
+                                                         actionListener="#{uploadedMealController.prepareShare(aCurrentUploadedMeal)}"
+                                                         update="growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                                         oncomplete="PF('ShareMealDialog').show()"/>
+
+                                        <p:confirmDialog id="confirmShareDialogBoxList" global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                            <div align="center">
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fas fa-window-close" />
+                                                &nbsp;
+                                                <p:commandButton value="Yes" type="button" class="ui-confirmdialog-yes ui-button-danger" icon="fas fa-check-square" />
+                                            </div>
+                                        </p:confirmDialog>
+
+                                    </div>
+                                </f:facet>
+                        </p:panel>
+                    </p:dataViewListItem>
+
+                    <f:facet name="footer">
+                        <div align="center">
+                            <!--
+                            ================================
+                            |      UPLOAD FILE Button      |
+                            ================================
+                            -->
+                            <p:commandButton id="uploadButton" value="Upload Meal" icon="fas fa-upload" styleClass="rounded-button"
+                                             update=":FavoriteMealsForm"
+                                             action="/uploadedMeals/UploadFile?faces-redirect=true" />
+
+                        </div>
+                    </f:facet>
+
+                </p:dataView>
+            </h:form>
+        </div>
+        <br/><br/><br/><br/><br/><br/><br/>
+
+        <ui:include src="/uploadedMeals/ShareMeal.xhtml"/>
+
+
+    </ui:define>
+
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>
+

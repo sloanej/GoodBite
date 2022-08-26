@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Team 5 on 2021.11.11
+  - Copyright © 2021 Team 5. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+        <style type="text/css">
+            p {
+                line-height: 1.5;
+                margin: 5px;
+            }
+            .product-item .product-item-content {
+                border: 1px solid var(--surface-d);
+                border-radius: 3px;
+                margin: .3rem;
+                text-align: center;
+                padding: 2rem 0;
+            }
+
+            .product-item .product-image {
+                width: 50%;
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+            }
+        </style>
+    </head>
+    <h:body>
+
+    </h:body>
+        <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+        <!-- This page is constructed based on the siteTemplate -->
+        <ui:composition template="/template/siteTemplateBG.xhtml">
+            <!-- Create the content for this page below -->
+            <ui:define name="editableContent">
+                <h:form>
+                    <div class="card" align="center">
+                        <!--
+                        ========================================
+                        |   PrimeFaces Galleria Image Slider   |
+                        ========================================
+                        (1) value="#{galleriaManager.listOfPhotos}" obtains a list of photo object references.
+                        (2) var="aPhoto" is the iterator variable holding a photo object reference from the list.
+                        (3) numVisible="7" indicates that 7 thumbnail photos are displayed below each photo.
+                        (4) responsiveOptions defines a model of options for Responsive UI Design.
+                            It enables the slider to resize to fit on a smartphone screen.
+                        (5) circular="true" loops the slide show until it is stopped.
+                        (6) autoPlay="true" automatically starts the slide show.
+                        (7) If the user selects a thumbnail photo or clicks an arrow button, the slider
+                            becomes manual until the page is refreshed to be auto play again.
+                        (8) transitionInterval="4000" displays next photo after 4 seconds (4000 milliseconds).
+                        (9) showCaption="true" enables caption display. We show only photo title in the caption.
+                            Photo description (alt) is omitted.
+                        (10) Change max-width to be the maximum width of the photos used.
+                        -->
+
+                        <p:galleria value="#{galleriaManager.listOfPhotos}" var="aPhoto" numVisible="7" responsiveOptions="#{galleriaView.responsiveOptions1}" style="max-width: 500px">
+                            <p:graphicImage value="#{aPhoto.regularPhotoFilepath}" alt="#{aPhoto.title}" style="width: 100%; display: block;" />
+                            <f:facet name="caption">
+                                <span class="p-mb-2">#{aPhoto.title}</span>
+                            </f:facet>
+                            <f:facet name="thumbnail">
+                                <p:graphicImage value="#{aPhoto.thumbnailPhotoFilepath}" alt="#{aPhoto.title}" style="width: 100%; display: block;" />
+                            </f:facet>
+                        </p:galleria>
+                    </div>
+                    <div></div>
+                    <br></br><br></br>
+                    <div class="card">
+
+                        <p:carousel value="#{carouselView.listOfRecipes}" var="product" circular="true" autoplayInterval="5000"
+                                    responsiveOptions="#{carouselView.responsiveOptions}" numVisible="3" numScroll="1">
+                            <f:facet name="header" >
+                                <div style="background-color: white; width: 100%; height:70px; padding: 1px; text-align: center" >
+                                    <h2 style="font-family: 'Times New Roman', Times, serif; font-size: 18pt; font-weight: bold; text-decoration: none; color: darkolivegreen">
+                                        Popular Recipes:
+                                    </h2>
+                                </div>
+
+                            </f:facet>
+                            <div class="product-item">
+                                <br></br><br></br>   <br></br><br></br>
+                                <p:card style="margin-right: 10px" >
+                                    <div class="product-item-content">
+                                        <div class="p-mb-3" style="text-align: center">
+                                            <img src="#{product.imageUrl}" alt="Recipe Photo" style="height: 300px; width: 300px"  />
+                                        </div>
+                                        <div>
+                                            <h3 style="font-family: 'Times New Roman', Times, serif; color: darkolivegreen" class="p-mb-1">
+                                                #{product.name}
+                                            </h3>
+                                            <h4 style="font-family: 'Times New Roman', Times, serif;" class="p-mt-0 p-mb-3">
+                                                <h:outputText value="#{product.nutrients}"/>
+                                            </h4>
+
+                                        </div>
+                                    </div>
+                                </p:card>
+                            </div>
+                        </p:carousel>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+        <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

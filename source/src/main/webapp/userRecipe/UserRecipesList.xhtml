@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Team 5 on 2021.12.6
+  - Copyright © 2021 Team 5. All rights reserved.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+This page is constructed based on the siteTemplate
+<ui:composition template="/template/siteTemplateBG.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Saved Recipes" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+
+        <!-- In case of JSF validation error, set 'selected' to null in recipeController -->
+        <c:if test="#{facesContext.validationFailed}">
+            ${userRecipeController.unselect()}
+        </c:if>
+
+        <!--         Set 'selected' to null in recipeController when the user refreshes / reloads this JSF page-->
+        <f:metadata>
+            <f:viewAction action="#{userRecipeController.unselect()}" rendered="#{facesContext.postback}" />
+        </f:metadata>
+
+        <div align="center">
+            <h:form id="RecipeListForm">
+                <p:panel header="List of Saved Recipes">
+                    <p:dataTable id="datalist"
+                                 value="#{userRecipeController.getListOfRecipes()}"
+                                 var="aRecipe"
+                                 widgetVar="recipesDataTable"
+                                 selectionMode="single"
+                                 selection="#{userRecipeController.selected}"
+                                 reflow="true"
+                                 showGridlines="true"
+                                 paginator="true"
+                                 rowKey="#{aRecipe.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10,20,30,50,70,90"
+                                 emptyMessage="No Recipe found for the search query entered!" >
+
+
+                        <p:ajax event="rowSelect"   update="viewButton "/>
+                        <p:ajax event="rowUnselect" update="viewButton "/>
+
+                        <!--
+                        *************************
+                        *   Data Table Header   *
+                        *************************
+                        -->
+                        <f:facet name="header">
+                            <div align="center">
+                                <p:inputText id="globalFilter" onkeyup="PF('recipesDataTable').filter()" filterMatchMode="contains"
+                                             style="width: 200px"
+                                             placeholder="Enter Recipe Search Query" />
+                                &nbsp;
+                                <p:commandButton type="button" value="Clear All Filters" styleClass="ui-button-outlined"
+                                                 icon="fas fa-undo" onclick="PF('recipesDataTable').clearFilters()" />
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="Recipe Photo"
+                                  style="width: 80px; text-align: center; vertical-align: top">
+                            <h:graphicImage value="#{aRecipe.imageUrl}" width="80px"/>
+                        </p:column>
+
+                        <p:column headerText="Name:" sortBy="#{aRecipe.name}" style="text-align: center ; vertical-align: top; width: 100px"
+                                  filterBy="#{aRecipe.name}" filterMatchMode="contains" exportFunction="#{aRecipe.getName()}"
+                        >
+                            <h:outputText value="#{aRecipe.name}"/>
+                        </p:column>
+
+                        <p:column headerText="Ingredients:" sortBy="#{aRecipe.ingredients}" style="width: 300px; text-align: center ; vertical-align: top"
+                                  filterBy="#{aRecipe.ingredients}" filterMatchMode="contains" exportFunction="#{aRecipe.getIngredients()}"
+                        >
+                            <h:outputText value="#{aRecipe.ingredients}" styleClass="scrollableTextBox"/>
+                        </p:column>
+
+                        <p:column headerText="Nutrients:" sortBy="#{aRecipe.nutrients}" style="width: 300px; text-align: center ; vertical-align: top"
+                                  filterBy="#{aRecipe.nutrients}" filterMatchMode="contains" exportFunction="#{aRecipe.getNutrients()}"
+                        >
+                            <h:outputText value="#{aRecipe.nutrients}" styleClass="scrollableTextBox"/>
+                        </p:column>
+
+                        <p:column headerText="Health Labels:" sortBy="#{aRecipe.healthLabels}" style="width: 300px; text-align: center ; vertical-align: top"
+                                  filterBy="#{aRecipe.healthLabels}" filterMatchMode="contains" exportFunction="#{aRecipe.getHealthLabels()}"
+                        >
+                            <h:outputText value="#{aRecipe.healthLabels}" styleClass="scrollableTextBox"/>
+                        </p:column>
+
+                        <p:column headerText="Diet Labels:" sortBy="#{aRecipe.dietLabels}" style="width:300px; text-align: center ; vertical-align: top"
+                                  filterBy="#{aRecipe.dietLabels}" filterMatchMode="contains" exportFunction="#{aRecipe.getDietLabels()}"
+                        >
+                            <h:outputText value="#{aRecipe.dietLabels}" styleClass="scrollableTextBox"/>
+                        </p:column>
+
+                        <p:column headerText="Category" sortBy="#{aRecipe.category}"
+                                  filterBy="#{aRecipe.category}" filterMatchMode="contains" exportFunction="#{aRecipe.getCategory()}"
+                                  style="vertical-align: top; width: 80px">
+                            <h:outputText value="#{aRecipe.category}"/>
+                        </p:column>
+
+                        <p:column headerText="Cuisine" sortBy="#{aRecipe.cuisine}"
+                                  filterBy="#{aRecipe.cuisine}" filterMatchMode="contains"  exportFunction="#{aRecipe.getCuisine()}"
+                                  style="vertical-align: top; width: 80px">
+                            <h:outputText value="#{aRecipe.cuisine}"/>
+                        </p:column>
+
+                        <p:column headerText="Image" style="width:100px;">
+                            <div align="center">
+                                <h:graphicImage class="smallProfilePhoto" value="#{userController.userPhoto()}" />
+                            </div>
+                        </p:column>
+
+
+
+
+                        <!--
+                                        *************************
+                                        *   Data Table Footer   *
+                                        *************************
+                                        -->
+                        <f:facet name="footer">
+                            <div align="center">
+                                <!--                                 CREATE button: id is used since it is referenced to be activated or deactivated-->
+                                &nbsp;
+                                <p:commandButton id="viewButton" value="View" icon="fas fa-eye"
+                                                 styleClass="rounded-button"
+                                                 update=":RecipeViewForm" oncomplete="PF('RecipeViewDialog').show()"
+                                                 disabled="#{empty userRecipeController.selected}"/>
+                                &nbsp;
+                                &nbsp;
+                            </div>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+                <p:panelGrid columns="2">
+                    <!--
+                    ================================================
+                    EXPORT ALL DATA as Excel, PDF, CSV, XML, or JSON
+                    ================================================
+                    -->
+                    <p:panel header="Export All Data">
+                        <h:commandLink>
+                            <p:graphicImage value="#{resource['images:exportIcons/xlsExport.png']}" width="40" />
+                            <!--
+                            PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                            poi-3.15.jar must be included in WEB-INF/lib.
+                            -->
+                            <p:dataExporter type="xls" target="datalist" fileName="Recipes" />
+                        </h:commandLink>
+                        &nbsp;
+                        <h:commandLink>
+                            <p:graphicImage value="#{resource['images:exportIcons/pdfExport.png']}" width="40" />
+                            <!--
+                            PrimeFaces p:dataExporter uses itext-2.1.7.jar for exporting into PDF documents.
+                            itext-2.1.7.jar must be included in WEB-INF/lib.
+                            -->
+                            <p:dataExporter type="pdf" target="datalist" fileName="Recipes"/>
+                        </h:commandLink>
+                        &nbsp;
+                        <h:commandLink>
+                            <p:graphicImage value="#{resource['images:exportIcons/csvExport.png']}" width="40" />
+                            <!--
+                            PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                            poi-3.15.jar must be included in WEB-INF/lib.
+                            -->
+                            <p:dataExporter type="csv" target="datalist" fileName="Recipes" />
+                        </h:commandLink>
+                        &nbsp;
+                        <h:commandLink>
+                            <p:graphicImage value="#{resource['images:exportIcons/xmlExport.png']}" width="40" />
+                            <!--
+                            PrimeFaces p:dataExporter uses xmlbeans-2.6.0.jar for exporting into XML documents.
+                            xmlbeans-2.6.0.jar must be included in WEB-INF/lib.
+                            -->
+                            <p:dataExporter type="xml" target="datalist" fileName="Recipes" />
+                        </h:commandLink>
+                        &nbsp;
+                        <h:commandLink>
+                            <p:graphicImage value="#{resource['images:exportIcons/jsonExport.png']}" />
+                            <!-- Download data table content as a JSON file  -->
+                            <p:fileDownload value="#{fileDownloadManager.file}"/>
+                        </h:commandLink>
+                    </p:panel>
+
+                    <!--
+                    ===========================================
+                    EXPORT PAGE DATA as Excel, PDF, CSV, or XML
+                    ===========================================
+                    -->
+                    <p:panel header="Export Only Shown Page Data">
+                        <h:commandLink>
+                            <p:graphicImage value="#{resource['images:exportIcons/xlsExport.png']}" width="40" />
+                            <!--
+                            PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                            poi-3.15.jar must be included in WEB-INF/lib.
+                            -->
+                            <p:dataExporter type="xls" target="datalist" fileName="Recipes-Page" pageOnly="true" />
+                        </h:commandLink>
+                        &nbsp;
+                        <h:commandLink>
+                            <p:graphicImage value="#{resource['images:exportIcons/pdfExport.png']}" width="40" />
+                            <!--
+                            PrimeFaces p:dataExporter uses itext-2.1.7.jar for exporting into PDF documents.
+                            itext-2.1.7.jar must be included in WEB-INF/lib.
+                            -->
+                            <p:dataExporter type="pdf" target="datalist" fileName="Recipes-Page" pageOnly="true" />
+                        </h:commandLink>
+                        &nbsp;
+                        <h:commandLink>
+                            <p:graphicImage value="#{resource['images:exportIcons/csvExport.png']}" width="40" />
+                            <!--
+                            PrimeFaces p:dataExporter uses poi-3.15.jar for exporting into Microsoft documents.
+                            poi-3.15.jar must be included in WEB-INF/lib.
+                            -->
+                            <p:dataExporter type="csv" target="datalist" fileName="Recipes-Page" pageOnly="true" />
+                        </h:commandLink>
+                        &nbsp;
+                        <h:commandLink>
+                            <p:graphicImage value="#{resource['images:exportIcons/xmlExport.png']}" width="40" />
+                            <!--
+                            PrimeFaces p:dataExporter uses xmlbeans-2.6.0.jar for exporting into XML documents.
+                            xmlbeans-2.6.0.jar must be included in WEB-INF/lib.
+                            -->
+                            <p:dataExporter type="xml" target="datalist" fileName="Recipes-Page" pageOnly="true" />
+                        </h:commandLink>
+                    </p:panel>
+                </p:panelGrid>
+            </h:form>
+        </div>
+
+        <!--
+        Clicking the View button displays the included
+        View.xhtml file in a dialog window on top of this page.
+        -->
+        <ui:include src="/userRecipe/View.xhtml"/>
+
+
+    </ui:define>
+</ui:composition>
+</html>
+
