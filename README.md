@@ -1,7 +1,7 @@
 # GoodBite
 
 ## Project Description
-GoodBite is a web application developed by Jack Sloane, Ishaan Gulati, and Neha Surana for a Software Engineering Course at Virginia Tech.
+GoodBite is a web application developed by Jack Sloane, Ishaan Gulati, and Neha Surana for a graduate level Software Engineering Course at Virginia Tech.
 
 ## Project Objective
 The objective of our team project is to demonstrate how capable the team members are in engineering a Jakarta/Java EE cloud software application to solve a complex problem. The cloud software application is created for the purpose of showing how learned and new complex functionalities and features the team members are capable of developing. 
