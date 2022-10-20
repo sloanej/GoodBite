@@ -15,13 +15,13 @@ The objective of our team project is to demonstrate how capable the team members
 6.	User login flow, reset password flow, and sign up flow.
 7.	Create cloud storage for the user to upload/download files.
 8.	The use of Datatable, Datagrid and Datalist for displaying data.
-9.	Responsive Dialogues with Scrollable contents
-10.	TextBox Scrollable Vertically
+9.	Responsive Dialogues with scrollable contents
+10.	TextBox Scrollable vertically
 11.	Database search for geocodings
 12.	Custom CSS sheets
 
 ## Delivered Software Functionallity
-Due to hosting costs, we the website for GoodBite is no longer live. Here is a detailed walk-through of our software functionality. We start at the home page of our application website: 
+Due to hosting costs, the website for GoodBite is no longer live. Here is a detailed walk-through of our software functionality. We start at the home page of our application website: 
 
 <img width="470" alt="image" src="https://user-images.githubusercontent.com/46733794/186985459-41335bf3-287e-4600-9ed7-7f273135fe6a.png">
 Fig. 1 
